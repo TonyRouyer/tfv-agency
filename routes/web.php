@@ -75,3 +75,9 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'allNewsArchive' en GET affiche la liste des article archivés
     $router->get('allNewsArchive', 'newsController@showNewsListArchive');
   });
+
+
+  // route employee
+    $router->post('employee', 'employeeController@createEmployee');
+    
+    $router->get('employee', 'employeeController@getEmployeeList');
