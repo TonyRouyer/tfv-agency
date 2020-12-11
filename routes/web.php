@@ -40,8 +40,8 @@ $router->group(['prefix' => ''], function () use ($router) {
 });
 // route apartement 
 $router->group(['prefix' => ''], function () use ($router) {
-    $router->get('saleapartment', 'apartmentController@getApartmentSaleList');
-    $router->get('rentalapartment', 'apartmentController@getApartmentRentalList');
+    $router->get('saleApartment', 'apartmentController@getApartmentSaleList');
+    $router->get('rentalApartment', 'apartmentController@getApartmentRentalList');
 
     $router->get('apartmentSaleFilter/{search}', 'apartmentController@getApartmentSaleFilter');
     $router->get('apartmentRentalFilter/{search}', 'apartmentController@getApartmentRentalFilter');
