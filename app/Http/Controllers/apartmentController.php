@@ -24,9 +24,16 @@ class apartmentController extends Controller
         ->get();
         return response()->json($house);
     }
-    // retourne la liste des appartement en vente selon des filtres, au format JSON
+/**
+ * retourne la liste des appartement en vente selon des filtres, au format JSON
+ *
+ *ordre : priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
+ *
+ * @param string contient la liste de tout les parametre dans l'odre ci-dessus
+ *
+ * @return void
+ */
     public function getApartmentSaleFilter($search){
-        //'0,250000,0,0,0,30,100,1,0,0,1,0,1,0,0,0,0'
             $explodeSearch = explode(',', $search);
     
             $house = apartment::where('houseApartment', 1)->where('SaleOrRental', 0);
@@ -84,7 +91,15 @@ class apartmentController extends Controller
             }
             return $house->get();
         }
-    // retourne la liste des Appartement en location selon des filtres, au format JSON
+/**
+ * retourne la liste des appartement en location selon des filtres, au format JSON
+ *
+ *ordre : priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
+ *
+ * @param string contient la liste de tout les parametre dans l'odre ci-dessus
+ *
+ * @return void
+ */    
     public function getApartmentRentalFilter($search){
         //'0,250000,0,0,0,30,100,1,0,0,1,0,1,0,0,0,0'
             $explodeSearch = explode(',', $search);

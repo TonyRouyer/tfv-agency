@@ -52,4 +52,12 @@ class realEstateController extends Controller{
             return response()->json('bien non trouvé',404);
         }
     }
+    public function showRealEstateDetail($id){
+        try{
+            $realEstate = realEstate::findOrFail($id);
+            return response()->json($realEstate,200);
+        }catch(ModelNotFoundException $e){
+            return response()->json('bien non trouvé',404);
+        }
+    }
 }
