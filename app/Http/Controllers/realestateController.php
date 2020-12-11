@@ -6,23 +6,23 @@ use App\Models\realEstate;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class real_estateController extends Controller
+class realestateController extends Controller
 {
     
-    public function showAllRealEstate()
-    {
-        return response()->json(realEstate::all());
-    }
+    // public function showAllRealEstate()
+    // {
+    //     return response()->json(realEstate::all());
+    // }
 
-    public function showOneRealEstate($id)
-    {
-        try{
-            $toto = realEstate::findOrFail($id);
-        return response()->json($toto,200);
-    }catch(ModelNotFoundException $e){
-        return response()->json('Bien non trouvé',404);
-    }
-    }
+    // public function showOneRealEstate($id)
+    // {
+    //     try{
+    //         $toto = realEstate::findOrFail($id);
+    //     return response()->json($toto,200);
+    // }catch(ModelNotFoundException $e){
+    //     return response()->json('Bien non trouvé',404);
+    // }
+    // }
 
     public function createRealEstate(Request $request)
     {

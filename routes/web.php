@@ -14,30 +14,45 @@
 */
 
 $router->get('/', function () use ($router) {
-    // return $router->app->version();
-    return $router->app/Models/version();
+    return $router->app->version();
 });
 
-$router->group(['prefix' => 'api'], function () use ($router) {
-  $router->get('authors',  ['uses' => 'AuthorController@showAllAuthors']);
 
-  $router->get('authors/{id}', ['uses' => 'AuthorController@showOneAuthor']);
 
-  $router->post('authors', ['uses' => 'AuthorController@create']);
 
-  $router->delete('authors/{id}', ['uses' => 'AuthorController@delete']);
-
-  $router->put('authors/{id}', ['uses' => 'AuthorController@update']);
-});
-
-$router->group(['prefix' => 'api'], function () use ($router) {
-    $router->get('realestate',  ['uses' => 'real_estateController@showAllRealEstate']);
-  
-    $router->get('realestate/{id}', ['uses' => 'real_estateController@showOneRealEstate']);
-  
-    $router->post('realestate', ['uses' => 'real_estateController@createRealEstate']);
-  
-    $router->delete('realestate/{id}', ['uses' => 'real_estateController@deleteRealEstate']);
-  
-    $router->put('realestate/{id}', ['uses' => 'real_estateController@updateRealEstate']);
+// route real estate A MODIFIER
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->post('realestate', 'realestateController@createRealEstate');
+    // $router->delete('realestate/{id}', 'realestateController@deleteRealEstate');
+    // $router->put('realestate/{id}', 'realestateController@updateRealEstate');
   });
+
+
+
+
+// route house
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->get('saleHouse', 'houseController@getHouseSaleList');
+    $router->get('rentalHouse', 'houseController@getHouseRentalList');
+
+    $router->get('houseSaleFilter/{search}', 'houseController@getHouseSaleFilter');
+    $router->get('houseRentalFilter/{search}', 'houseController@getHouseRentalFilter');
+});
+// route apartement 
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->get('saleapartment', 'apartmentController@getApartmentSaleList');
+    $router->get('rentalapartment', 'apartmentController@getApartmentRentalList');
+
+    $router->get('apartmentSaleFilter/{search}', 'apartmentController@getApartmentSaleFilter');
+    $router->get('apartmentRentalFilter/{search}', 'apartmentController@getApartmentRentalFilter');
+
+});
+// route cretion d'agence
+$router->put('agency', 'agencyController@createRealEstate');
+
+
+
+
+
+
+    
