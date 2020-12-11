@@ -12,24 +12,15 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-
-
-
-
-// route real estate A MODIFIER
+// route real estate 
 $router->group(['prefix' => ''], function () use ($router) {
-    $router->post('realestate', 'realestateController@createRealEstate');
-    // $router->delete('realestate/{id}', 'realestateController@deleteRealEstate');
-    // $router->put('realestate/{id}', 'realestateController@updateRealEstate');
+    $router->post('realEstate', 'realEstateController@createRealEstate');
+    $router->put('realEstate/{id}', 'realEstateController@updateRealEstate');
+    $router->delete('realEstate/{id}', 'realEstateController@deleteRealEstate');
   });
-
-
-
-
 // route house
 $router->group(['prefix' => ''], function () use ($router) {
     $router->get('saleHouse', 'houseController@getHouseSaleList');
@@ -49,10 +40,3 @@ $router->group(['prefix' => ''], function () use ($router) {
 });
 // route cretion d'agence
 $router->put('agency', 'agencyController@createRealEstate');
-
-
-
-
-
-
-    
