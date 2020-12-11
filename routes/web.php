@@ -62,7 +62,7 @@ $router->group(['prefix' => ''], function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'news' en POST cree un nouvelle article / champs obligatoire :  'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
     $router->post('news', 'newsController@createNews');
-    // 'archiveNews/{id}' en PUT  modifie l'article a l'id choisie 
+    // 'updateNews/{id}' en PUT  modifie l'article a l'id choisie 
     $router->put('updateNews/{id}', 'newsController@updateNews');
     // 'validateNews/{id}' en PUT change le statue de l'article a '1' = publié
     $router->put('validateNews/{id}', 'newsController@validateNews');
