@@ -20,8 +20,10 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'realEstate' en POST cree un nouveau bien / champs obligatoire : 'referencePublishing', 'houseApartment' , 'saleOrRental' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency'
     $router->post('realEstate', 'realEstateController@createRealEstate');
-    // 'realEstate/{id}' en PUT met a jour le bien a l'id choisie
-    $router->put('realEstate/{id}', 'realEstateController@updateRealEstate');
+    // 'updateRealEstate/{id}' en PUT met a jour le bien a l'id choisie
+    $router->put('updateRealEstate/{id}', 'realEstateController@updateRealEstate');
+    // 'validateRealEstate/{id}' en PUT met a jour le status de l'annonce vers 1 = publier
+    $router->put('validateRealEstate/{id}', 'realEstateController@validateRealEstate');
     // 'archiveRealEstate/{id}' en PUT place le bien au status archivé
     $router->put('archiveRealEstate/{id}', 'realEstateController@deleteRealEstate');
     // realEstate/{id} en GET recupere les infos du bien a l'article selectionné
