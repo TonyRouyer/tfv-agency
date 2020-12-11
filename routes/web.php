@@ -19,7 +19,7 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     $router->post('realEstate', 'realEstateController@createRealEstate');
     $router->put('realEstate/{id}', 'realEstateController@updateRealEstate');
-    $router->delete('realEstate/{id}', 'realEstateController@deleteRealEstate');
+    $router->post('archiveRealEstate/{id}', 'realEstateController@deleteRealEstate');
   });
 // route house
 $router->group(['prefix' => ''], function () use ($router) {

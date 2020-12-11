@@ -37,10 +37,17 @@ class realEstateController extends Controller{
         }
     }
     public function deleteRealEstate($id){
+        // try{
+        //     $realEstate = realEstate::findOrFail($id);
+        //     $realEstate->delete();
+        //     return response()->json('Le bien a été supprimé',200);
+        // }catch(ModelNotFoundException $e){
+        //     return response()->json('bien non trouvé',404);
+        // }
         try{
             $realEstate = realEstate::findOrFail($id);
-            $realEstate->delete();
-            return response()->json('Le bien a été supprimé',200);
+            $realEstate->update(['id_tfv042119_status'=> 2]);
+            return response()->json('Le fichier a été archivé',200);
         }catch(ModelNotFoundException $e){
             return response()->json('bien non trouvé',404);
         }
