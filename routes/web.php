@@ -16,29 +16,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-// route real estate 
-$router->group(['prefix' => ''], function () use ($router) {
-    // 'realEstate' en POST cree un nouveau bien / champs obligatoire : 'referencePublishing', 'houseApartment' , 'saleOrRental' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency'
-    $router->post('realEstate', 'realEstateController@createRealEstate');
-    // 'realEstate/{id}' en PUT met a jour le bien a l'id choisie
-    $router->put('realEstate/{id}', 'realEstateController@updateRealEstate');
-    // 'archiveRealEstate/{id}' en PUT place le bien au status archivé
-    $router->put('archiveRealEstate/{id}', 'realEstateController@deleteRealEstate');
-    // realEstate/{id} en GET recupere les infos du bien a l'article selectionné
-    $router->get('realEstate/{id}', 'realEstateController@showRealEstateDetail');
-  });
-
-// route house
-$router->group(['prefix' => ''], function () use ($router) {
-    // 'saleHouse' en GET recupere la liste des maison en vente
-    $router->get('saleHouse', 'houseController@getHouseSaleList');
-    // 'rentalHouse' en GET recupere la liste des maison en location
-    $router->get('rentalHouse', 'houseController@getHouseRentalList');
-    // 'houseSaleFilter/{search}' en GET recupere la liste des maison en vente avec des filtre
-    $router->get('houseSaleFilter/{search}', 'houseController@getHouseSaleFilter');
-    // 'houseRentalFilter/{search}' en GET recupere la liste des maison en location avec des filtre
-    $router->get('houseRentalFilter/{search}', 'houseController@getHouseRentalFilter');
-});
+// route création d'agence
+    // 'agency' en PUT créer une nouvelle agence dans la bdd / champs obligatoire : 'name' , 'address' , 'city' , 'zip'
+    $router->put('agency', 'agencyController@createRealEstate');
 
 // route apartement 
 $router->group(['prefix' => ''], function () use ($router) {
@@ -52,13 +32,51 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('apartmentRentalFilter/{search}', 'apartmentController@getApartmentRentalFilter');
 });
 
-// route cretion d'agence
-    // 'agency' en PUT cree une nouvelle agence dans la bdd / champs obligatoire : 'name' , 'address' , 'city' , 'zip'
-    $router->put('agency', 'agencyController@createRealEstate');
+// route appointment
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'appointment' en POST créer un nouveau rendez-vous / champs obligatoire :  'dateTime', 'label', 'id_tfv042119_employee'
+    $router->post('appointment', 'appointmentController@createAppointment');
+    // 'archiveAppointment/{id}' en PUT  modifie le rendez-vous à l'id choisit 
+    $router->put('updateAppointment/{id}', 'appointmentController@updateAppointment');
+    // 'validateAppointment/{id}' en PUT change le rendez-vous de l'employé à '1' = publié
+    $router->put('validateAppointment/{id}', 'appointmentController@validateAppointment');
+    // 'archiveAppointment/{id}' en PUT place le rendez-vous definit par l'id de l'employé archivé
+    $router->put('archiveAppointment/{id}', 'appointmentController@deleteAppointment');
+    // 'allAppointmentPublished/{id}' en GET affiche le rendez-vous à l'id choisit
+    $router->get('appointment/{id}', 'appointmentController@showAppointment');
+    // 'allAppointmentPublished' en GET affiche la liste des rendez-vous publiés
+    $router->get('allAppointmentPublished', 'appointmentController@showAppointmentListPublished');
+    // 'allAppointmentArchive' en GET affiche la liste des rendez-vous archivés
+    $router->get('allAppointmentArchive', 'appointmentController@showAppointmentListArchive');
+  });
+
+  // route employee
+  $router->group(['prefix' => ''], function () use ($router) {
+  $router->post('employee', 'employeeController@createEmployee');
+  $router->get('employee', 'employeeController@getEmployeeList');
+  });
+
+  // route managementProposal
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'managementProposal' en POST créer une nouvelle mise en gestion / champs obligatoire :  'type', 'address', 'zip', 'city', 'fullText', 'id_tfv042119_employee'
+    $router->post('managementProposal', 'managementProposalController@createManagementProposal');
+    // 'archiveManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit 
+    $router->put('updateManagementProposal/{id}', 'managementProposalController@updateManagementProposal');
+    // 'validateManagementProposal/{id}' en PUT change la mise en gestion de l'employé à '1' = publié
+    $router->put('validateManagementProposal/{id}', 'managementProposalController@validateManagementProposal');
+    // 'archiveManagementProposal/{id}' en PUT place la mise en gestion definit par l'id de l'employé archivé
+    $router->put('archiveManagementProposal/{id}', 'managementProposalController@deleteManagementProposal');
+    // 'allManagementProposalPublished/{id}' en GET affiche la mise en gestion à l'id choisit
+    $router->get('managementProposal/{id}', 'managementProposalController@showManagementProposal');
+    // 'allManagementProposalPublished' en GET affiche la liste des mises en gestion publiées
+    $router->get('allManagementProposalPublished', 'managementProposalController@showManagementProposalListPublished');
+    // 'allManagementProposalArchive' en GET affiche la liste des mises en gestion archivées
+    $router->get('allmanagementProposalArchive', 'managementProposalController@showManagementProposalListArchive');
+  });
 
 // route news
 $router->group(['prefix' => ''], function () use ($router) {
-    // 'news' en POST cree un nouvelle article / champs obligatoire :  'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
+    // 'news' en POST créer un nouvelle article / champs obligatoire :  'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
     $router->post('news', 'newsController@createNews');
     // 'archiveNews/{id}' en PUT  modifie l'article a l'id choisie 
     $router->put('updateNews/{id}', 'newsController@updateNews');
@@ -74,8 +92,100 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('allNewsArchive', 'newsController@showNewsListArchive');
   });
 
+// route owner
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'owner' en POST créer un nouveau propriétaire / champs obligatoire : 'OwnerLastname', 'OwnerFirstname', 'OwnerMail', 'OwnerPhone', 'civility', 'id_tfv042119_management_proposal'
+    $router->post('owner', 'ownerController@createOwner');
+    // 'archiveOwner/{id}' en PUT  modifie le propriétaire à l'id choisit 
+    $router->put('updateOwner/{id}', 'ownerController@updateOwner');
+    // 'validateOwner/{id}' en PUT change le propriétaire de la mise en gestion à '1' = publiée
+    $router->put('validateOwner/{id}', 'ownerController@validateOwner');
+    // 'archiveOwner/{id}' en PUT place le propriétaire definit par l'id de la mise en gestion archivée
+    $router->put('archiveOwner/{id}', 'ownerController@deleteOwner');
+    // 'allOwnerPublished/{id}' en GET affiche le propriétaire à l'id choisit
+    $router->get('owner/{id}', 'ownerController@showOwner');
+    // 'allOwnerPublished' en GET affiche la liste des propriétaires publiés
+    $router->get('allOwnerPublished', 'ownerController@showOwnerListPublished');
+    // 'allOwnerArchive' en GET affiche la liste des propriétaires archivés
+    $router->get('allOwnerArchive', 'ownerController@showOwnerListArchive');
+  });
 
-  // route employee
-    $router->post('employee', 'employeeController@createEmployee');
-    
-    $router->get('employee', 'employeeController@getEmployeeList');
+  // route ownerFiles
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'ownerFiles' en POST créer un nouveau fichier du propriétaire / champs obligatoire : 'documentName', 'title', 'id_tfv042119_owner'
+    $router->post('ownerFiles', 'ownerFilesController@createOwnerFiles');
+    // 'archiveOwnerFiles/{id}' en PUT  modifie le fichier du propriétaire à l'id choisit 
+    $router->put('updateOwnerFiles/{id}', 'ownerFilesController@updateOwnerFiles');
+    // 'validateOwnerFiles/{id}' en PUT change le fichier du propriétaire du propriétaire à '1' = publié
+    $router->put('validateOwnerFiles/{id}', 'ownerFilesController@validateOwnerFiles');
+    // 'archiveOwnerFiles/{id}' en PUT place le fichier du propriétaire definit par l'id du propriétaire archivé
+    $router->put('archiveOwnerFiles/{id}', 'ownerFilesController@deleteOwnerFiles');
+    // 'allOwnerFilesPublished/{id}' en GET affiche le fichier du propriétaire à l'id choisit
+    $router->get('ownerFiles/{id}', 'ownerFilesController@showOwnerFiles');
+    // 'allOwnerFilesPublished' en GET affiche la liste des Fichiers du propriétaire publiée
+    $router->get('allOwnerFilesPublished', 'ownerFilesController@showOwnerFilesListPublished');
+    // 'allOwnerFilesArchive' en GET affiche la liste des fichiers du propriétaire archivée
+    $router->get('allOwnerFilesArchive', 'ownerFilesController@showOwnerFilesListArchive');
+  });
+
+// route real estate 
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'realEstate' en POST créer un nouveau bien / champs obligatoire : 'referencePublishing', 'houseApartment' , 'saleOrRental' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency'
+    $router->post('realEstate', 'realEstateController@createRealEstate');
+    // 'realEstate/{id}' en PUT met à jour le bien à l'id choisit
+    $router->put('realEstate/{id}', 'realEstateController@updateRealEstate');
+    // 'archiveRealEstate/{id}' en PUT place le bien au status archivé
+    $router->put('archiveRealEstate/{id}', 'realEstateController@deleteRealEstate');
+    // realEstate/{id} en GET récupère les infos du bien à l'article sélectionné
+    $router->get('realEstate/{id}', 'realEstateController@showRealEstateDetail');
+  });
+
+// route rental
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'rental' en POST créer un nouveau locataire / champs obligatoire : 'rentalPhone', 'rentalMail', 'rentalEntryDate', 'rentalBeginContactDate', 'rentalLastname', 'rentalFirstname', 'civility', 'rentalEndDate', 'id_tfv042119_owner'
+    $router->post('rental', 'rentalController@createRental');
+    // 'archiveRental/{id}' en PUT  modifie le locataire à l'id choisit 
+    $router->put('updateRental/{id}', 'rentalController@updaterental');
+    // 'validaterental/{id}' en PUT change le locataire de la mise en gestion à '1' = publiée
+    $router->put('validateRental/{id}', 'rentalController@validateRental');
+    // 'archiveRental/{id}' en PUT place le locataire definit par l'id de la mise en gestion archivée
+    $router->put('archiveRental/{id}', 'rentalController@deleteRental');
+    // 'allRentalPublished/{id}' en GET affiche le locataire à l'id choisit
+    $router->get('rental/{id}', 'rentalController@showRental');
+    // 'allRentalPublished' en GET affiche la liste du locataire publiée
+    $router->get('allRentalPublished', 'rentalController@showRentalListPublished');
+    // 'allRentalArchive' en GET affiche la liste des locataires de mise en gestion archivée
+    $router->get('allRentalArchive', 'rentalController@showRentalListArchive');
+  });
+
+  // route rentalFiles
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'rentalFiles' en POST créer un nouveau fichier du locataire / champs obligatoire : 'documentName', 'title', 'id_tfv042119_rental'
+    $router->post('rentalFiles', 'rentalFilesController@createRentalFiles');
+    // 'archiveRentalFiles/{id}' en PUT  modifie le fichier du locataire à l'id choisit 
+    $router->put('updateRentalFiles/{id}', 'rentalFilesController@updaterentalFiles');
+    // 'validaterentalFiles/{id}' en PUT change le fichier du locataire du locataire à '1' = publié
+    $router->put('validateRentalFiles/{id}', 'rentalFilesController@validateRentalFiles');
+    // 'archiveRentalFiles/{id}' en PUT place le fichier du locataire definit par l'id du locataire archivé
+    $router->put('archiveRentalFiles/{id}', 'rentalFilesController@deleteRentalFiles');
+    // 'allRentalFilesPublished/{id}' en GET affiche le fichier du locataire à l'id choisit
+    $router->get('rentalFiles/{id}', 'rentalFilesController@showRentalFiles');
+    // 'allRentalFilesPublished' en GET affiche la liste des fichiers du locataire publiée
+    $router->get('allRentalFilesPublished', 'rentalFilesController@showRentalFilesListPublished');
+    // 'allRentalFilesArchive' en GET affiche la liste des fichiers du locataire archivée
+    $router->get('allRentalFilesArchive', 'rentalFilesController@showRentalFilesListArchive');
+  });
+
+// route house
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'saleHouse' en GET récupère la liste des maisons en vente
+    $router->get('saleHouse', 'houseController@getHouseSaleList');
+    // 'rentalHouse' en GET récupère la liste des maisons en location
+    $router->get('rentalHouse', 'houseController@getHouseRentalList');
+    // 'houseSaleFilter/{search}' en GET récupère la liste des maisons en vente avec des filtres
+    $router->get('houseSaleFilter/{search}', 'houseController@getHouseSaleFilter');
+    // 'houseRentalFilter/{search}' en GET récupère la liste des maisons en location avec des filtres
+    $router->get('houseRentalFilter/{search}', 'houseController@getHouseRentalFilter');
+});
+
+  
