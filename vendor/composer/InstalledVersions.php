@@ -1,15 +1,5 @@
 <?php
 
-
-
-
-
-
-
-
-
-
-
 namespace Composer;
 
 use Composer\Semver\VersionParser;
@@ -29,7 +19,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '1fc31920bc07248c8d5b77ccf6181ff2b4ffbd2c',
+    'reference' => 'ea84aae07130e3c9a59eeb52db02b9c84f9e3441',
     'name' => 'laravel/lumen',
   ),
   'versions' => 
@@ -377,7 +367,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '1fc31920bc07248c8d5b77ccf6181ff2b4ffbd2c',
+      'reference' => 'ea84aae07130e3c9a59eeb52db02b9c84f9e3441',
     ),
     'laravel/lumen-framework' => 
     array (
@@ -1074,12 +1064,13 @@ private static $installed = array (
     ),
     'tymon/jwt-auth' => 
     array (
-      'pretty_version' => '1.0.2',
-      'version' => '1.0.2.0',
+      'pretty_version' => 'dev-develop',
+      'version' => 'dev-develop',
       'aliases' => 
       array (
+        0 => '1.0.x-dev',
       ),
-      'reference' => 'e588cb719539366c0e2f6017f975379cb73e9680',
+      'reference' => 'fb0cfc8b6bf82ec3ace2eed10f27db0da064d8f9',
     ),
     'vlucas/phpdotenv' => 
     array (
