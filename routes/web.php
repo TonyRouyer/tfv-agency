@@ -20,8 +20,10 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'realEstate' en POST cree un nouveau bien / champs obligatoire : 'referencePublishing', 'houseApartment' , 'saleOrRental' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency'
     $router->post('realEstate', 'realEstateController@createRealEstate');
-    // 'realEstate/{id}' en PUT met a jour le bien a l'id choisie
-    $router->put('realEstate/{id}', 'realEstateController@updateRealEstate');
+    // 'updateRealEstate/{id}' en PUT met a jour le bien a l'id choisie
+    $router->put('updateRealEstate/{id}', 'realEstateController@updateRealEstate');
+    // 'validateRealEstate/{id}' en PUT met a jour le status de l'annonce vers 1 = publier
+    $router->put('validateRealEstate/{id}', 'realEstateController@validateRealEstate');
     // 'archiveRealEstate/{id}' en PUT place le bien au status archivé
     $router->put('archiveRealEstate/{id}', 'realEstateController@deleteRealEstate');
     // realEstate/{id} en GET récupère les infos du bien à l'article sélectionné
@@ -56,7 +58,7 @@ $router->group(['prefix' => ''], function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'appointment' en POST créer un nouveau rendez-vous / champs obligatoire :  'dateTime', 'label', 'id_tfv042119_employee'
     $router->post('appointment', 'appointmentController@createAppointment');
-    // 'archiveAppointment/{id}' en PUT  modifie le rendez-vous à l'id choisit 
+    // 'archiveAppointment/{id}' en PUT  modifie le rendez-vous à l'id choisit
     $router->put('updateAppointment/{id}', 'appointmentController@updateAppointment');
     // 'validateAppointment/{id}' en PUT change le rendez-vous de l'employé à '1' = publié
     $router->put('validateAppointment/{id}', 'appointmentController@validateAppointment');
@@ -80,7 +82,7 @@ $router->group(['prefix' => ''], function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'managementProposal' en POST créer une nouvelle mise en gestion / champs obligatoire :  'type', 'address', 'zip', 'city', 'fullText', 'id_tfv042119_employee'
     $router->post('managementProposal', 'managementProposalController@createManagementProposal');
-    // 'archiveManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit 
+    // 'archiveManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit
     $router->put('updateManagementProposal/{id}', 'managementProposalController@updateManagementProposal');
     // 'validateManagementProposal/{id}' en PUT change la mise en gestion de l'employé à '1' = publié
     $router->put('validateManagementProposal/{id}', 'managementProposalController@validateManagementProposal');
@@ -98,7 +100,11 @@ $router->group(['prefix' => ''], function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'news' en POST créer un nouvelle article / champs obligatoire :  'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
     $router->post('news', 'newsController@createNews');
+
+    // 'updateNews/{id}' en PUT  modifie l'article a l'id choisie
+
     // 'archiveNews/{id}' en PUT  modifie l'article a l'id choisie
+
     $router->put('updateNews/{id}', 'newsController@updateNews');
     // 'validateNews/{id}' en PUT change le statue de l'article a '1' = publié
     $router->put('validateNews/{id}', 'newsController@validateNews');
@@ -116,7 +122,7 @@ $router->group(['prefix' => ''], function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'owner' en POST créer un nouveau propriétaire / champs obligatoire : 'OwnerLastname', 'OwnerFirstname', 'OwnerMail', 'OwnerPhone', 'civility', 'id_tfv042119_management_proposal'
     $router->post('owner', 'ownerController@createOwner');
-    // 'archiveOwner/{id}' en PUT  modifie le propriétaire à l'id choisit 
+    // 'archiveOwner/{id}' en PUT  modifie le propriétaire à l'id choisit
     $router->put('updateOwner/{id}', 'ownerController@updateOwner');
     // 'validateOwner/{id}' en PUT change le propriétaire de la mise en gestion à '1' = publiée
     $router->put('validateOwner/{id}', 'ownerController@validateOwner');
@@ -143,5 +149,14 @@ $router->group(['prefix' => ''], function () use ($router) {
        $router->post('register', 'AuthController@register');
 
        $router->post('login', 'AuthController@login');
+
+       $router->get('profile', 'UserController@profile');
+
+       $router->get('users/{id}', 'UserController@singleUser');
+
+       $router->get('users', 'UserController@allUsers');
+
+       $router->put('update', 'UserController@UpdateUsers');
+
 
     });

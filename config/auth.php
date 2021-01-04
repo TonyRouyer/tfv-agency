@@ -1,5 +1,5 @@
 <?php
-
+//Parametres jwt
 return [
     'defaults' => [
         'guard' => 'api',

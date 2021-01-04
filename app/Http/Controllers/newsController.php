@@ -11,7 +11,6 @@ class newsController extends Controller{
 
     public function createNews(Request $request){
         $news = news::create($request->all());
-
         return response()->json($news, 201);
     }
 
@@ -34,7 +33,7 @@ class newsController extends Controller{
             return response()->json('article non trouvé',404);
         }
     }
-    
+
     public function validateNews($id){
         try{
             $news = news::findOrFail($id);
@@ -58,6 +57,7 @@ class newsController extends Controller{
         $newsList = news::where('id_tfv042119_status', 1)->get();
         return response()->json($newsList, 200);
     }
+    
     public function showNewsListArchive(){
         $newsList = news::where('id_tfv042119_status', 2)->get();
         return response()->json($newsList, 200);
