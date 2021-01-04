@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-// route real estate 
+// route real estate
 $router->group(['prefix' => ''], function () use ($router) {
     // 'realEstate' en POST cree un nouveau bien / champs obligatoire : 'referencePublishing', 'houseApartment' , 'saleOrRental' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency'
     $router->post('realEstate', 'realEstateController@createRealEstate');
@@ -42,7 +42,7 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('houseRentalFilter/{search}', 'houseController@getHouseRentalFilter');
 });
 
-// route apartement 
+// route apartement
 $router->group(['prefix' => ''], function () use ($router) {
     // 'saleApartment'  en GET recupere la liste des appartement en vente sans filtre
     $router->get('saleApartment', 'apartmentController@getApartmentSaleList');
@@ -62,7 +62,11 @@ $router->group(['prefix' => ''], function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'news' en POST cree un nouvelle article / champs obligatoire :  'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
     $router->post('news', 'newsController@createNews');
+<<<<<<< HEAD
     // 'updateNews/{id}' en PUT  modifie l'article a l'id choisie 
+=======
+    // 'archiveNews/{id}' en PUT  modifie l'article a l'id choisie
+>>>>>>> master
     $router->put('updateNews/{id}', 'newsController@updateNews');
     // 'validateNews/{id}' en PUT change le statue de l'article a '1' = publié
     $router->put('validateNews/{id}', 'newsController@validateNews');
@@ -79,5 +83,16 @@ $router->group(['prefix' => ''], function () use ($router) {
 
   // route employee
     $router->post('employee', 'employeeController@createEmployee');
-    
+
     $router->get('employee', 'employeeController@getEmployeeList');
+
+
+
+    // authentification
+    $router->group(['prefix' => ''], function () use ($router) {
+       // Matches "/api/register
+       $router->post('register', 'AuthController@register');
+
+       $router->post('login', 'AuthController@login');
+
+    });
