@@ -2,19 +2,67 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\user;
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+use  App\Models\User;
 
-class userController extends Controller
+class UserController extends Controller
 {
+     /**
+     * Instantiate a new UserController instance.
+     */
 
-
-   public function UpdateUsers($id, Request $request)
-  {
-      $userUpdate = user::findOrFail($id);
-      $userUpdate->update($request->all());
-
-     return response()->json($userUpdate, 200);
+    public function __construct()
+    {
+        $this->middleware('auth');
     }
+
+    public function UpdateUsers(Request $request, $id) //$id, Request $request
+     {
+        $userUpdate= user::findOrFail($id);
+
+        $userUpdate->lastname = $request->input('lastname');
+        $userUpdate->firstname = $request->input('firstname');
+        $userUpdate->mail = $request->input('mail');
+        $userUpdate->password = $request->input('password');
+        $userUpdate->avatar = $request->input('avatar');
+        $userUpdate->save();
+        return response()->json($userUpdate, 200);
+     }
+
+    /**
+     * Get the authenticated User.
+     */
+
+    public function profile()
+    {
+        return response()->json(['user' => Auth::user()], 200);
+    }
+
+    /**
+     * Get all User.
+     */
+
+    public function allUsers()
+    {
+         return response()->json(['users' =>  User::all()], 200);
+    }
+
+    /**
+     * Get one user.
+     */
+
+    public function singleUser($id)
+    {
+        try {
+            $user = User::findOrFail($id);
+
+            return response()->json(['user' => $user], 200);
+
+        } catch (\Exception $e) {
+
+            return response()->json(['message' => 'user not found!'], 404);
+        }
+
+    }
+
 }

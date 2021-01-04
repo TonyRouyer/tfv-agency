@@ -89,4 +89,13 @@ $router->group(['prefix' => ''], function () use ($router) {
 
        $router->post('login', 'AuthController@login');
 
+       $router->get('profile', 'UserController@profile');
+
+       $router->get('users/{id}', 'UserController@singleUser');
+
+       $router->get('users', 'UserController@allUsers');
+
+       $router->put('update', 'UserController@UpdateUsers');
+
+
     });

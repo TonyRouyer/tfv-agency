@@ -9,17 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-  
+
   public function register(Request $request)
   {
     //validate incoming request
     $this->validate($request, [
       'lastname' => 'required|string',
       'firstname' => 'required|string',
-      'mail' => 'required|email|unique:users',
+      'mail' => 'required|email|unique:user',
       'password' => 'required|confirmed',
       'avatar' => 'required',
-      'id_tfv042119_role' => 'required',
+      'id_tfv042119_role' => '',
     ]);
 
     try {
