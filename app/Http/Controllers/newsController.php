@@ -3,10 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\news;
+
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+
 class newsController extends Controller{
+
+    public function __construct()
+    {
+        $this->middleware('role');
+    }
     
 
     public function createNews(Request $request){
