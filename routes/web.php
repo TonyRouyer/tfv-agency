@@ -169,7 +169,7 @@ $router->group(['prefix' => ''], function () use ($router) {
 
        $router->get('users', 'UserController@allUsers');
 
-       $router->put('update', 'UserController@UpdateUsers');
+       $router->put('update/{id}', 'UserController@UpdateUsers');
 
 
     });

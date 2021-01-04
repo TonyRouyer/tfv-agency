@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
-use  App\Models\User;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -18,16 +19,29 @@ class UserController extends Controller
 
     public function UpdateUsers(Request $request, $id) //$id, Request $request
      {
-        $userUpdate= user::findOrFail($id);
 
-        $userUpdate->lastname = $request->input('lastname');
-        $userUpdate->firstname = $request->input('firstname');
-        $userUpdate->mail = $request->input('mail');
-        $userUpdate->password = $request->input('password');
-        $userUpdate->avatar = $request->input('avatar');
-        $userUpdate->save();
-        return response()->json($userUpdate, 200);
-     }
+     if (Auth::check()){
+
+       $user = Auth::user();
+       $user->lastname = $request->input('lastname');
+       $user->firstname = $request->input('firstname');
+       $user->mail = $request->input('mail');
+       $plainPassword = $request->input('password');
+       //on hash le mot de passe
+       $user->password = app('hash')->make($plainPassword);
+       $user->avatar = $request->input('avatar');
+       $user->id_tfv042119_role = $request->input('id_tfv042119_role');
+
+       $user->save();
+
+        return response()->json($user, 200);
+        return response()->json(['message' => 'user not found!'], 404);
+
+                      }
+
+      }
+
+
 
     /**
      * Get the authenticated User.
