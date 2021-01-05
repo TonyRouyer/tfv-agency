@@ -59,22 +59,27 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'agency' en PUT cree une nouvelle agence dans la bdd / champs obligatoire : 'name' , 'address' , 'city' , 'zip'
     $router->put('agency', 'agencyController@createRealEstate');
 
-// route news
+
+
+
+
+  // route news
 $router->group(['prefix' => ''], function () use ($router) {
+    
     // 'news' en POST cree un nouvelle article / champs obligatoire :  'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
-    $router->post('news', 'newsController@createNews');
+    $router->post('news', 'newsControllerAuthCreate@createNews');
     // 'updateNews/{id}' en PUT  modifie l'article a l'id choisie 
-    $router->put('updateNews/{id}', 'newsController@updateNews');
-    // 'validateNews/{id}' en PUT change le statue de l'article a '1' = publié
-    $router->put('validateNews/{id}', 'newsController@validateNews');
+    $router->put('updateNews/{id}', 'newsControllerAuth@updateNews');
     // 'archiveNews/{id}' en PUT place l'article definie par l'id au statue archivé
-    $router->put('archiveNews/{id}', 'newsController@deleteNews');
+    $router->put('archiveNews/{id}', 'newsControllerAuth@deleteNews');
+    // 'allNewsArchive' en GET affiche la liste des article archivés
+    $router->get('allNewsArchive', 'newsControllerAuth@showNewsListArchive');
+    // 'validateNews/{id}' en PUT change le statue de l'article a '1' = publié
+    $router->put('validateNews/{id}', 'newsControllerAuthValidate@validateNews');
     // 'allNewsPublished/{id}' en GET affiche l'article a l'id choisie
     $router->get('news/{id}', 'newsController@showNews');
     // 'allNewsPublished' en GET affiche la liste des article publiés
     $router->get('allNewsPublished', 'newsController@showNewsListPublished');
-    // 'allNewsArchive' en GET affiche la liste des article archivés
-    $router->get('allNewsArchive', 'newsController@showNewsListArchive');
   });
 
 
