@@ -21,14 +21,16 @@ $router->get('/', function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'realEstate' en POST cree un nouveau bien / champs obligatoire : 'referencePublishing', 'houseApartment' , 'saleOrRental' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency'
     $router->post('realEstate', 'realEstateController@createRealEstate');
-    // 'updateRealEstate/{id}' en PUT met a jour le bien a l'id choisie
-    $router->put('updateRealEstate/{id}', 'realEstateController@updateRealEstate');
     // 'validateRealEstate/{id}' en PUT met a jour le status de l'annonce vers 1 = publier
-    $router->put('validateRealEstate/{id}', 'realEstateController@validateRealEstate');
+    $router->put('realestateControllerValidate/{id}', 'realestateControllerValidate@validateRealEstate');
     // 'archiveRealEstate/{id}' en PUT place le bien au status archivé
     $router->put('archiveRealEstate/{id}', 'realEstateController@deleteRealEstate');
     // realEstate/{id} en GET recupere les infos du bien a l'article selectionné
-    $router->get('realEstate/{id}', 'realEstateController@showRealEstateDetail');
+    $router->get('realEstate/{id}', 'realestateControllerShowDetail@showRealEstateDetail');
+
+
+    // 'updateRealEstate/{id}' en PUT met a jour le bien a l'id choisie
+    $router->put('updateRealEstate/{id}', 'realestateControllerShowDetail@updateRealEstate');
   });
 
 // route house
@@ -59,22 +61,27 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'agency' en PUT cree une nouvelle agence dans la bdd / champs obligatoire : 'name' , 'address' , 'city' , 'zip'
     $router->put('agency', 'agencyController@createRealEstate');
 
-// route news
+
+
+
+
+  // route news
 $router->group(['prefix' => ''], function () use ($router) {
+
     // 'news' en POST cree un nouvelle article / champs obligatoire :  'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
-    $router->post('news', 'newsController@createNews');
+    $router->post('news', 'newsControllerAuthCreate@createNews');
     // 'updateNews/{id}' en PUT  modifie l'article a l'id choisie
-    $router->put('updateNews/{id}', 'newsController@updateNews');
-    // 'validateNews/{id}' en PUT change le statue de l'article a '1' = publié
-    $router->put('validateNews/{id}', 'newsController@validateNews');
+    $router->put('updateNews/{id}', 'newsControllerAuth@updateNews');
     // 'archiveNews/{id}' en PUT place l'article definie par l'id au statue archivé
-    $router->put('archiveNews/{id}', 'newsController@deleteNews');
+    $router->put('archiveNews/{id}', 'newsControllerAuth@deleteNews');
+    // 'allNewsArchive' en GET affiche la liste des article archivés
+    $router->get('allNewsArchive', 'newsControllerAuth@showNewsListArchive');
+    // 'validateNews/{id}' en PUT change le statue de l'article a '1' = publié
+    $router->put('validateNews/{id}', 'newsControllerAuthValidate@validateNews');
     // 'allNewsPublished/{id}' en GET affiche l'article a l'id choisie
     $router->get('news/{id}', 'newsController@showNews');
     // 'allNewsPublished' en GET affiche la liste des article publiés
     $router->get('allNewsPublished', 'newsController@showNewsListPublished');
-    // 'allNewsArchive' en GET affiche la liste des article archivés
-    $router->get('allNewsArchive', 'newsController@showNewsListArchive');
   });
 
 

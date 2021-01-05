@@ -29,7 +29,7 @@ class AuthController extends Controller
       $user->firstname = $request->input('firstname');
       $user->mail = $request->input('mail');
       $plainPassword = $request->input('password');
-      //on hash le mot de passe
+      //on hash le mot de passe avec la make méthode
       $user->password = app('hash')->make($plainPassword);
       $user->avatar = $request->input('avatar');
       $user->id_tfv042119_role = 6;

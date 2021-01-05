@@ -80,6 +80,8 @@ $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
     'role' => App\Http\Middleware\RoleMiddleware::class,
     'roleUsers' => App\Http\Middleware\RoleUsers::class,
+    'roleDeux' => App\Http\Middleware\RoleMiddlewareDeux::class,
+    'roleTrois' => App\Http\Middleware\RoleMiddlewareTrois::class,
 ]);
 
 /*

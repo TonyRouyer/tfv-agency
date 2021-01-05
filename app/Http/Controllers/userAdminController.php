@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class UserController extends Controller
+
+class userAdminController extends Controller
 {
      /**
      * Instantiate a new UserController instance.
@@ -14,9 +16,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
         $this->middleware('roleUsers');
-
     }
 
     /**
@@ -41,6 +41,6 @@ class UserController extends Controller
         }
 
     }
-    
+
 
 }

@@ -17,8 +17,13 @@ class UserController extends Controller
         $this->middleware('auth');
   
     }
+<<<<<<< HEAD
 
     public function UpdateUsers(Request $request)
+=======
+    //$id, Request $request
+    public function UpdateUsers(Request $request, $id) 
+>>>>>>> master
      {
 
         if (Auth::check()){
