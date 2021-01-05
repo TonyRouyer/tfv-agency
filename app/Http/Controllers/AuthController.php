@@ -18,7 +18,7 @@ class AuthController extends Controller
       'firstname' => 'required|string',
       'mail' => 'required|email|unique:user',
       'password' => 'required|confirmed',
-      'avatar' => 'required'
+      'avatar' => 'required',
     ]);
 
     try {
@@ -41,7 +41,7 @@ class AuthController extends Controller
 
     } catch (\Exception $e) {
       //return error message
-      return response()->json(['message' => 'User Registration Failed!'], 409);
+      return response()->json(['message' => 'Inscription non aboutie'], 409);
     }
 
   }

@@ -63,7 +63,7 @@ $router->group(['prefix' => ''], function () use ($router) {
 $router->group(['prefix' => ''], function () use ($router) {
     // 'news' en POST cree un nouvelle article / champs obligatoire :  'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
     $router->post('news', 'newsController@createNews');
-    // 'updateNews/{id}' en PUT  modifie l'article a l'id choisie 
+    // 'updateNews/{id}' en PUT  modifie l'article a l'id choisie
     $router->put('updateNews/{id}', 'newsController@updateNews');
     // 'validateNews/{id}' en PUT change le statue de l'article a '1' = publié
     $router->put('validateNews/{id}', 'newsController@validateNews');
@@ -79,17 +79,6 @@ $router->group(['prefix' => ''], function () use ($router) {
 
 
 
-
-
-
-
-  // route employee
-    $router->post('employee', 'employeeController@createEmployee');
-
-    $router->get('employee', 'employeeController@getEmployeeList');
-
-
-
     // authentification
     $router->group(['prefix' => ''], function () use ($router) {
        // Matches "/api/register
@@ -99,11 +88,11 @@ $router->group(['prefix' => ''], function () use ($router) {
 
        $router->get('profile', 'UserController@profile');
 
-       $router->get('users/{id}', 'UserController@singleUser');
+       $router->get('users/{id}', 'userAdminController@singleUser');
 
-       $router->get('users', 'UserController@allUsers');
+       $router->get('users', 'userAdminController@allUsers');
 
-       $router->put('update/{id}', 'UserController@UpdateUsers');
+       $router->put('update', 'UserController@UpdateUsers');
 
 
     });

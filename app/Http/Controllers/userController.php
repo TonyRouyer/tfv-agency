@@ -15,13 +15,17 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+  
     }
 
-    public function UpdateUsers(Request $request, $id) //$id, Request $request
+    public function UpdateUsers(Request $request)
      {
 
         if (Auth::check()){
             //permet de verifier si l'utilisateur est authentifié
+
+            //$userCorrespond = auth()->user()->id;
+
         $user = Auth::user();
         $user->lastname = $request->input('lastname');
         $user->firstname = $request->input('firstname');
@@ -30,17 +34,15 @@ class UserController extends Controller
         //on hash le mot de passe
         $user->password = app('hash')->make($plainPassword);
         $user->avatar = $request->input('avatar');
-        $user->id_tfv042119_role = $request->input('id_tfv042119_role');
+        $user->id_tfv042119_role = 6;
 
         $user->save();
 
-            return response()->json($user, 200);
-            return response()->json(['message' => 'user not found!'], 404);
+               return response()->json($user, 200);
 
         }
 
     }
-
 
 
     /**
