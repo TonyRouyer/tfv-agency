@@ -15,8 +15,8 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
-
-    public function UpdateUsers(Request $request, $id) //$id, Request $request
+    //$id, Request $request
+    public function UpdateUsers(Request $request, $id) 
      {
         $userUpdate= user::findOrFail($id);
 

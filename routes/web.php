@@ -26,7 +26,7 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->put('validateRealEstate/{id}', 'realEstateController@validateRealEstate');
     // 'archiveRealEstate/{id}' en PUT place le bien au status archivé
     $router->put('archiveRealEstate/{id}', 'realEstateController@deleteRealEstate');
-    // realEstate/{id} en GET récupère les infos du bien à l'article sélectionné
+    // realEstate/{id} en GET recupere les infos du bien a l'article selectionné
     $router->get('realEstate/{id}', 'realEstateController@showRealEstateDetail');
   });
 

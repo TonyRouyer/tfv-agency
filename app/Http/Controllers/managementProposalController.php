@@ -8,7 +8,39 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class managementProposalController extends Controller{
     
-
+    public function register(Request $request)
+    {
+      //validate incoming request
+      $this->validate($request, [
+        'type' => 'required|boolean',
+        'address' => 'required|string',
+        'zip' => 'required|string',
+        'city' => 'required|string',
+        'fullTExt' => 'required|string',
+        ]);
+  
+      try {
+        //on instancie
+        $managementProposal = new ManagementProposal;
+        //stock et récupére les données des input
+        $managementProposal->type = $request->input('type');
+        $managementProposal->address = $request->input('address');
+        $managementProposal->zip = $request->input('zip');
+        $managementProposal->city = $request->input('city');
+        $managementProposal->fullText = $request->input('fullText');
+        // sauvegarde les données (les envoies)
+        $managementProposal->save();
+  
+        //return successful response
+        return response()->json(['managementProposal' => $managementProposal, 'message' => 'CREATED'], 201);
+  
+      } catch (\Exception $e) {
+        //return error message
+        return response()->json(['message' => 'Error Registration Failed!'], 409);
+      }
+  
+    }
+  
     public function createManagementProposal(Request $request){
         $managementProposal = managementProposal::create($request->all());
 
