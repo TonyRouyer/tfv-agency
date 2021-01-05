@@ -18,8 +18,7 @@ class AuthController extends Controller
       'firstname' => 'required|string',
       'mail' => 'required|email|unique:user',
       'password' => 'required|confirmed',
-      'avatar' => 'required',
-      'id_tfv042119_role' => '',
+      'avatar' => 'required'
     ]);
 
     try {
@@ -33,7 +32,7 @@ class AuthController extends Controller
       //on hash le mot de passe avec la make méthode
       $user->password = app('hash')->make($plainPassword);
       $user->avatar = $request->input('avatar');
-      $user->id_tfv042119_role = $request->input('id_tfv042119_role');
+      $user->id_tfv042119_role = 6;
       // sauvegarde les données (les envoies)
       $user->save();
 
