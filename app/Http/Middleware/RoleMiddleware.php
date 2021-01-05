@@ -1,8 +1,9 @@
 <?php
 namespace App\Http\Middleware;
 use Closure;
-use  App\Models\User;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use App\Models\User;
+
 class RoleMiddleware { 
 	/**
     * Handle the incoming request. 
@@ -12,11 +13,22 @@ class RoleMiddleware {
     * @param string $role 
     * @return mixed 
     */ 
-    public function handle($request, Closure $next, $role = "")
+    
+    public function handle($request, Closure $next)
     {
-    	if (Auth::id_tfv042119_role()  1 {
+        $role = auth()->user()->id_tfv042119_role ;
+
+    	if ($role == '1') {
+            return $next($request);
+        }else if ($role == '2') {
+            return $next($request);
+        }else if ($role == '4'){
             return $next($request);
         }
-        return response('Unauthorized.', 401);
+
+
+            return response('Unauthorized.', 401);
+        
+        
 	}
 }

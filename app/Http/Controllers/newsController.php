@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\news;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 

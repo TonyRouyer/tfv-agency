@@ -14,6 +14,7 @@
 */
 $router->get('/', function () use ($router) {
     return $router->app->version();
+
 });
 
 // route real estate
@@ -75,6 +76,8 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'allNewsArchive' en GET affiche la liste des article archivés
     $router->get('allNewsArchive', 'newsController@showNewsListArchive');
   });
+
+
 
 
 

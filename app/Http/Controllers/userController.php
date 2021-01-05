@@ -20,26 +20,26 @@ class UserController extends Controller
     public function UpdateUsers(Request $request, $id) //$id, Request $request
      {
 
-     if (Auth::check()){
+        if (Auth::check()){
+            //permet de verifier si l'utilisateur est authentifié
+        $user = Auth::user();
+        $user->lastname = $request->input('lastname');
+        $user->firstname = $request->input('firstname');
+        $user->mail = $request->input('mail');
+        $plainPassword = $request->input('password');
+        //on hash le mot de passe
+        $user->password = app('hash')->make($plainPassword);
+        $user->avatar = $request->input('avatar');
+        $user->id_tfv042119_role = $request->input('id_tfv042119_role');
 
-       $user = Auth::user();
-       $user->lastname = $request->input('lastname');
-       $user->firstname = $request->input('firstname');
-       $user->mail = $request->input('mail');
-       $plainPassword = $request->input('password');
-       //on hash le mot de passe
-       $user->password = app('hash')->make($plainPassword);
-       $user->avatar = $request->input('avatar');
-       $user->id_tfv042119_role = $request->input('id_tfv042119_role');
+        $user->save();
 
-       $user->save();
+            return response()->json($user, 200);
+            return response()->json(['message' => 'user not found!'], 404);
 
-        return response()->json($user, 200);
-        return response()->json(['message' => 'user not found!'], 404);
+        }
 
-                      }
-
-      }
+    }
 
 
 
