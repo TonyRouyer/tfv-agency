@@ -111,31 +111,38 @@ $router->group(['prefix' => ''], function () use ($router) {
   });
 
 
-  // route employee
-    $router->post('employee', 'employeeController@createEmployee');
 
-    $router->get('employee', 'employeeController@getEmployeeList');
+  //ROUTE SIMPLE UTILISATEUR
 
-
-
-  // authentification
   $router->group(['prefix' => ''], function () use ($router) {
-  // Matches "/api/register
+
   $router->post('register', 'AuthController@register');
 
   $router->post('login', 'AuthController@login');
 
-  $router->get('profile', 'UserController@profile');
+  $router->get('profile', [
+  'middleware' => 'auth',
+  'uses' => 'UserController@profile'
+    ]);
+  $router->put('update', [
+  'middleware' => 'auth',
+  'uses' => 'UserController@UpdateUsers'
+    ]);
+});
 
-       $router->put('update', 'UserController@UpdateUsers');
+//ROUTE ADMIN
+  $router->group(['prefix' => 'adm'], function () use ($router) {
 
-
-              $router->get('users/{id}', 'userAdminController@singleUser');
-
-              $router->get('users', 'userAdminController@allUsers');
-
-              $router->post('registerEmployee', 'userAdminController@register');
-
-
-
-    });
+    $router->post('register', [
+    'middleware' => 'roleUsers',
+    'uses' => 'UserController@registerEmployee'
+      ]);
+    $router->get('users', [
+    'middleware' => 'roleUsers',
+    'uses' => 'UserController@allUsers'
+      ]);
+    $router->get('users/{id}', [
+    'middleware' => 'roleUsers',
+    'uses' => 'UserController@singleUser'
+      ]);
+  });
