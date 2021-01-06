@@ -114,3 +114,11 @@ $router->group(['prefix' => ''], function () use ($router) {
 
 
     });
+
+    
+
+    $router->group(['prefix' => ''], function () use ($router) {
+        $router->get('appointement', 'appointementController@UpdateAppointement');
+ 
+ 
+     });

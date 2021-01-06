@@ -81,6 +81,7 @@ $app->routeMiddleware([
     'role' => App\Http\Middleware\RoleMiddleware::class,
     'roleDeux' => App\Http\Middleware\RoleMiddlewareDeux::class,
     'roleTrois' => App\Http\Middleware\RoleMiddlewareTrois::class,
+    'RoleMiddlewareEmployee'  => App\Http\Middleware\RoleMiddlewareTrois::class,
 ]);
 
 /*
