@@ -19,14 +19,50 @@ class userAdminController extends Controller
         $this->middleware('roleUsers');
     }
 
-    /**
-     * Get all User.
-     */
+    public function register(Request $request)
+    {
+      //validate incoming request
+      $this->validate($request, [
+        'lastname' => 'required|string',
+        'firstname' => 'required|string',
+        'mail' => 'required|email|unique:user',
+        'password' => 'required|confirmed',
+        'avatar' => 'required',
+        'id_tfv042119_role' => 'required',
+      ]);
+
+      try {
+        //on instancie
+        $user = new User;
+        //stock et récupére les données des input
+        $user->lastname = $request->input('lastname');
+        $user->firstname = $request->input('firstname');
+        $user->mail = $request->input('mail');
+        $plainPassword = $request->input('password');
+        //on hash le mot de passe avec la make méthode
+        $user->password = app('hash')->make($plainPassword);
+        $user->avatar = $request->input('avatar');
+        $user->id_tfv042119_role = $request->input('id_tfv042119_role');
+        // sauvegarde les données (les envoies)
+        $user->save();
+
+        //return successful response
+        return response()->json(['user' => $user, 'message' => 'CREATED'], 201);
+
+      } catch (\Exception $e) {
+        //return error message
+        return response()->json(['message' => 'Inscription non aboutie'], 409);
+      }
+
+    }
+
+
 
     public function allUsers()
     {
          return response()->json(['users' =>  User::all()], 200);
     }
+
 
     public function singleUser($id)
     {

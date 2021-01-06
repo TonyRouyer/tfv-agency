@@ -15,22 +15,16 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-  
+
     }
-<<<<<<< HEAD
 
     public function UpdateUsers(Request $request)
-=======
-    //$id, Request $request
-    public function UpdateUsers(Request $request, $id) 
->>>>>>> master
+
      {
 
         if (Auth::check()){
             //permet de verifier si l'utilisateur est authentifié
-
-            //$userCorrespond = auth()->user()->id;
-
+            
         $user = Auth::user();
         $user->lastname = $request->input('lastname');
         $user->firstname = $request->input('firstname');

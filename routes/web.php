@@ -95,11 +95,15 @@ $router->group(['prefix' => ''], function () use ($router) {
 
        $router->get('profile', 'UserController@profile');
 
-       $router->get('users/{id}', 'userAdminController@singleUser');
-
-       $router->get('users', 'userAdminController@allUsers');
-
        $router->put('update', 'UserController@UpdateUsers');
+
+
+              $router->get('users/{id}', 'userAdminController@singleUser');
+
+              $router->get('users', 'userAdminController@allUsers');
+
+              $router->post('registerEmployee', 'userAdminController@register');
+
 
 
     });
