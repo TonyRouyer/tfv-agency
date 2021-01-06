@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use App\Models\User;
 
 class Authenticate
 {
@@ -23,6 +24,7 @@ class Authenticate
     public function __construct(Auth $auth)
     {
         $this->auth = $auth;
+
     }
 
     /**

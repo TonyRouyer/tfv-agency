@@ -6,14 +6,14 @@ use App\Models\User;
 
 class RoleMiddlewareAgence { 
 	/**
-    * Handle the incoming request. 
-    * 
-    * @param \Illuminate\Http\Request $request 
-    * @param \Closure $next 
-    * @param string $role 
-    * @return mixed 
-    */ 
-    
+    * Handle the incoming request.
+    *
+    * @param \Illuminate\Http\Request $request
+    * @param \Closure $next
+    * @param string $role
+    * @return mixed
+    */
+
     public function handle($request, Closure $next){
         if ( auth()->user() != null ){
             $role = auth()->user()->id_tfv042119_role ;
@@ -26,6 +26,29 @@ class RoleMiddlewareAgence {
         else{
             return response('Unauthorized.', 401);
         }
-        
+
 	}
 }
+  class RoleUsers {
+
+    /**
+    * Handle the incoming request.
+    *
+    * @param \Illuminate\Http\Request $request
+    * @param \Closure $next
+    * @param string $role
+    * @return mixed
+    */
+
+    public function handle($request, Closure $next)
+    {
+      $roleUsers = auth()->user()->id_tfv042119_role ;
+      return dd($roleUsers);
+      if ($roleUsers == '1') {
+        return $next($request);
+      }
+      return response('Unauthorized.', 401);
+    }
+
+
+  }
