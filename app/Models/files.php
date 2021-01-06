@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ownerFiles extends Model
+class files extends Model
 {
-    protected $table = 'ownerFiles';
+    protected $table = 'files';
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -14,7 +14,7 @@ class ownerFiles extends Model
      * @var array
      */
     protected $fillable = [
-        'documentName' , 'title' , 'id_tfv_042119_owner'
+        'documentName' , 'title' , 'id_tfv_042119_user'
     ];
 
     /**
