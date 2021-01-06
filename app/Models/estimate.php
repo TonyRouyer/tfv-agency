@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class owner extends Model
+class estimate extends Model
 {
-    protected $table = 'owner';
+    protected $table = 'estimate';
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -14,7 +14,7 @@ class owner extends Model
      * @var array
      */
     protected $fillable = [
-        'ownerLastname' , 'ownerFirstname' , 'ownerMail' , 'ownerPhone' , 'civility'
+        'price' , 'address' , 'zip', 'city', 'area'
     ];
 
     /**

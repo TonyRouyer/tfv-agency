@@ -10,6 +10,8 @@ class managementProposalControllerAuthCreate extends Controller{
     public function __construct(){
         $this->middleware('role');
     }
+
+    // Création de la mise en gestion
     public function createManagementProposal(Request $request){
         $managementProposal = managementProposal::create($request->all());
         return response()->json($managementProposal, 201);

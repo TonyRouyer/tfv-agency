@@ -11,10 +11,11 @@ class managementProposalControllerAuthValidate extends Controller{
         $this->middleware('roleTrois');
     }
 
+    // Validation pour la publication de la mise en gestion
     public function validateManagementProposal($id){
         try{
             $managementProposal = managementProposal::findOrFail($id);
-            $managementProposal->update(['id_tfv042119_employee'=> 1]);
+            $managementProposal->update(['id_tfv042119_user'=> 1]);
             return response()->json('mise en gestion a été publiée',200);
         }catch(ModelNotFoundException $e){
             return response()->json('mise en gestion non trouvée',404);

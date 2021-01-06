@@ -4,7 +4,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use App\Models\User;
 
-class RoleMiddlewareDeux { 
+class RoleMiddlewareResponsable { 
 	/**
     * Handle the incoming request. 
     * 
