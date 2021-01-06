@@ -14,7 +14,7 @@ class appointment extends Model
      * @var array
      */
     protected $fillable = [
-        'dateTime' , 'label' , 'id_tfv042119_employee'
+        'dateTime' , 'label' , 'id_tfv042119_user'
     ];
 
     /**

@@ -4,7 +4,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use App\Models\User;
 
-class RoleMiddleware { 
+class RoleMiddlewareValidateur { 
 	/**
     * Handle the incoming request. 
     * 
@@ -17,11 +17,11 @@ class RoleMiddleware {
     public function handle($request, Closure $next){
         if ( auth()->user() != null ){
             $role = auth()->user()->id_tfv042119_role ;
-            if ($role == '1' || $role == '2' || $role == '3' || $role == '4' || $role == '5') {
+            if ($role == '1' || $role == '2' || $role == '5') {
                 return $next($request);
             }else {
                 return response('Unauthorized.', 401);
-            }
+            }  
         }
         else{
             return response('Unauthorized.', 401);
