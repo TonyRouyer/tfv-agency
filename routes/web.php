@@ -15,7 +15,7 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
  // relation avec la table user
-    return $router->belongstomany('App\User', 'id_tfv042119_user');
+    return $router->app->hasOne('App\User', 'id_tfv042119_user');
 });
 
 //  ROUTE REAL ESTATE
@@ -130,23 +130,30 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'apartmentRentalFilter/{search}' en GET récupère la liste des appartements en vente avec des filtres
     $router->get('apartmentRentalFilter/{search}', 'apartmentController@getApartmentRentalFilter');
   });
-// ROUTE AGENCY
+    // ROUTE AGENCY
     // 'agency' en PUT créer une nouvelle agence dans la bdd / champs obligatoire : 'name' , 'address' , 'city' , 'zip'
     $router->put('agency', [
         'middleware' => 'roleResponsable',
         'uses' => 'agencyController@createRealEstate'
     ]);
-// ROUTE MANAGEMENTPROPOSAL
+  // ROUTE MANAGEMENTPROPOSAL
 $router->group(['prefix' => ''], function () use ($router) {
   // 'managementProposal/{id}' en GET affiche la mise en gestion à l'id choisit
   $router->get('managementProposal/{id}', 'managementProposalController@showManagementProposal');
   // 'allManagementProposalPublished' en GET affiche la liste des mises en gestion publiée
   $router->get('allManagementProposalPublished', 'managementProposalController@showManagementProposalListPublished');
-  // 'managementProposal' en POST créer un nouvelle mise en gestion / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
+  // 'managementProposal' en POST créer un nouvelle mise en gestion du propriétaire / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
   $router->post('proposalManagement', [
       'middleware' => 'roleUsers',
-      'uses' => 'managementProposalController@createManagementProposal'
-  ]);
+      'uses' => 'managementProposalController@createManagementProposal'])
+      ->where('owner', 1)
+      ->get();
+  // 'managementProposal' en POST créer un nouvelle mise en gestion du locataire / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
+  $router->post('proposalManagement', [
+    'middleware' => 'roleUsers',
+    'uses' => 'managementProposalController@createManagementProposal'])
+    ->where('rental', 1)
+    ->get();
   // 'updateManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit
   $router->put('updateManagementProposal/{id}', [
       'middleware' => 'roleResponsable',
