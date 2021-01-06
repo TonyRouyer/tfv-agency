@@ -8,13 +8,14 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class appointmentController extends Controller{
     
-
+// Création d'un rendez-vous
     public function createAppointment(Request $request){
         $appointment = appointment::create($request->all());
 
         return response()->json($appointment, 201);
     }
 
+    // Modifier un rendez-vous
     public function updateAppointment($id, Request $request){
         try{
             $appointment = appointment::findOrFail($id);

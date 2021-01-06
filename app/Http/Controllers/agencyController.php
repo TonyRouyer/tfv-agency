@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class agencyController extends Controller
 {
     
-
+// Création de l'offre
     public function createRealEstate(Request $request)
     {
         $agency = agency::create($request->all());
