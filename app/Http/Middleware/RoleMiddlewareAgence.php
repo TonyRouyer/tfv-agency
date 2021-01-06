@@ -4,7 +4,11 @@ use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use App\Models\User;
 
+<<<<<<< HEAD:app/Http/Middleware/RoleMiddleware.php
 class RoleMiddleware {
+=======
+class RoleMiddlewareAgence { 
+>>>>>>> master:app/Http/Middleware/RoleMiddlewareAgence.php
 	/**
     * Handle the incoming request.
     *

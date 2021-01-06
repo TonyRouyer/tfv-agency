@@ -14,7 +14,7 @@ class managementProposal extends model
      * @var array
      */
     protected $fillable = [
-        'type' , 'address' , 'zip' , 'city' , 'fullText', 'id_tfv_042119_employee' , 'id_tfv_042119_owner' , 'id_tfv_042119_rental'
+        'type' , 'address' , 'zip' , 'city' , 'fullText', 'id_tfv_042119_user'
     ];
 
     /**
