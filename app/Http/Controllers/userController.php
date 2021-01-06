@@ -11,10 +11,15 @@ class UserController extends Controller
 {
 
 //Update de l'utilisateur en se moment connecté en vérifiant le token (que le token lui apartienne bien)
+
+/**
+* Function pour update l'utilisateur
+* $user = @var int, @var string
+*
+*
+*/
     public function UpdateUsers(Request $request)
-
      {
-
         if (Auth::check()){
             //permet de verifier si l'utilisateur est authentifié
 
@@ -31,11 +36,8 @@ class UserController extends Controller
         $user->save();
 
                return response()->json($user, 200);
-
         }
-
     }
-
 
 //permet de récupérer le profil d'un utilisateur en fonction de son token
     public function profile()
@@ -43,6 +45,12 @@ class UserController extends Controller
         return response()->json(['user' => Auth::user()], 200);
     }
 
+
+/*
+*
+* PARTIE ADMIN
+*
+*/
 
 
 //insertion d'un employer seulement par l'admin ou par le chef d'agence grace au middleware
@@ -72,7 +80,6 @@ class UserController extends Controller
         $user->id_tfv042119_role = $request->input('id_tfv042119_role');
         // sauvegarde les données (les envoies)
         $user->save();
-
         //return successful response
         return response()->json(['user' => $user, 'message' => 'CREATED'], 201);
 
@@ -80,9 +87,7 @@ class UserController extends Controller
         //return error message
         return response()->json(['message' => 'Inscription non aboutie'], 409);
       }
-
     }
-
 
 //permet de récupérer la liste de tout les utlisateurs en fonction du token
     public function allUsers()

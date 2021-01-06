@@ -106,7 +106,7 @@ class managementProposalController extends Controller{
 
 
     public function __construct(){
-        $this->middleware('roleDeux');
+        $this->middleware('roleResponsable');
     }
 
     // Création de la mise en gestion
@@ -148,7 +148,7 @@ class managementProposalController extends Controller{
 
 
     public function __construct(){
-        $this->middleware('role');
+        $this->middleware('roleAgence');
     }
 
     // Création de la mise en gestion
@@ -163,7 +163,7 @@ class managementProposalController extends Controller{
 
 
     public function __construct(){
-        $this->middleware('roleTrois');
+        $this->middleware('roleValidateur');
     }
 
     // Validation pour la publication de la mise en gestion

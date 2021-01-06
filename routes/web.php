@@ -14,12 +14,14 @@
 */
 $router->get('/', function () use ($router) {
     return $router->app->version();
-
+ // relation avec la table user
+    return $router->belongstomany('App\User', 'id_tfv042119_user');
 });
 
 //  ROUTE REAL ESTATE
 $router->group(['prefix' => ''], function () use ($router) {
     // 'realEstate' en POST créer un nouveau bien / champs obligatoire : 'referencePublishing', 'houseApartment' , 'saleOrRental' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency'
+    // uses signifie "utilise"
     $router->post('realEstate', [
         'middleware' => 'roleResponsable',
         'uses' => 'realEstateController@createRealEstate'
@@ -52,6 +54,7 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'allNewsPublished' en GET affiche la liste des articles publiés
     $router->get('allNewsPublished', 'newsController@showNewsListPublished');
     // 'news' en POST créer un nouvelle article / champs obligatoire : 'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
+    // uses signifie "utilise"
     $router->post('news', [
         'middleware' => 'roleUsers',
         'uses' => 'newsController@createNews'
@@ -133,7 +136,39 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleResponsable',
         'uses' => 'agencyController@createRealEstate'
     ]);
-
+// ROUTE MANAGEMENTPROPOSAL
+$router->group(['prefix' => ''], function () use ($router) {
+  // 'managementProposal/{id}' en GET affiche la mise en gestion à l'id choisit
+  $router->get('managementProposal/{id}', 'managementProposalController@showManagementProposal');
+  // 'allManagementProposalPublished' en GET affiche la liste des mises en gestion publiée
+  $router->get('allManagementProposalPublished', 'managementProposalController@showManagementProposalListPublished');
+  // 'managementProposal' en POST créer un nouvelle mise en gestion / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
+  $router->post('proposalManagement', [
+      'middleware' => 'roleUsers',
+      'uses' => 'managementProposalController@createManagementProposal'
+  ]);
+  // 'updateManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit
+  $router->put('updateManagementProposal/{id}', [
+      'middleware' => 'roleResponsable',
+      'uses' => 'managementProposalController@updateManagementProposal'
+  ]);
+  // 'archiveManagementProposal/{id}' en PUT place la mise en gestion définit par l'id au user archivée
+  $router->put('archiveManagementProposal/{id}', [
+      'middleware' => 'roleResponsable',
+      'uses' => 'managementProposalController@deleteManagementProposal'
+  ]);
+  // 'allManagementProposalArchive' en GET affiche la liste des mises en gestion archivée
+  $router->get('allProposalManagementArchive', [
+      'middleware' => 'roleResponsable',
+      'uses' => 'managementProposalController@showManagementProposalListArchive'
+  ]);
+  //  validateManagementProposal en PUT valide la mise en gestion à l'id choisit
+  $router->put('validateManagementProposal/{id}', [
+      'middleware' => 'roleValidateur',
+      'uses' => 'managementProposalController@validateManagementProposal'
+  ]);
+ 
+});
 
 
 
@@ -164,22 +199,4 @@ $router->group(['prefix' => ''], function () use ($router) {
   $router->get('estimateList', 'estimateController@estmateList');
   // 'estimateDelete' en PUT efface l'estimation
   $router->put('deleteEstimate/{id}', 'estimateController@deleteEstimate');
-});
-
-// route managementProposal
-$router->group(['prefix' => ''], function () use ($router) {
-  // 'managementProposal' en POST créer un nouvelle mise en gestion / champs obligatoire : 'type', 'address' , 'fullText' , 'zip' , 'city' , 'fullText', 'id_tfv042119_user'
-  $router->post('managementProposal', 'managementProposalControllerAuthCreate@createManagementProposal');
-  // 'updateManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit
-  $router->put('updateManagementProposal/{id}', 'managementProposalControllerAuth@updateManagementProposal');
-  // 'archiveManagementProposal/{id}' en PUT place la mise en gestion définit par l'id au user archivé
-  $router->put('archiveManagementProposal/{id}', 'managementProposalControllerAuth@deleteManagementProposal');
-  // 'allManagementProposalArchive' en GET affiche la liste des mises en gestion archivées
-  $router->get('allManagementProposalArchive', 'managementProposalControllerAuth@showManagementProposalListArchive');
-  // 'validateManagementProposal/{id}' en PUT change le user de la mise en gestion à '1' = publié
-  $router->put('validateManagementProposal/{id}', 'managementProposalControllerAuthValidate@validateManagementProposal');
-  // 'allManagementProposalPublished/{id}' en GET affiche la mise en gestion à l'id choisit
-  $router->get('managementProposal/{id}', 'managementProposalController@showManagementProposal');
-  // 'allManagementProposalPublished' en GET affiche la liste des mises en gestion publiées
-  $router->get('allManagementProposalPublished', 'managementProposalController@showManagementProposalListPublished');
 });
