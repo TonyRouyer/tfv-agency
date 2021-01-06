@@ -26,26 +26,29 @@ class appointmentController extends Controller{
         }
     }
 
+    // Mettre le rendez-vous en archive
     public function deleteAppointment($id){
         try{
             $appointment = appointment::findOrFail($id);
-            $appointment->update(['id_tfv042119_employee'=> 2]);
+            $appointment->update(['id_tfv042119_user'=> 2]);
             return response()->json('rendez-vous a été archivé',200);
         }catch(ModelNotFoundException $e){
             return response()->json('rendez-vous non trouvé',404);
         }
     }
     
+    // Valider le rendez-vous
     public function validateAppointment($id){
         try{
             $appointment = appointment::findOrFail($id);
-            $appointment->update(['id_tfv042119_employee'=> 1]);
+            $appointment->update(['id_tfv042119_user'=> 1]);
             return response()->json('rendez-vous a été publié',200);
         }catch(ModelNotFoundException $e){
             return response()->json('rendez-vous non trouvé',404);
         }
     }
 
+    // Liste des rendez-vous
     public function showAppointment($id){
         try{
             $appointment = appointment::findOrFail($id);
@@ -55,12 +58,15 @@ class appointmentController extends Controller{
         }
     }
 
+    // Liste des rendez-vous publiés
     public function showAppointmentListPublished(){
-        $appointmentList = appointment::where('id_tfv042119_employee', 1)->get();
+        $appointmentList = appointment::where('id_tfv042119_user', 1)->get();
         return response()->json($appointmentList, 200);
     }
+
+    // Liste des rendez-vous archivés
     public function showAppointmentListArchive(){
-        $appointmentList = appointment::where('id_tfv042119_employee', 2)->get();
+        $appointmentList = appointment::where('id_tfv042119_user', 2)->get();
         return response()->json($appointmentList, 200);
 }
 }
