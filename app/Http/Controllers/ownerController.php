@@ -61,5 +61,6 @@ class ownerController extends Controller{
     public function showOwnerListArchive(){
         $ownerList = owner::where('id_tfv042119_management_proposal', 2)->get();
         return response()->json($ownerList, 200);
-}
+    }
+
 }

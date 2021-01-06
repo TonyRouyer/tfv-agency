@@ -8,14 +8,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class agencyController extends Controller
 {
-    
-
-    public function createRealEstate(Request $request)
-    {
+    public function createRealEstate(Request $request){
         $agency = agency::create($request->all());
-
         return response()->json($agency, 201);
     }
-
-  
 }

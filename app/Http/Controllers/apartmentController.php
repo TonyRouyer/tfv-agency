@@ -21,9 +21,9 @@ class apartmentController extends Controller{
         return response()->json($house);
     }
     /**
-     * retourne la liste des appartement en vente selon des filtres, au format JSON
-     *
-     *ordre : priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
+    * retourne la liste des appartement en vente selon des filtres, au format JSON
+    *
+    * ordre : priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
     *
     * @param string contient la liste de tout les parametre dans l'odre ci-dessus
     *
