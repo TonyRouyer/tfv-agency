@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class estimateController extends Controller{
     
+<<<<<<< HEAD
     //envoyer un mail de conformation
 /** 
     $bdd = new PDO('mysql:host=127.0.0.1;dbname=tfvagency', 'root', '');
@@ -30,6 +31,8 @@ class estimateController extends Controller{
             echo "L'utilisateur n'existe pas !";
          }
 */
+=======
+>>>>>>> dev
     public function createEstimate(Request $request){
         
         $estimate = estimate::create($request->all());

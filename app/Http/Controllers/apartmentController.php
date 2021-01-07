@@ -6,34 +6,48 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class apartmentController extends Controller{
+<<<<<<< HEAD
     // retourne la liste des appartements en vente au format JSON
+=======
+     /**
+     * function getApartmentSaleList
+     *retourne la liste des appartement en vente au format JSON
+     * @return json 
+     */
+>>>>>>> dev
     public function getApartmentSaleList(){
         $house = apartment::where('houseApartment', 1)
         ->where('owner', 1)
         ->get();
-        return response()->json($house);
+        return response()->json(['saleApartementList' => $house], 200);
     }
-    // retourne la liste des appartement en location au format JSON
+     /**
+     * function getApartmentRentalList
+     *retourne la liste des appartement en location au format JSON
+     * @return json 
+     */
     public function getApartmentRentalList(){
         $house = apartment::where('houseApartment', 1)
         ->where('rental', 1)
         ->get();
-        return response()->json($house);
+        return response()->json(['rentalApartementList' => $house], 200);
     }
-    /**
-    * retourne la liste des appartement en vente selon des filtres, au format JSON
-    *
-    * ordre : priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
-    *
-    * @param string contient la liste de tout les parametre dans l'odre ci-dessus
-    *
-    * @return void
-    */
+     /**
+     * function getApartmentSaleFilter
+     * Recupère la liste de toute les appartement en vente d'apres divers filtres sous forme de chiffre, 0 ne prend pour ne pas prendre en compte le filtres
+     * avec dans l'ordre : 
+     * @param Request priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
+     * @return json avec la liste des apartement trouvé
+     */
     public function getApartmentSaleFilter($search){
             $explodeSearch = explode(',', $search);
+<<<<<<< HEAD
     
             $house = apartment::where('houseApartment', 1)->where('owner', 0);
     
+=======
+            $house = apartment::where('houseApartment', 1)->where('SaleOrRental', 0);
+>>>>>>> dev
             if ($explodeSearch[0] >= 0 && $explodeSearch[0] < $explodeSearch[1]) {
                 $house->where('price', '>=' , $explodeSearch[0]);
             }
@@ -85,23 +99,26 @@ class apartmentController extends Controller{
             if ($explodeSearch[16] != 0) {
                 $house->where('cellar', '=' , 1);
             }
-            return $house->get();
+            $result = $house->get();
+            return response()->json(['saleApartement' => $result], 200);
         }
-    /**
-     * retourne la liste des appartement en location selon des filtres, au format JSON
-     *
-     *ordre : priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
-    *
-    * @param string contient la liste de tout les parametre dans l'odre ci-dessus
-    *
-    * @return void
-    */    
+     /**
+     * function getApartmentRentalFilter
+     * Recupère la liste de toute les appartement en location d'apres divers filtres sous forme de chiffre, 0 ne prend pour ne pas prendre en compte le filtres
+     * avec dans l'ordre : 
+     * @param Request priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
+     * @return json avec la liste des apartement trouvé
+     */
     public function getApartmentRentalFilter($search){
         //'0,250000,0,0,0,30,100,1,0,0,1,0,1,0,0,0,0'
         $explodeSearch = explode(',', $search);
+<<<<<<< HEAD
 
         $house = apartment::where('houseApartment', 1)->where('rental', 1);
 
+=======
+        $house = apartment::where('houseApartment', 1)->where('SaleOrRental', 1);
+>>>>>>> dev
         if ($explodeSearch[0] >= 0 && $explodeSearch[0] < $explodeSearch[1]) {
             $house->where('price', '>=' , $explodeSearch[0]);
         }
@@ -153,6 +170,7 @@ class apartmentController extends Controller{
         if ($explodeSearch[16] != 0) {
             $house->where('cellar', '=' , 1);
         }
-        return $house->get();
+        $result = $house->get();
+        return response()->json(['rentalApartement' => $result], 200);
         }
 }

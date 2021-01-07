@@ -179,7 +179,31 @@ $router->group(['prefix' => ''], function () use ($router) {
 
 
 
+// ROUTE APPOINTEMENT
 
+    $router->post('addappointement', [
+        'middleware' => 'roleAgence',
+        'uses' => 'appointementController@createAppointement'
+    ]);
+    $router->get('getappointement', [
+        'middleware' => 'roleAgence',
+        'uses' => 'appointementController@getAppointementList'
+    ]);
+    $router->get('getappointementdetail/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'appointementController@showAppointementDetail'
+    ]);
+    $router->delete('deleteappointementdetail/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'appointementController@deleteAppointement'
+    ]);
+    $router->put('updateappointementdetail/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'appointementController@updateAppointement'
+    ]);
+    
+    
+    
 
 
 
