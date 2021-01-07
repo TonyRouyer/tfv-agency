@@ -7,10 +7,34 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class estimateController extends Controller{
     
-
+    //envoyer un mail de conformation
+/** 
+    $bdd = new PDO('mysql:host=127.0.0.1;dbname=tfvagency', 'root', '');
+         //On instancie
+         $user = new User;
+         $user->mail = $request->input('mail');
+         $user->password = $request->input('password');
+         $requser = $bdd->prepare("SELECT * FROM tfv042119_user WHERE mail = ? AND password = ?");
+         $requser->execute(array($user->mail, $user->password));
+         $userexist = $requser->rowCount();
+         if($userexist == 1) {
+            $user = $requser->fetch();
+            if($user['confirme'] == 0) {
+               $updateuser = $bdd->prepare("UPDATE tfv042119_user SET confirme = 1 WHERE mail = ? AND password = ?");
+               $updateuser->execute(array(mail,password));
+               echo "Votre compte a bien été confirmé !";
+            } else {
+               echo "Votre compte a déjà été confirmé !";
+            }
+         } else {
+            echo "L'utilisateur n'existe pas !";
+         }
+*/
     public function createEstimate(Request $request){
+        
         $estimate = estimate::create($request->all());
         return response()->json($estimate, 201);
+              
     }
 
     public function updateEstimate($id, Request $request){
