@@ -6,15 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class apartmentController extends Controller{
-<<<<<<< HEAD
-    // retourne la liste des appartements en vente au format JSON
-=======
      /**
      * function getApartmentSaleList
      *retourne la liste des appartement en vente au format JSON
      * @return json 
      */
->>>>>>> dev
     public function getApartmentSaleList(){
         $house = apartment::where('houseApartment', 1)
         ->where('owner', 1)
@@ -41,13 +37,7 @@ class apartmentController extends Controller{
      */
     public function getApartmentSaleFilter($search){
             $explodeSearch = explode(',', $search);
-<<<<<<< HEAD
-    
-            $house = apartment::where('houseApartment', 1)->where('owner', 0);
-    
-=======
             $house = apartment::where('houseApartment', 1)->where('SaleOrRental', 0);
->>>>>>> dev
             if ($explodeSearch[0] >= 0 && $explodeSearch[0] < $explodeSearch[1]) {
                 $house->where('price', '>=' , $explodeSearch[0]);
             }
@@ -112,13 +102,7 @@ class apartmentController extends Controller{
     public function getApartmentRentalFilter($search){
         //'0,250000,0,0,0,30,100,1,0,0,1,0,1,0,0,0,0'
         $explodeSearch = explode(',', $search);
-<<<<<<< HEAD
-
-        $house = apartment::where('houseApartment', 1)->where('rental', 1);
-
-=======
         $house = apartment::where('houseApartment', 1)->where('SaleOrRental', 1);
->>>>>>> dev
         if ($explodeSearch[0] >= 0 && $explodeSearch[0] < $explodeSearch[1]) {
             $house->where('price', '>=' , $explodeSearch[0]);
         }
