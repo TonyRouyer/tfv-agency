@@ -78,7 +78,6 @@ $app->configure('app');
 
 $app->routeMiddleware([
     'auth' => App\Http\Middleware\Authenticate::class,
-    'roleUsers' => App\Http\Middleware\AdminMiddleware::class,
     'roleAgence' => App\Http\Middleware\RoleMiddlewareAgence::class,
     'roleResponsable' => App\Http\Middleware\RoleMiddlewareResponsable::class,
     'roleValidateur' => App\Http\Middleware\RoleMiddlewareValidateur::class,

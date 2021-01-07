@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class estimateController extends Controller{
     
-
     public function createEstimate(Request $request){
         $estimate = estimate::create($request->all());
 

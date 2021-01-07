@@ -9,36 +9,124 @@ use App\Models\appointment;
 
 class appointementController extends Controller
 {
-     /**
-     * Instantiate a new UserController instance.
+    /**
+     * function createAppointement
+     * Crée un nouveau RDV dans la table appointement, renvois un message d'erreur si il y en a une.
+     * @param Request dateTime , label
+     * @param User token in header
+     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
      */
-
-    public function __construct()
-    {
-        $this->middleware('role');
-    }
-   
-    public function UpdateAppointement() {
-        //recuperer le RDV du l'user en cours pour le modifier
-
-        if (Auth::check()){
-        $appointement = Auth::appointment();
-
-        $appointement->dateTime = $request->input('dateTime');
-        $appointement->label = $request->input('label');
-        $appointement->id_tfv042119_employee = $request->input('employeeId');
-        $appointement->save();
-        return response()->json($appointement, 200);
-        }else{
-            return response()->json(['message' => 'Appointement not found!'], 404);
+    public function createAppointement(Request $request) {
+        $this->validate($request, [
+            'dateTime' => 'required|date_format:Y-m-d H:i:s',
+            'label' => 'required',
+          ]);
+        try {
+            $appointement = new appointment;
+            $appointement->dateTime = $request->input('dateTime');
+            $appointement->label = $request->input('label');
+            $appointement->id_tfv042119_user = auth()->user()->id;
+            $appointement->save();
+            return response()->json(['appointement' => $appointement, 'message' => 'CREATED'], 201);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Le rendez-vous n\'a pas été enregistré'], 409);
         }
     }
-
-
+    /**
+     * function getAppointementList
+     * recupere la liste des tout les RDV que l'utilisateur a crée en fonction de son token
+     * @param User token in header
+     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     */
     public function getAppointementList(){
-        $appointement = appointment::where('id_tfv042119_employee', auth()->employee()->id)
-        ->get();
-        return response()->json($house, 200);
+        $appointement = appointment::where('id_tfv042119_user', auth()->user()->id)->get();
+        return response()->json($appointement, 200);
     }
+    /**
+     * function showAppointementDetail
+     * Retrouve les informations d'un rendez-vous créer par l'utilisateur en fonction de l'id recherché, message d'erreur si l'id ne corespond pas a un RDV de l'utilisateur
+     * @param Request $id du RDV recherché
+     * @param User token in header
+     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     */
+    public function showAppointementDetail(Request $request, $id) {
+        $appointementlist = appointment::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
+        $decoded = json_decode($appointementlist, true);
+        foreach($decoded as $d) {
+            foreach($d as $clef=>$value) {
+                if ($value == $id){
+                    $appointment = appointment::where('id', $id);
+                    $result = response()->json(['appointment' => $appointment->get()], 200);
+                    return $result;
+                }
+            }
+        }
+        if (!isset($result)){
+            return response()->json(['message' => 'Vous n\'avez pas acces a cela'], 409);
+        }
+    }
+    /**
+     * function deleteAppointement
+     * Supprime un rendez-vous de l'utilisateur en fonction de l'id recherché, sinon renvois un message d'erreur.
+     * @param Request $id du RDV recherché
+     * @param User token in header
+     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     */
+    public function deleteAppointement(Request $request, $id) {
 
+        $appointementlist = appointment::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
+
+        $decoded = json_decode($appointementlist, true);
+
+        foreach($decoded as $d) {
+            foreach($d as $clef=>$value) {
+                if ($value == $id){
+                    $appointment = appointment::where('id', $id)->delete();
+                    $result = response()->json(['message' => 'RDV supprimé'], 200);
+                    return $result;
+                }
+            }
+        }
+        if (!isset($result)){
+            return response()->json(['message' => 'Vous n\'avez pas acces a cela'], 409);
+        }
+    }
+    /**
+     * function updateAppointement
+     * Met à jour un RDV en fonction des parametre, et de l'id. message d'erreur si l'id ne corespond pas a un RDV crée par l'utilisateur
+     * @param Request dateTime , label
+     * @param Request $id du RDV recherché
+     * @param User token in header
+     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     */
+    public function updateAppointement(Request $request, $id) {
+        $this->validate($request, [
+            'dateTime' => 'date_format:Y-m-d H:i:s'
+          ]);
+        $appointementlist = appointment::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
+        $decoded = json_decode($appointementlist, true);
+        foreach($decoded as $d) {
+            foreach($d as $clef=>$value) {
+                if ($value == $id){
+                    $appointment = appointment::findOrFail($id);
+                    if (null !== $request->input('dateTime')){
+                        $appointment->update(['dateTime'=> $request->input('dateTime')]);
+                        $result = response()->json(['appointment' => $appointment, 'message' => 'Updated'], 201);
+                        return $result;
+                    }else if (null !== $request->input('label')){
+                        $appointment->update(['label' => $request->input('label')]);
+                        $result = response()->json(['appointment' => $appointment, 'message' => 'Updated'], 201);
+                        return $result;
+                    }else if (null !== $request->input('dateTime') && null !==$request->input('label')){
+                        $appointment->update(['dateTime'=> $request->input('dateTime'), 'label' => $request->input('label')]);
+                        $result = response()->json(['appointment' => $appointment, 'message' => 'Updated'], 201);
+                        return $result;
+                    }
+                }
+            }
+        }
+        if (!isset($result)){
+            return response()->json(['message' => 'Vous n\'avez pas acces a cela'], 409);
+        }
+    }
 }
