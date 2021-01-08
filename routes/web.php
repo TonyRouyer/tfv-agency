@@ -13,9 +13,9 @@
 |
 */
 $router->get('/', function () use ($router) {
-    return $router->app->version();
- // relation avec la table user
-    return $router->app->hasOne('App\User', 'id_tfv042119_user');
+    $router->get('/', function () use ($router) {
+        return phpinfo();
+    });
 });
 
 //  ROUTE REAL ESTATE
@@ -85,27 +85,27 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->post('register', 'AuthController@register');
     $router->post('login', 'AuthController@login');
     $router->get('profile', [
-    'middleware' => 'auth',
-    'uses' => 'UserController@profile'
+        'middleware' => 'auth',
+        'uses' => 'UserController@profile'
       ]);
     $router->put('update', [
-    'middleware' => 'auth',
-    'uses' => 'UserController@UpdateUsers'
+        'middleware' => 'auth',
+        'uses' => 'UserController@UpdateUsers'
     ]);
 });
 //ROUTE ADMIN
 $router->group(['prefix' => 'adm'], function () use ($router) {
     $router->post('register', [
-    'middleware' => 'roleUsers',
-    'uses' => 'UserController@registerEmployee'
+        'middleware' => 'roleUsers',
+        'uses' => 'UserController@registerEmployee'
       ]);
     $router->get('users', [
-    'middleware' => 'roleUsers',
-    'uses' => 'UserController@allUsers'
+        'middleware' => 'roleUsers',
+        'uses' => 'UserController@allUsers'
       ]);
     $router->get('users/{id}', [
-    'middleware' => 'roleUsers',
-    'uses' => 'UserController@singleUser'
+        'middleware' => 'roleUsers',
+        'uses' => 'UserController@singleUser'
       ]);
 });
 // ROUTE HOUSE
@@ -130,54 +130,45 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'apartmentRentalFilter/{search}' en GET récupère la liste des appartements en vente avec des filtres
     $router->get('apartmentRentalFilter/{search}', 'apartmentController@getApartmentRentalFilter');
   });
-    // ROUTE AGENCY
+// ROUTE AGENCY
     // 'agency' en PUT créer une nouvelle agence dans la bdd / champs obligatoire : 'name' , 'address' , 'city' , 'zip'
     $router->put('agency', [
         'middleware' => 'roleResponsable',
         'uses' => 'agencyController@createRealEstate'
     ]);
-//   // ROUTE MANAGEMENTPROPOSAL
+  // ROUTE MANAGEMENTPROPOSAL
 // $router->group(['prefix' => ''], function () use ($router) {
-//   // 'managementProposal/{id}' en GET affiche la mise en gestion à l'id choisit
-//   $router->get('managementProposal/{id}', 'managementProposalController@showManagementProposal');
-//   // 'allManagementProposalPublished' en GET affiche la liste des mises en gestion publiée
-//   $router->get('allManagementProposalPublished', 'managementProposalController@showManagementProposalListPublished');
-//   // 'managementProposal' en POST créer un nouvelle mise en gestion du propriétaire / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
-//   $router->post('proposalManagement', [
-//       'middleware' => 'roleUsers',
-//       'uses' => 'managementProposalController@createManagementProposal'])
-//   // 'managementProposal' en POST créer un nouvelle mise en gestion du locataire / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
-//   $router->post('proposalManagement', [
-//     'middleware' => 'roleUsers',
-//     'uses' => 'managementProposalController@createManagementProposal'])
-
-//   // 'updateManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit
-//   $router->put('updateManagementProposal/{id}', [
-//       'middleware' => 'roleResponsable',
-//       'uses' => 'managementProposalController@updateManagementProposal'
-//   ]);
-//   // 'archiveManagementProposal/{id}' en PUT place la mise en gestion définit par l'id au user archivée
-//   $router->put('archiveManagementProposal/{id}', [
-//       'middleware' => 'roleResponsable',
-//       'uses' => 'managementProposalController@deleteManagementProposal'
-//   ]);
-//   // 'allManagementProposalArchive' en GET affiche la liste des mises en gestion archivée
-//   $router->get('allProposalManagementArchive', [
-//       'middleware' => 'roleResponsable',
-//       'uses' => 'managementProposalController@showManagementProposalListArchive'
-//   ]);
-//   //  validateManagementProposal en PUT valide la mise en gestion à l'id choisit
-//   $router->put('validateManagementProposal/{id}', [
-//       'middleware' => 'roleValidateur',
-//       'uses' => 'managementProposalController@validateManagementProposal'
-//   ]);
- 
+//     // 'managementProposal/{id}' en GET affiche la mise en gestion à l'id choisit
+//         $router->get('managementProposal/{id}', 'managementProposalController@showManagementProposal');
+//     // 'allManagementProposalPublished' en GET affiche la liste des mises en gestion publiée
+//     $router->get('allManagementProposalPublished', 'managementProposalController@showManagementProposalListPublished');
+//     // 'managementProposal' en POST créer un nouvelle mise en gestion du propriétaire / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
+//     $router->post('proposalManagement', [
+//         'middleware' => 'roleUsers',
+//         'uses' => 'managementProposalController@createManagementProposal']);
+//     // 'updateManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit
+//     $router->put('updateManagementProposal/{id}', [
+//         'middleware' => 'roleResponsable',
+//         'uses' => 'managementProposalController@updateManagementProposal'
+//     ]);
+//     // 'archiveManagementProposal/{id}' en PUT place la mise en gestion définit par l'id au user archivée
+//     $router->put('archiveManagementProposal/{id}', [
+//         'middleware' => 'roleResponsable',
+//         'uses' => 'managementProposalController@deleteManagementProposal'
+//     ]);
+//     // 'allManagementProposalArchive' en GET affiche la liste des mises en gestion archivée
+//     $router->get('allProposalManagementArchive', [
+//         'middleware' => 'roleResponsable',
+//         'uses' => 'managementProposalController@showManagementProposalListArchive'
+//     ]);
+//     //  validateManagementProposal en PUT valide la mise en gestion à l'id choisit
+//     $router->put('validateManagementProposal/{id}', [
+//         'middleware' => 'roleValidateur',
+//         'uses' => 'managementProposalController@validateManagementProposal'
+//     ]);
 // });
-
-
-
 // ROUTE APPOINTEMENT
-
+$router->group(['prefix' => ''], function () use ($router) {
     $router->post('addappointement', [
         'middleware' => 'roleAgence',
         'uses' => 'appointementController@createAppointement'
@@ -198,25 +189,21 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleAgence',
         'uses' => 'appointementController@updateAppointement'
     ]);
-    
-    
-    
-
-
-
-
-
-// route apartement
-$router->group(['prefix' => ''], function () use ($router) {
-  // 'saleApartment'  en GET récupère la liste des appartements en vente sans filtre
-  $router->get('saleApartment', 'apartmentController@getApartmentSaleList');
-  // 'rentalApartment' en GET récupère la liste des appartements en location sans filtre
-  $router->get('rentalApartment', 'apartmentController@getApartmentRentalList');
-  // 'apartmentSaleFilter/{search}' en GET récupère la liste des appartements en vente avec des filtres
-  $router->get('apartmentSaleFilter/{search}', 'apartmentController@getApartmentSaleFilter');
-  // 'apartmentRentalFilter/{search}' en GET récupère la liste des appartements en vente avec des filtres
-  $router->get('apartmentRentalFilter/{search}', 'apartmentController@getApartmentRentalFilter');
 });
+// ROUTE CLIENT LIST
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->put('addclientlist', [
+        'middleware' => 'roleAgence',
+        'uses' => 'clientListController@createClientList'
+    ]);
+});
+    
+    
+
+
+
+
+
 
 
 // route estimate
@@ -228,3 +215,7 @@ $router->group(['prefix' => ''], function () use ($router) {
 //   // 'estimateDelete' en PUT efface l'estimation
 //   $router->put('deleteEstimate/{id}', 'estimateController@deleteEstimate');
 });
+
+$router->get('profile', [
+    'as' => 'profile', 'uses' => 'ExampleController@profile'
+]);

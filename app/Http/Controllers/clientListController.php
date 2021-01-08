@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Models\clientList;
 
-class clientList extends Controller{
+class clientListController extends Controller{
 
     public function createClientList(Request $request){
 
@@ -35,14 +35,30 @@ class clientList extends Controller{
           ]);
         try {
             $clientList = new clientList;
+            $clientList->civility = $request->input('civility');
+            $clientList->firstname = $request->input('firstname');
+            $clientList->lastname = $request->input('lastname');
+            $clientList->phone = $request->input('phone');
+            $clientList->mail = $request->input('mail');
+            $clientList->houseOrApartement = $request->input('houseOrApartement');
+            $clientList->buyOrRental = $request->input('buyOrRental');
+            $clientList->city = $request->input('city');
+            $clientList->ray = $request->input('ray');
+            $clientList->budget = $request->input('budget');
+            $clientList->digicode = $request->input('digicode');
+            $clientList->balcony = $request->input('balcony');
+            $clientList->garden = $request->input('garden');
+            $clientList->basement = $request->input('basement');
+            $clientList->furniture = $request->input('furniture');
+            $clientList->elevator = $request->input('elevator');
+            $clientList->garage = $request->input('garage');
+            $clientList->parking = $request->input('parking');
+            $clientList->id_tfv042119_user = auth()->user()->id;
+            $clientList->id_tfv042119_status = 1;
 
+            $clientList->save();
 
-            // finir fonction a partir d'ici
-            $appointement->dateTime = $request->input('dateTime');
-            $appointement->label = $request->input('label');
-            $appointement->id_tfv042119_user = auth()->user()->id;
-            $appointement->save();
-            return response()->json(['appointement' => $appointement, 'message' => 'CREATED'], 201);
+            return response()->json(['appointement' => $clientList, 'message' => 'CREATED'], 201);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Le rendez-vous n\'a pas été enregistré'], 409);
         }
@@ -50,11 +66,11 @@ class clientList extends Controller{
 
     }     
 
-    public function deleteClientList(){
+    // public function deleteClientList(){
 
-    } 
+    // } 
 
-    public function getClientListDetail (){
+    // public function getClientListDetail (){
 
-    } 
+    // } 
 }
