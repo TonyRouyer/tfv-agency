@@ -14,4 +14,5 @@ class agencyController extends Controller
         $agency = agency::create($request->all());
         return response()->json($agency, 201);
     }
+
 }
