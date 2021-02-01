@@ -185,6 +185,25 @@ $router->group(['prefix' => ''], function () use ($router) {
         'uses' => 'clientListController@createClientList'
     ]);
 });
+//ROUTE SALE OR RENTAL REQUEST
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->post('addRequest', [
+        'uses' => 'saleOrRental_requestController@addRequest'
+    ]);
+    $router->delete('deleteRequest/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'saleOrRental_requestController@deleteRequest'
+    ]);
+    $router->put('archiveRequest/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'saleOrRental_requestController@archiveRequest'
+    ]);
+    $router->get('showRequest/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'saleOrRental_requestController@showRequest'
+    ]);
+
+});
     
     
 
