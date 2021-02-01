@@ -105,9 +105,19 @@ class UserController extends Controller
 
         } catch (\Exception $e) {
 
-            return response()->json(['message' => 'user not found!'], 404);
+            return response()->json(['message' => 'Utilisateur non trouvé !'], 404);
         }
 
     }
-
-}
+     
+        // POST /user/{id}/avatar
+        public function uploadAvatar(Request $request, User $user) {
+            $file = $request->file('file');
+            
+            $fileEntry = $this->storeFileEntry($file, $user);
+            
+            $user->avatar_id = $fileEntry->id;
+            $user->save();
+        }
+        
+    }
