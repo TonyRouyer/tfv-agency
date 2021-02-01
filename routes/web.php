@@ -118,7 +118,7 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('houseSaleFilter/{search}', 'houseController@getHouseSaleFilter');
     // 'houseRentalFilter/{search}' en GET récupère la liste des maisons en location avec des filtres
     $router->get('houseRentalFilter/{search}', 'houseController@getHouseRentalFilter');
-  });
+});
 // ROUTE APARTEMENT
 $router->group(['prefix' => ''], function () use ($router) {
     // 'saleApartment'  en GET récupère la liste des appartements en vente sans filtre
@@ -136,7 +136,7 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleResponsable',
         'uses' => 'agencyController@createRealEstate'
     ]);
-  // ROUTE MANAGEMENTPROPOSAL
+// ROUTE MANAGEMENTPROPOSAL
 $router->group(['prefix' => ''], function () use ($router) {
     // 'managementProposal/{id}' en GET affiche la mise en gestion à l'id choisit
         $router->get('managementProposal/{id}', [
@@ -240,7 +240,22 @@ $router->group(['prefix' => ''], function () use ($router) {
         'uses' => 'callController@showAllCall'
     ]);
 });
-    
+// ROUTE FAVORITE
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->put('addFavorite/{id}', [
+        'middleware' => 'auth',
+        'uses' => 'favoriteController@addFavorite'
+    ]);
+    $router->delete('deleteFavorite/{id}', [
+        'middleware' => 'auth',
+        'uses' => 'favoriteController@deleteFavorite'
+    ]);
+    $router->get('getFavorieList', [
+        'middleware' => 'auth',
+        'uses' => 'favoriteController@getFavorieList'
+    ]);
+
+});
 
 
 

@@ -73,7 +73,7 @@ class callController extends Controller{
         }
     }
     /**
-     * function deleteClientList
+     * function showAllCall
      * Recupere tout showAllCall call de la table Call
      * 
      * @return Json liste des call
