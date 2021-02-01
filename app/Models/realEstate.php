@@ -14,33 +14,7 @@ class realEstate extends Model
      * @var array
      */
     protected $fillable = [
-<<<<<<< HEAD
         'referencePublishing', 'houseApartment' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency', 'id_tfv042119_favorites', 'id_tfv042119_images'
-=======
-        'referencePublishing', 
-        'houseApartment',
-        'SaleOrRental',
-        'title',         
-        'fullText',            
-        'coverImage',         
-        'address',          
-        'zip',                 
-        'city',             
-        'complement',         
-        'price',            
-        'area',               
-        'numberOfPieces',    
-        'digicode',           
-        'furniture',        
-        'balcony',           
-        'elevator',          
-        'garden',            
-        'garage',           
-        'parking',         
-        'cellar',        
-        'id_tfv042119_status',
-        'id_tfv042119_agency'    
->>>>>>> dev
     ];
 
     /**
