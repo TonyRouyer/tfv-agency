@@ -129,7 +129,7 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('apartmentSaleFilter/{search}', 'apartmentController@getApartmentSaleFilter');
     // 'apartmentRentalFilter/{search}' en GET récupère la liste des appartements en vente avec des filtres
     $router->get('apartmentRentalFilter/{search}', 'apartmentController@getApartmentRentalFilter');
-  });
+});
 // ROUTE AGENCY
     // 'agency' en PUT créer une nouvelle agence dans la bdd / champs obligatoire : 'name' , 'address' , 'city' , 'zip'
     $router->put('agency', [
@@ -154,7 +154,7 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleResponsable',
         'uses' => 'managementProposalController@updateManagementProposal'
     ]);
-   });
+});
 // ROUTE APPOINTEMENT
 $router->group(['prefix' => ''], function () use ($router) {
     $router->post('addappointement', [
@@ -185,7 +185,61 @@ $router->group(['prefix' => ''], function () use ($router) {
         'uses' => 'clientListController@createClientList'
     ]);
 });
-    
+//ROUTE SALE OR RENTAL REQUEST
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->post('addRequest', [
+        'uses' => 'saleOrRental_requestController@addRequest'
+    ]);
+    $router->delete('deleteRequest/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'saleOrRental_requestController@deleteRequest'
+    ]);
+    $router->put('archiveRequest/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'saleOrRental_requestController@archiveRequest'
+    ]);
+    $router->get('showRequest/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'saleOrRental_requestController@showRequest'
+    ]);
+});
+// ROUTE CLIENT LIST
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->put('addclientlist', [
+        'middleware' => 'roleAgence',
+        'uses' => 'clientListController@createClientList'
+    ]);
+    $router->put('deleteClientList/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'clientListController@deleteClientList'
+    ]);
+    $router->get('getClientListDetail/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'clientListController@getClientListDetail'
+    ]);
+    $router->get('getClientListEmployee', [
+        'middleware' => 'roleAgence',
+        'uses' => 'clientListController@getClientListEmployee'
+    ]);
+});
+// ROUTE CALL
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->put('addcall', [
+        'uses' => 'callController@addCall'
+    ]);
+    $router->delete('deletecall/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'callController@deleteCall'
+    ]);
+    $router->get('getCallDetail/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'callController@showOnecall'
+    ]);
+    $router->get('getAllCall', [
+        'middleware' => 'roleAgence',
+        'uses' => 'callController@showAllCall'
+    ]);
+});
     
 
 

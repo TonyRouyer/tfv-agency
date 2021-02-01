@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class call extends Model
+class saleOrRental_request extends Model
 {
-    protected $table = 'call';
+    protected $table = 'saleOrRental_request';
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -14,14 +14,17 @@ class call extends Model
      * @var array
      */
     protected $fillable = [
-        'lastname',
-        'firstname',
+        'saleOrRental',
+        'houseApartment',
+        'address',
+        'zip',
+        'city',
+        'fullText',
         'mail',
-        'availability',
-        'preferenceCall',
         'phone',
-        'message',
-        'id_tfv042119_status'
+        'id_tfv042119_status',
+        'id_tfv042119_user'
+
     ];
 
     /**
