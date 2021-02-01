@@ -21,6 +21,7 @@ $router->get('/', function () use ($router) {
 //  ROUTE REAL ESTATE
 $router->group(['prefix' => ''], function () use ($router) {
     // 'realEstate' en POST créer un nouveau bien / champs obligatoire : 'referencePublishing', 'houseApartment' , 'saleOrRental' , 'title' , 'fullText', 'coverImage' , 'address', 'zip' , 'city' , 'complement', 'price' , 'area' , 'numberOfPieces' , 'digicode' , 'furniture' , 'balcony' , 'elevator' , 'garden' , 'garage', 'parking' ,'cellar', 'id_tfv042119_status', 'id_tfv042119_agency'
+    // uses signifie "utilise"
     $router->post('realEstate', [
         'middleware' => 'roleResponsable',
         'uses' => 'realEstateController@createRealEstate'
@@ -86,7 +87,7 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('profile', [
         'middleware' => 'auth',
         'uses' => 'UserController@profile'
-    ]);
+      ]);
     $router->put('update', [
         'middleware' => 'auth',
         'uses' => 'UserController@UpdateUsers'
@@ -97,15 +98,15 @@ $router->group(['prefix' => 'adm'], function () use ($router) {
     $router->post('register', [
         'middleware' => 'roleUsers',
         'uses' => 'UserController@registerEmployee'
-    ]);
+      ]);
     $router->get('users', [
         'middleware' => 'roleUsers',
         'uses' => 'UserController@allUsers'
-    ]);
+      ]);
     $router->get('users/{id}', [
         'middleware' => 'roleUsers',
         'uses' => 'UserController@singleUser'
-    ]);
+      ]);
 });
 // ROUTE HOUSE
 $router->group(['prefix' => ''], function () use ($router) {
@@ -136,37 +137,24 @@ $router->group(['prefix' => ''], function () use ($router) {
         'uses' => 'agencyController@createRealEstate'
     ]);
   // ROUTE MANAGEMENTPROPOSAL
-// $router->group(['prefix' => ''], function () use ($router) {
-//     // 'managementProposal/{id}' en GET affiche la mise en gestion à l'id choisit
-//         $router->get('managementProposal/{id}', 'managementProposalController@showManagementProposal');
-//     // 'allManagementProposalPublished' en GET affiche la liste des mises en gestion publiée
-//     $router->get('allManagementProposalPublished', 'managementProposalController@showManagementProposalListPublished');
-//     // 'managementProposal' en POST créer un nouvelle mise en gestion du propriétaire / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
-//     $router->post('proposalManagement', [
-//         'middleware' => 'roleUsers',
-//         'uses' => 'managementProposalController@createManagementProposal']);
-//     // 'updateManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit
-//     $router->put('updateManagementProposal/{id}', [
-//         'middleware' => 'roleResponsable',
-//         'uses' => 'managementProposalController@updateManagementProposal'
-//     ]);
-//     // 'archiveManagementProposal/{id}' en PUT place la mise en gestion définit par l'id au user archivée
-//     $router->put('archiveManagementProposal/{id}', [
-//         'middleware' => 'roleResponsable',
-//         'uses' => 'managementProposalController@deleteManagementProposal'
-//     ]);
-//     // 'allManagementProposalArchive' en GET affiche la liste des mises en gestion archivée
-//     $router->get('allProposalManagementArchive', [
-//         'middleware' => 'roleResponsable',
-//         'uses' => 'managementProposalController@showManagementProposalListArchive'
-//     ]);
-//     //  validateManagementProposal en PUT valide la mise en gestion à l'id choisit
-//     $router->put('validateManagementProposal/{id}', [
-//         'middleware' => 'roleValidateur',
-//         'uses' => 'managementProposalController@validateManagementProposal'
-//     ]);
-// });
-
+$router->group(['prefix' => ''], function () use ($router) {
+    // 'managementProposal/{id}' en GET affiche la mise en gestion à l'id choisit
+        $router->get('managementProposal/{id}', [
+            'middleware' => 'auth',
+            'uses' => 'managementProposalController@showManagementProposalDetail'
+        ]);
+        // 'getManagementProposalList' en GET affiche la liste des mises en gestion publiée
+    $router->get('getManagementProposalList', 'managementProposalController@getManagementProposalList');
+    // 'managementProposal' en POST créer un nouvelle mise en gestion du propriétaire / champs obligatoire : 'type', 'address' , 'zip' , 'city' , 'fullText' , 'id_tfv042119_user'
+    $router->post('proposalManagement', [
+        'middleware' => 'roleUsers',
+        'uses' => 'managementProposalController@createManagementProposal']);
+    // 'updateManagementProposal/{id}' en PUT  modifie la mise en gestion à l'id choisit
+    $router->put('updateManagementProposal/{id}', [
+        'middleware' => 'roleResponsable',
+        'uses' => 'managementProposalController@updateManagementProposal'
+    ]);
+   });
 // ROUTE APPOINTEMENT
 $router->group(['prefix' => ''], function () use ($router) {
     $router->post('addappointement', [
@@ -192,52 +180,19 @@ $router->group(['prefix' => ''], function () use ($router) {
 });
 // ROUTE CLIENT LIST
 $router->group(['prefix' => ''], function () use ($router) {
-    $router->post('addclientlist', [
+    $router->put('addclientlist', [
         'middleware' => 'roleAgence',
         'uses' => 'clientListController@createClientList'
     ]);
-    $router->put('deleteClientList/{id}', [
-        'middleware' => 'roleAgence',
-        'uses' => 'clientListController@deleteClientList'
-    ]);
-    $router->get('getClientListDetail/{id}', [
-        'middleware' => 'roleAgence',
-        'uses' => 'clientListController@getClientListDetail'
-    ]);
-    $router->get('getClientListEmployee', [
-        'middleware' => 'roleAgence',
-        'uses' => 'clientListController@getClientListEmployee'
-    ]);
 });
-//ROUTE SALE OR RENTAL REQUEST
-$router->group(['prefix' => ''], function () use ($router) {
-    $router->post('addRequest', [
-        'uses' => 'saleOrRental_requestController@addRequest'
-    ]);
-    $router->delete('deleteRequest/{id}', [
-        'middleware' => 'roleAgence',
-        'uses' => 'saleOrRental_requestController@deleteRequest'
-    ]);
-    $router->put('archiveRequest/{id}', [
-        'middleware' => 'roleAgence',
-        'uses' => 'saleOrRental_requestController@archiveRequest'
-    ]);
-    $router->get('showRequest/{id}', [
-        'middleware' => 'roleAgence',
-        'uses' => 'saleOrRental_requestController@showRequest'
-    ]);
-
-});
+    
+    
 
 
 
 
 
 
-
-
-
-$router->post('toto', 'agencyController@uploadImage');
 
 // route estimate
 $router->group(['prefix' => ''], function () use ($router) {
@@ -248,3 +203,7 @@ $router->group(['prefix' => ''], function () use ($router) {
 //   // 'estimateDelete' en PUT efface l'estimation
 //   $router->put('deleteEstimate/{id}', 'estimateController@deleteEstimate');
 });
+
+$router->get('profile', [
+    'as' => 'profile', 'uses' => 'ExampleController@profile'
+]);

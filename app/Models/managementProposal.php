@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class managementProposal extends model
 {
-    protected $table = 'managementProposal';
+    protected $table = 'management_Proposal';
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.

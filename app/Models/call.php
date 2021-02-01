@@ -14,7 +14,6 @@ class call extends Model
      * @var array
      */
     protected $fillable = [
-<<<<<<< Updated upstream
         'lastname' ,
         'firstname' , 
         'mail' ,
@@ -22,15 +21,6 @@ class call extends Model
         'preferenceCall' ,
         'phone' ,
         'id_tfv042119_status' 
-=======
-    'lastname' ,
-    'firstname' ,
-    'mail' ,
-    'availability' ,
-    'preferenceCall' ,
-    'phone' ,
-    'id_tfv042119_status'
->>>>>>> Stashed changes
     ];
 
     /**
@@ -40,8 +30,5 @@ class call extends Model
      */
     protected $hidden = [];
 }
-<<<<<<< Updated upstream
 
  
-=======
->>>>>>> Stashed changes

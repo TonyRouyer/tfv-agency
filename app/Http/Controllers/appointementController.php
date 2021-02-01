@@ -62,7 +62,7 @@ class appointementController extends Controller
             }
         }
         if (!isset($result)){
-            return response()->json(['message' => 'Vous n\'avez pas acces a cela'], 409);
+            return response()->json(['message' => 'Vous n\'avez pas acces à cela'], 409);
         }
     }
     /**
@@ -88,7 +88,7 @@ class appointementController extends Controller
             }
         }
         if (!isset($result)){
-            return response()->json(['message' => 'Vous n\'avez pas acces a cela'], 409);
+            return response()->json(['message' => 'Vous n\'avez pas acces à cela'], 409);
         }
     }
     /**
