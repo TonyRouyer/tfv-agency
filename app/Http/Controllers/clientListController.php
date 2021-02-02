@@ -9,7 +9,11 @@ use App\Models\clientList;
 class clientListController extends Controller{
 
     public function createClientList(Request $request){
+<<<<<<< HEAD
 /**
+=======
+     /**
+>>>>>>> 6994ce95b17016621096a16fd54da53665c9722a
      * function createClientList
      * Créé une nouvelle liste de clients dans la table appointment et renvoie un message d'erreur si nécessaire
      * @param Request civility, firstname, lastname, phone, mail, houseOrApartement, buyOrRental, city,

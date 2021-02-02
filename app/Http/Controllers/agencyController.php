@@ -11,6 +11,7 @@ class agencyController extends Controller{
      /**
      * function createRealEstate
      * Création de l'offre
+     * @param request name, address, city, zip(N°département) 
      * @return json avec l'offre et le code HTTP 201
      */
     public function createRealEstate(Request $request){
