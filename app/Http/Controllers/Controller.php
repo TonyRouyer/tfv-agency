@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Laravel\Lumen\Routing\Controller as BaseController;
-//import auth facades
+//Importation du fichier auth en façades
   use Illuminate\Support\Facades\Auth;
 
   class Controller extends BaseController
   {
-    //function qui renvoie le token+date expiration + type + renvoie le code 200
+    //fonction qui renvoie le TOKEN + date expiration + type + renvoie le code 200
     protected function respondWithToken($token)
     {
       return response()->json([
