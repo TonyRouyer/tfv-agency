@@ -29,26 +29,3 @@ class RoleMiddlewareAgence {
 
 	}
 }
-  class RoleUsers {
-
-    /**
-    * Handle the incoming request.
-    *
-    * @param \Illuminate\Http\Request $request
-    * @param \Closure $next
-    * @param string $role
-    * @return mixed
-    */
-
-    public function handle($request, Closure $next)
-    {
-      $roleUsers = auth()->user()->id_tfv042119_role ;
-      return dd($roleUsers);
-      if ($roleUsers == '1') {
-        return $next($request);
-      }
-      return response('Unauthorized.', 401);
-    }
-
-
-  }

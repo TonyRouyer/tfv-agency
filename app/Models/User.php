@@ -39,6 +39,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
+     * Obtenez l'identifiant qui sera stocké dans la requête objet du JWT.
      *
      * @return mixed
      */
@@ -49,6 +50,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
+     * Renvoie un tableau de valeurs de clé, contenant toutes les requête personnalisées à ajouter au JWT.
      *
      * @return array
      */

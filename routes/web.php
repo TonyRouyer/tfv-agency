@@ -56,7 +56,7 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'news' en POST créer un nouvelle article / champs obligatoire : 'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
     // uses signifie "utilise"
     $router->post('news', [
-        'middleware' => 'roleUsers',
+        'middleware' => 'roleAgence',
         'uses' => 'newsController@createNews'
     ]);
     // 'updateNews/{id}' en PUT  modifie l'article à l'id choisit
@@ -307,20 +307,11 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleAgence',
         'uses' => 'imagesController@uploadrealestateImg'
     ]);
-    
     $router->get('getRealestateImg/{id}', [
         'uses' => 'imagesController@getRealestateImg'
     ]);
-
 });
-    
-    
-
-
-
-
-
-// route estimate
+// ROUTE ESTIMATE
 $router->group(['prefix' => ''], function () use ($router) {
   // 'estimate' en POST créer un nouvelle estimation / champs obligatoire : 'price', 'address' , 'zip' , 'city' , 'area' , 'id_tfv042119_user'
   $router->post('estimate', 'estimateController@createEstimate');
@@ -329,7 +320,3 @@ $router->group(['prefix' => ''], function () use ($router) {
 //   // 'estimateDelete' en PUT efface l'estimation
 //   $router->put('deleteEstimate/{id}', 'estimateController@deleteEstimate');
 });
-
-$router->get('profile', [
-    'as' => 'profile', 'uses' => 'ExampleController@profile'
-]);

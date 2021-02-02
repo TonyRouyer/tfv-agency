@@ -32,13 +32,40 @@ class newsController extends Controller{
     }
      /**
      * function createNews
-     * Crée une nouvelle news
+     * Crée une nouvelle news,
+     * @param "title(varchar), a (img) , fullText(varchar), datePublishing (sql datetime) , author (varchar)";
      * @return json avec la news et le code HTTP 201
      */
     public function createNews(Request $request){
-        $news = news::create($request->all());
-        return response()->json($news, 201);
-    }
+        $this->validate($request, [
+            'title' => 'required',
+            'fullText' => 'required',
+            'datePublishing' => 'required|date_format:Y-m-d H:i:s',
+            'author' => 'required'
+          ]);
+            $news = new news;
+            $news->title = $request->input('title');
+            $news->fullText = $request->input('fullText');
+            if ($request->hasFile('a')) {
+                $original_filename = $request->file('a')->getClientOriginalName();
+                $original_filename_arr = explode('.', $original_filename);
+                $file_ext = end($original_filename_arr);
+                $destination_path = './upload/news/';
+                $image = 'U-' . time() . '.' . $file_ext;
+                if ($request->file('a')->move($destination_path, $image)) {
+                    $news->imageNews = $image;
+                } else {
+                    return response()->json('Cannot upload file',404);
+                }
+            } else {
+                $news->imageNews = 'exemple.png';
+            }
+            $news->datePublishing = $request->input('datePublishing');
+            $news->author = $request->input('author');
+            $news->id_tfv042119_status = 4;
+            $news->save();
+            return response()->json($news, 201);
+        }
      /**
      * function updateNews
      * Met a jour une news en fonction de son id, ou une erreur si l'id est incorecte
