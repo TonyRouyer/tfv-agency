@@ -11,10 +11,10 @@ class appointementController extends Controller
 {
     /**
      * function createAppointement
-     * Crée un nouveau RDV dans la table appointement, renvois un message d'erreur si il y en a une.
-     * @param Request dateTime , label
-     * @param User token in header
-     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     * Créé un nouveau RDV dans la table appointement et renvoi un message d'erreur si nécessaire
+     * @param Request dateTime, label
+     * @param User TOKEN in header
+     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 201 et 409
      */
     public function createAppointement(Request $request) {
         $this->validate($request, [
@@ -34,9 +34,9 @@ class appointementController extends Controller
     }
     /**
      * function getAppointementList
-     * recupere la liste des tout les RDV que l'utilisateur a crée en fonction de son token
-     * @param User token in header
-     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     * Récupère la liste de tous les RDV que l'utilisateur a créé en fonction de son TOKEN
+     * @param User TOKEN in header
+     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 200 et 409
      */
     public function getAppointementList(){
         $appointement = appointment::where('id_tfv042119_user', auth()->user()->id)->get();
@@ -44,10 +44,10 @@ class appointementController extends Controller
     }
     /**
      * function showAppointementDetail
-     * Retrouve les informations d'un rendez-vous créer par l'utilisateur en fonction de l'id recherché, message d'erreur si l'id ne corespond pas a un RDV de l'utilisateur
+     * Retrouve les informations d'un rendez-vous créées par l'utilisateur en fonction de l'id recherché avec un message d'erreur si l'id ne corespond pas a un RDV de l'utilisateur
      * @param Request $id du RDV recherché
-     * @param User token in header
-     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     * @param User TOKEN in header
+     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 200 et 409
      */
     public function showAppointementDetail(Request $request, $id) {
         $appointementlist = appointment::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
@@ -67,10 +67,10 @@ class appointementController extends Controller
     }
     /**
      * function deleteAppointement
-     * Supprime un rendez-vous de l'utilisateur en fonction de l'id recherché, sinon renvois un message d'erreur.
+     * Supprime un rendez-vous de l'utilisateur en fonction de l'id recherché, sinon renvoi un message d'erreur
      * @param Request $id du RDV recherché
-     * @param User token in header
-     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     * @param User TOKEN in header
+     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 200 et 409
      */
     public function deleteAppointement(Request $request, $id) {
 
@@ -97,7 +97,7 @@ class appointementController extends Controller
      * @param Request dateTime , label
      * @param Request $id du RDV recherché
      * @param User token in header
-     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     * @return json avec les infos du RDV, message de confirmation , et le code HTML 201 et 409
      */
     public function updateAppointement(Request $request, $id) {
         $this->validate($request, [
@@ -126,7 +126,7 @@ class appointementController extends Controller
             }
         }
         if (!isset($result)){
-            return response()->json(['message' => 'Vous n\'avez pas acces a cela'], 409);
+            return response()->json(['message' => 'Vous n\'avez pas l\'accès !'], 409);
         }
     }
 }

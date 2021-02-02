@@ -9,6 +9,7 @@ use App\Models\clientList;
 class clientListController extends Controller{
 
     public function createClientList(Request $request){
+<<<<<<< HEAD
     /**
      * function createClientList
      * Crée un nouvelle entrée dans la table ClientList
@@ -16,6 +17,16 @@ class clientListController extends Controller{
      * @return Json avec la liste crée et un message de confirmation
      */
 
+=======
+/**
+     * function createClientList
+     * Créé une nouvelle liste de clients dans la table appointment et renvoie un message d'erreur si nécessaire
+     * @param Request civility, firstname, lastname, phone, mail, houseOrApartement, buyOrRental, city,
+     * ray, budget, digicode, balcony, garden, basement, furniture, elevator, garage, parking
+     * @param User TOKEN in header
+     * @return json avec les infos de la liste des clients et message de confirmation ainsi que le code HTML 201 et 409
+     */
+>>>>>>> vathana
         $this->validate($request, [
             'civility' => 'required',
             'firstname' => 'required',
