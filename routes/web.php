@@ -256,7 +256,24 @@ $router->group(['prefix' => ''], function () use ($router) {
     ]);
 
 });
+// ROUTE ALERT
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->put('addAlert', [
+        'middleware' => 'auth',
+        'uses' => 'alertController@addAlert'
+    ]);
+    $router->delete('deleteAlert/{id}', [
+        'middleware' => 'auth',
+        'uses' => 'alertController@deleteAlert'
+    ]);
+    $router->get('showAllAlert', [
+        'middleware' => 'auth',
+        'uses' => 'alertController@showAllAlert'
+    ]);
 
+
+
+});
 
 
 
