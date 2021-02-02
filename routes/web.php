@@ -270,12 +270,41 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'auth',
         'uses' => 'alertController@showAllAlert'
     ]);
+});
+// ROUTE MANAGEMENT PROPOSAL
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->post('creatMP', [
+        'middleware' => 'RoleGetionnaireLocatif',
+        'uses' => 'managementProposalController@createManagementProposal'
+    ]);
+    $router->put('updateManagementProposal/{id}', [
+        'middleware' => 'RoleGetionnaireLocatif',
+        'uses' => 'managementProposalController@updateManagementProposal'
+    ]);
+    $router->get('showManagementProposalDetail/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'managementProposalController@showManagementProposalDetail'
+    ]);
+    $router->get('getManagementProposalList', [
+        'middleware' => 'roleAgence',
+        'uses' => 'managementProposalController@getManagementProposalList'
+    ]);
+});
+// ROUTE FILES
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->post('uploadImage', [
+        'middleware' => 'roleAgence',
+        'uses' => 'filesController@uploadImage'
+    ]);
+    $router->post('getFiles', [
+        'middleware' => 'roleAgence',
+        'uses' => 'filesController@getFiles'
+    ]);
 
-
+    
+    
 
 });
-
-
 
 
 

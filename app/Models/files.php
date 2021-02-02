@@ -14,7 +14,7 @@ class files extends Model
      * @var array
      */
     protected $fillable = [
-        'documentName' , 'title' , 'id_tfv_042119_user'
+        'documentName' , 'title' , 'id_tfv_042119_user', 'id_tfv042119_management_proposal'
     ];
 
     /**
