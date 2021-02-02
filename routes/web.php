@@ -38,7 +38,6 @@ $router->group(['prefix' => ''], function () use ($router) {
     ]);
     // realEstate/{id} en GET récupère les infos du bien à l'article sélectionné
     $router->get('realEstate/{id}', [
-        'middleware' => 'roleAgence',
         'uses' => 'realEstateController@showRealEstateDetail'
     ]);
     // 'updateRealEstate/{id}' en PUT met à jour le bien à l'id choisit

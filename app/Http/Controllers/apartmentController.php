@@ -9,7 +9,7 @@ class apartmentController extends Controller{
      /**
      * function getApartmentSaleList
      *retourne la liste des appartements en vente au format JSON
-     * @return json avec l'appartement et le code HTTP 200 
+     * @return json Retourne la liste des appartements en vente et le code HTTP 200 
      */
     public function getApartmentSaleList(){
         $house = apartment::where('houseApartment', 1)
@@ -19,8 +19,8 @@ class apartmentController extends Controller{
     }
      /**
      * function getApartmentRentalList
-     *retourne la liste des appartements en location au format JSON
-     * @return json avec l'appartement et le code HTTP 200
+     * Retourne la liste des appartements en location au format JSON
+     * @return json Retourne la liste des appartements en vente et le code HTTP 200 
      */
     public function getApartmentRentalList(){
         $house = apartment::where('houseApartment', 1)
@@ -29,11 +29,11 @@ class apartmentController extends Controller{
         return response()->json(['rentalApartementList' => $house], 200);
     }
      /**
-     * function getApartmentSaleFilter
-     * Recupère la liste de tous les appartements en vente filtrée au format numérique sauf le 0 qui ne filtre pas.
+     * fonction getApartmentSaleFilter
+     * Récupère la liste de tous les appartements en vente filtrée au format numérique sauf le 0 qui ne filtre pas.
      * avec dans l'ordre : 
-     * @param Request priceMin, PriceMax, referencePublishing, city, zip (n° département), areaMin, areaMax, numberOFPieceMin, numberOfPieceMAx, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
-     * @return json avec la liste des appartements trouvée et le code HTTP 200
+     * @param Request priceMin, priceMax, referencePublishing, city, zip (n° département), areaMin, areaMax, numberOFPieceMin, numberOfPieceMAx, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
+     * @return json Retourne la liste des appartements trouvée et le code HTTP 200 
      */
     public function getApartmentSaleFilter($search){
             $explodeSearch = explode(',', $search);
@@ -93,11 +93,11 @@ class apartmentController extends Controller{
             return response()->json(['saleApartement' => $result], 200);
         }
      /**
-     * function getApartmentRentalFilter
-     * Recupère la liste de tous les appartements en location filtrée au format numérique sauf le 0 qui ne filtre pas
+     * fonction getApartmentRentalFilter
+     * Récupère la liste de tous les appartements en location filtrée au format numérique sauf le 0 qui ne filtre pas
      * avec dans l'ordre : 
      * @param Request priceMin, PriceMax, referencePublishing, city, zip (N° de département), areaMin, areaMax, numberOFPieceMin, numberOfPieceMAx, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
-     * @return json avec la liste des appartements trouvée et le code HTTP 200
+     * @return json Retourne la liste des appartements trouvée et le code HTTP 200
      */
     public function getApartmentRentalFilter($search){
         //'Exemple : recherche d'une maison, au prix de 250000€ avec une surface comprise entre 30m2 et 100m2 avec au moins 1 pièce, meublé avec escalier'

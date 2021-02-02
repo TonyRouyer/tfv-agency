@@ -10,11 +10,11 @@ use App\Models\appointment;
 class appointementController extends Controller
 {
     /**
-     * function createAppointement
+     * fonction createAppointement
      * Créé un nouveau RDV dans la table appointement et renvoi un message d'erreur si nécessaire
      * @param Request dateTime, label
      * @param User TOKEN in header
-     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 201 et 409
+     * @return json Retourne les infos du RDV avec un message de confirmation et le code HTML 201 ou 409
      */
     public function createAppointement(Request $request) {
         $this->validate($request, [
@@ -33,10 +33,10 @@ class appointementController extends Controller
         }
     }
     /**
-     * function getAppointementList
+     * fonction getAppointementList
      * Récupère la liste de tous les RDV que l'utilisateur a créé en fonction de son TOKEN
      * @param User TOKEN in header
-     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 200 et 409
+     * @return json Retourne les infos du RDV et message de confirmation ainsi que le code HTML 200 ou 409
      */
     public function getAppointementList(){
         $appointement = appointment::where('id_tfv042119_user', auth()->user()->id)->get();
@@ -47,7 +47,7 @@ class appointementController extends Controller
      * Retrouve les informations d'un rendez-vous créées par l'utilisateur en fonction de l'id recherché avec un message d'erreur si l'id ne corespond pas a un RDV de l'utilisateur
      * @param Request $id du RDV recherché
      * @param User TOKEN in header
-     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 200 et 409
+     * @return json Retourne les infos du RDV et message de confirmation ainsi que le code HTML 200 ou 409
      */
     public function showAppointementDetail(Request $request, $id) {
         $appointementlist = appointment::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
@@ -62,15 +62,15 @@ class appointementController extends Controller
             }
         }
         if (!isset($result)){
-            return response()->json(['message' => 'Vous n\'avez pas acces à cela'], 409);
+            return response()->json(['message' => 'Vous n\'avez pas l\'accès !'], 409);
         }
     }
     /**
-     * function deleteAppointement
+     * fonction deleteAppointement
      * Supprime un rendez-vous de l'utilisateur en fonction de l'id recherché, sinon renvoi un message d'erreur
      * @param Request $id du RDV recherché
      * @param User TOKEN in header
-     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 200 et 409
+     * @return json Retourne les infos du RDV et message de confirmation ainsi que le code HTML 200 ou 409
      */
     public function deleteAppointement(Request $request, $id) {
 
@@ -88,16 +88,16 @@ class appointementController extends Controller
             }
         }
         if (!isset($result)){
-            return response()->json(['message' => 'Vous n\'avez pas acces à cela'], 409);
+            return response()->json(['message' => 'Vous n\'avez pas l\'accès !'], 409);
         }
     }
     /**
-     * function updateAppointement
-     * Met à jour un RDV en fonction des parametre, et de l'id. message d'erreur si l'id ne corespond pas a un RDV crée par l'utilisateur
-     * @param Request dateTime , label
+     * fonction updateAppointement
+     * Met à jour un RDV en fonction des paramètres, et de l'id. Message d'erreur si l'id ne corespond pas à un RDV créé par l'utilisateur
+     * @param Request dateTime, label
      * @param Request $id du RDV recherché
-     * @param User token in header
-     * @return json avec les infos du RDV, message de confirmation , et le code HTML 201 et 409
+     * @param User TOKEN in header
+     * @return json Retourne les infos du RDV ainsi que le message de confirmation et le code HTML 201 ou 409
      */
     public function updateAppointement(Request $request, $id) {
         $this->validate($request, [

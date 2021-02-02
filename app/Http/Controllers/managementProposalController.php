@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class managementProposalController extends Controller{
         
      /**
-     * function createManagementProposal
-     * Crée un nouveau RDV dans la table appointement, renvois un message d'erreur si il y en a une.
-     * @param Request dateTime , label
-     * @param User token in header
-     * @return json avec les info du RDV, message de confirmation , et le code HTML 200
+     * fonction createManagementProposal
+     * Créé dans la table managementProposal, renvoi un message d'erreur si nécessaire
+     * @param Request type, address, city, zip(n°département), fullText
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation avec le code HTML 201 ou 409
      */
     public function createManagementProposal(Request $request) {
         $this->validate($request, [
@@ -42,10 +42,10 @@ class managementProposalController extends Controller{
         }
     }
     /**
-     * function getManagementProposalList
-     * recupere la liste des mises en gestion que l'utilisateur a crée en fonction de son token
-     * @param User token in header
-     * @return json avec les infos du RDV, message de confirmation , et le code HTML 200
+     * fonction getManagementProposalList
+     * Récupère la liste des mises en gestion locative que l'utilisateur a créé en fonction de son TOKEN
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation avec le code HTML 200
      */
     public function getManagementProposalList(){
         $managementProposal = managementProposal::where('id_tfv042119_user', auth()->user()->id)
@@ -55,11 +55,11 @@ class managementProposalController extends Controller{
         return response()->json($managementProposal, 200);
     }
     /**
-     * function showManagementProposalDetail
-     * Retrouve les informations d'une mise en gestion créé par l'utilisateur en fonction de l'id recherché, message d'erreur si l'id ne correspond pas à une mise en gestion de l'utilisateur
-     * @param Request $id de la mise en gestion recherché
-     * @param User token in header
-     * @return json avec les infos de la mise en gestion, message de confirmation , et le code HTML 200
+     * fonction showManagementProposalDetail
+     * Retrouve les informations d'une mise en gestion locative créées par l'utilisateur en fonction de l'id recherché et message d'erreur si l'id ne correspond pas à une mise en gestion de l'utilisateur
+     * @param Request $id de la mise en gestion recherchée
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation avec le code HTML 200 ou 409
      */
     public function showManagementProposalDetail(Request $request, $id) {
         $managementProposalList = managementProposal::select('id')
@@ -82,11 +82,11 @@ class managementProposalController extends Controller{
         }
     }
     /**
-     * function deleteManagementProposal
-     * Mettre en archive la mise en gestion de l'utilisateur en fonction de l'id recherché, sinon renvoi un message d'erreur.
+     * fonction deleteManagementProposal
+     * Mettre en archive la mise en gestion de l'utilisateur en fonction de l'id recherché, sinon renvoi un message d'erreur
      * @param Request $id de la mise en gestion recherchée
-     * @param User token in header
-     * @return json avec les infos de la mise en gestion, message de confirmation , et le code HTML 200
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation ainsi que le code HTML 200 ou 409
      */
     public function deleteManagementProposal(Request $request, $id) {
 
@@ -108,13 +108,13 @@ class managementProposalController extends Controller{
         }
     }
     /**
-     * function updateManagementProposal
-     * Met à jour de la mise en gestion en fonction des paramètres, et de l'id. message d'erreur si l'id ne corespond pas à une mise en gestion crée par l'utilisateur
-     * Recupere la list des management proposal crée par le proprietaire du token, si l'id ne correspond pas a l'un de cela on affiche une erreur
-     * @param Request type , address , zip , city , fullText
+     * fonction updateManagementProposal
+     * Met à jour la mise en gestion locative en fonction des paramètres, et de l'id. Message d'erreur si l'id ne correspond pas à une mise en gestion créé par l'utilisateur
+     * Récupère la liste des biens en gestion locative créé par le proprietaire du TOKEN et si l'id ne correspond pas à l'un de cela on affiche une erreur
+     * @param Request fullText
      * @param Request $id de la mise en gestion recherchée
-     * @param User token in header
-     * @return json avec les infos de la mise en gestion, message de confirmation , et le code HTML 200
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation ainsi que le code HTML 201 ou 409
      */
     public function updateManagementProposal(Request $request, $id) {
         $this->validate($request, [

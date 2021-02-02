@@ -11,10 +11,10 @@ use Illuminate\Contracts\Auth\Factory as Auth;
 
 class realEstateController extends Controller{
      /**
-     * function createRealEstate
-     * crée un nouveau bien dans la table real estate, prend en compte une liste de paramètres
-     * @param Request         referencePublishing,houseApartment,SaleOrRental,title,fullText,coverImage,address,zip,city,complement,price,area,numberOfPieces,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
-     * @return json avec les informations saisie et le code HTML 201
+     * Fonction createRealEstate
+     * création d'un nouveau bien dans la table realEstate, prend en compte une liste de paramètres
+     * @param Request referencePublishing, houseApartment, SaleOrRental, title, fullText, coverImage, address, zip, city, complement, price, area, numberOfPieces, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
+     * @return json Retourne les informations saisie avec le code HTML 201
      */  
     public function createRealEstate(Request $request){
         $employeeAgency = auth()->user()->id_tfv042119_agency;
@@ -46,7 +46,13 @@ class realEstateController extends Controller{
         return response()->json(['realestate' => $realEstate], 201);
     }
 
-
+/**
+     * Fonction deleteRealEstate
+     * Mettre en archive le bien de la table realEstate en fonction de l'id recherché, sinon renvoi un message d'erreur
+     * @param Request $id du bien recherché
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation ainsi que le code HTML 200 ou 404
+     */
 
     public function deleteRealEstate($id){
         try{
@@ -58,16 +64,30 @@ class realEstateController extends Controller{
         }
     }
 
+    /**
+     * fonction validateRealEstate
+     * Validation de l'annonce
+     * @param Request $id de l'annonce recherchée
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation ainsi que le code HTML 201 ou 404
+     */
+
     public function validateRealEstate($id){
         try{
             $realEstate = realEstate::findOrFail($id);
             $realEstate->update(['id_tfv042119_status'=> 1]);
-            return response()->json('L\'annonce a été publié',200);
+            return response()->json('L\'annonce a été publiée',200);
         }catch(ModelNotFoundException $e){
-            return response()->json('Annonce non trouvé',404);
+            return response()->json('Annonce non trouvée',404);
         }
     }
-
+/**
+     * fonction showRealEstateDetail
+     * Retrouve les informations d'un bien créées par l'utilisateur en fonction de l'id recherché et message d'erreur si l'id ne correspond pas à un bien de l'utilisateur
+     * @param Request $id de la mise en gestion recherchée
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation avec le code HTML 200 ou 404
+     */
 
     public function showRealEstateDetail($id){
         try{
@@ -77,6 +97,17 @@ class realEstateController extends Controller{
             return response()->json('bien non trouvé',404);
         }
     }
+
+    /**
+     * fonction updateRealEstate
+     * Met à jour le bien en fonction des paramètres, et de l'id. Message d'erreur si l'id ne correspond pas à un bien créé par l'utilisateur
+     * Récupère la liste des biens créé par le proprietaire du TOKEN et si l'id ne correspond pas à l'un de cela on affiche une erreur
+     * @param Request referencePublishing, houseApartment, SaleOrRental, title, fullText, coverImage, address, zip, city, complement, price, area, numberOfPieces, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
+     * @param Request $id du bien recherché
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation ainsi que le code HTML 201 ou 409
+     */
+
     public function updateRealEstate($id, Request $request){
         try{
             $realEstate = realEstate::findOrFail($id);

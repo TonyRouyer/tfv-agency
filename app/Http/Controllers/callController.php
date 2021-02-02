@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class callController extends Controller{
     /**
-     * function addCall
-     * ajoute une nouvelle ligne a la table call
-     * @param Request lastname , firstname , mail, avaibility, preferenceCall , phone (non obligatoire), message (non obligatoire)
-     * @return Json avec messagede confirmation
+     * fonction addCall
+     * Ajoute une nouvelle ligne a la table call
+     * @param Request lastname, firstname, mail, avaibility, preferenceCall, phone (non obligatoire), message (non obligatoire)
+     * @return Json Retourne un message de confirmation avec le code HTTP 201 ou 409
      */
     public function addCall(Request $request) {
         $this->validate($request, [
@@ -43,26 +43,26 @@ class callController extends Controller{
         }
     }
     /**
-     * function deleteCall
-     * suprimme la ligne dans la table Call definie par l'id
+     * fonction deleteCall
+     * Supprime la ligne dans la table Call définie par l'id
      * @param Request id de la ligne
-     * @return Json avec messagede confirmation
+     * @return Json Retourne un message de confirmation avec le code HTTP 200 ou 404
      */
     public function deleteCall($id){
         try{
             $call = call::findOrFail($id);
             $call->delete();
-            $result = response()->json(['message' => 'appelle supprimé'], 200);
+            $result = response()->json(['message' => 'appel supprimé'], 200);
             return $result;
         }catch(ModelNotFoundException $e){
             return response()->json('Appel non trouvé',404);
         }
     }
     /**
-     * function showOnecall
-     * recupere la liste du call definie par l'id
+     * fonction showOnecall
+     * Récupère la liste des appels définie par l'id
      * @param Request id de la ligne
-     * @return Json avec le contenue recherché
+     * @return Json Retourne le contenu recherché avec le code HTTP 200 ou 404
      */
     public function showOnecall($id){
         try{
@@ -73,12 +73,11 @@ class callController extends Controller{
         }
     }
     /**
-     * function showAllCall
-     * Recupere tout showAllCall call de la table Call
-     * 
-     * @return Json liste des call
+     * fonction showAllCall
+     * Récupère la liste de tous les appels de la table call
+     * @return Json Retourne la liste des appels avec le code HTTP 200
      */
-    // a optimiser pour afficher que les apelle de une agence en particulier
+    //à optimiser pour n'afficher que les appels d'une seule agence
     public function showAllCall(){
         $callList = call::where('id_tfv042119_status', 4)->get();
         return response()->json($callList, 200);
