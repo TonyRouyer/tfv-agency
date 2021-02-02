@@ -27,7 +27,7 @@ class newsController extends Controller{
      * @return json avec la liste de tous les news
      */
     public function showNewsListPublished(){
-        $newsList = news::where('id_tfv042119_status', 1)->get();
+        $newsList = news::where('id_tfv042119_status', 1) ->orderBy('datePublishing', 'desc')->get();
         return response()->json($newsList, 200);
     }
      /**
@@ -40,7 +40,6 @@ class newsController extends Controller{
         $this->validate($request, [
             'title' => 'required',
             'fullText' => 'required',
-            'datePublishing' => 'required|date_format:Y-m-d H:i:s',
             'author' => 'required'
           ]);
             $news = new news;
@@ -60,7 +59,7 @@ class newsController extends Controller{
             } else {
                 $news->imageNews = 'exemple.png';
             }
-            $news->datePublishing = $request->input('datePublishing');
+            $news->datePublishing = date("Y-m-d H:i:s");
             $news->author = $request->input('author');
             $news->id_tfv042119_status = 4;
             $news->save();
