@@ -27,22 +27,22 @@ $router->group(['prefix' => ''], function () use ($router) {
         'uses' => 'realEstateController@createRealEstate'
     ]);
     // 'archiveRealEstate/{id}' en PUT place le bien au status archivé
-    $router->post('archiveRealEstate/{id}', [
+    $router->put('archiveRealEstate/{id}', [
         'middleware' => 'roleResponsable',
         'uses' => 'realEstateController@deleteRealEstate'
     ]);
     // 'validateRealEstate/{id}' en PUT met à jour le status de l'annonce vers 1 = publié
-    $router->post('realestateControllerValidate/{id}', [
+    $router->put('realestateControllerValidate/{id}', [
         'middleware' => 'roleValidateur',
         'uses' => 'realEstateController@validateRealEstate'
     ]);
     // realEstate/{id} en GET récupère les infos du bien à l'article sélectionné
-    $router->post('realEstate/{id}', [
+    $router->get('realEstate/{id}', [
         'middleware' => 'roleAgence',
         'uses' => 'realEstateController@showRealEstateDetail'
     ]);
     // 'updateRealEstate/{id}' en PUT met à jour le bien à l'id choisit
-    $router->post('updateRealEstate/{id}', [
+    $router->put('updateRealEstate/{id}', [
         'middleware' => 'roleAgence',
         'uses' => 'realEstateController@updateRealEstate'
     ]);
@@ -296,15 +296,26 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleAgence',
         'uses' => 'filesController@uploadImage'
     ]);
-    $router->post('getFiles', [
+    $router->get('getFiles/{id}', [
         'middleware' => 'roleAgence',
         'uses' => 'filesController@getFiles'
     ]);
-
+});
+// ROUTE IMAGES
+$router->group(['prefix' => ''], function () use ($router) {
+    $router->post('uploadrealestateImg', [
+        'middleware' => 'roleAgence',
+        'uses' => 'imagesController@uploadrealestateImg'
+    ]);
     
-    
+    $router->get('getRealestateImg/{id}', [
+        'uses' => 'imagesController@getRealestateImg'
+    ]);
 
 });
+    
+    
+
 
 
 

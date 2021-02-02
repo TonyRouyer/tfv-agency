@@ -23,9 +23,7 @@ class AuthController extends Controller
       'firstname' => 'required|string',
       'mail' => 'required|email|unique:user',
       'password' => 'required|confirmed',
-      'avatar' => 'required',
     ]);
-
     try {
      /**
      * On instancie User
@@ -41,7 +39,24 @@ class AuthController extends Controller
       $plainPassword = $request->input('password');
       //on hash le mot de passe avec la "méthode make"
       $user->password = app('hash')->make($plainPassword);
-      $user->avatar = $request->input('avatar');
+      
+      if ($request->hasFile('a')) {
+        $original_filename = $request->file('a')->getClientOriginalName();
+        $original_filename_arr = explode('.', $original_filename);
+        $file_ext = end($original_filename_arr);
+        $destination_path = './upload/userAvatar/';
+        $image = 'U-' . time() . '.' . $file_ext;
+
+        if ($request->file('a')->move($destination_path, $image)) {
+
+            $user->avatar = $image;
+        } else {
+            return response()->json('Cannot upload file',404);
+        }
+      } else {
+          $user->avatar = 'exemple.png';
+      }
+
       $user->id_tfv042119_role = 6;
       // sauvegarde les données (les envoies)
       $user->save();
