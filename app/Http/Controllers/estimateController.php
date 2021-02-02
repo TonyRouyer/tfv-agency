@@ -8,33 +8,34 @@ use App\Models\dataPrice;
 
 class estimateController extends Controller{
     /**
-     * Undocumented function
-     * Crée une estimation en fonction des parametre. genere l'estimation, retourne un Json et envoie un mail si il a été renseigné
-     * @param $city , $zip , $area , $dpe , $mail
-     * @return json avec l'estimation
+     * function createEstimate
+     * Création d'une estimation dans la table dataprice et renvoi un message d'erreur si nécessaire
+     * @param Request area, city, zip (n° dpartement), , mail
+     * @param User TOKEN in header
+     * @return json Retourne les infos du RDV ains que le message de confirmation et le code HTML 201 ou 409
      */
     public function createEstimate(Request $request){
-        // on recupère les info soumisent
+        //on récupère les infos soumisent dans chaque champ
         $area = $request->input('area');
         $city = $request->input('city');
         $zip =  $request->input('zip');
         $dpe =  $request->input('dpe');
         $mail = $request->input('mail');
 
-        // on recupere les information depuis la table data price
+        //on récupère les infos qu'on met dans $data
         $data = dataPrice::where('NOM_COM', 'LIKE', "$city%")
         ->where('INSEE_DEP' , $zip)
         ->get();
 
         if (null !== $data){
-            // on decode le Json pour extraire le prix
+            //on décode le JSON pour extraire le prix
             $json = json_decode($data,true);
             
             if (!empty($json[0]['Prixm2'])){
                 $estimation = $json[0]['Prixm2'] * $request->input('area');
 
                 
-                // a finir envoie de mail si present
+                //à finir envoi de mail si présent
         
                     return response()->json(['estimation' => $estimation . ' euros'], 200);
             }else {

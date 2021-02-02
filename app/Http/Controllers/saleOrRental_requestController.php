@@ -9,10 +9,10 @@ use App\Models\saleOrRental_request;
 
 class saleOrRental_requestController extends Controller{
     /**
-     *  function addRequest
-     * Ajoute une ligne a la table saleOrRental_request, prend plusieur parametre en compte, renvoie un message d'erreur sinon
+     * fonction addRequest
+     * Ajoute une ligne à la table saleOrRental_request, prend plusieurs paramètres en compte, sinon renvoi un message d'erreur
      * @param Request 'saleOrRental''houseApartment''address''zip''city''mail''phone'
-     * @return json avec message inserer = code HTML 201
+     * @return json Retourne un message de confirmation avec le code HTML 201 ou 409
      */
     public function addRequest(Request $request){
         $this->validate($request, [
@@ -44,47 +44,47 @@ class saleOrRental_requestController extends Controller{
         }
     }
     /**
-     *  function deleteRequest
-     * supprime la ligne dans la table saleOrRentalRequest a l'id indiqué
+     * fonction deleteRequest
+     * Supprime la ligne dans la table saleOrRentalRequest à l'id indiqué
      * @param Request $id
-     * @return json message de confirmation ou echec
+     * @return json Retourne un message de confirmation avec le code HTML 200 ou 404
      */
     public function deleteRequest($id){
         try{
             $rentalFiles = saleOrRental_request::findOrFail($id)
             ->delete();
-            return response()->json('Suppression reussi',200);
+            return response()->json('Suppression réussie',200);
         }catch(ModelNotFoundException $e){
-            return response()->json('requete non trouvé',404);
+            return response()->json('requête non trouvée',404);
         }
     }
     /**
-     *  function archiveRequest
-     * Place la requete au statue archive et ajoute le proprietaire du token dans le champs user
+     * fonction archiveRequest
+     * Place la requête au status archivé et ajoute le proprietaire du TOKEN dans le champ user
      * @param $id
-     * @return json avec message de confirmation ou erreur
+     * @return json Retourne un message de confirmation avec un code HTML 200 ou 404
      */
     public function archiveRequest($id) {
         try{
             $rentalFiles = saleOrRental_request::findOrFail($id);
             $rentalFiles->update(['id_tfv042119_status'=> 2, 'id_tfv042119_user' => auth()->user()->id]);
-            return response()->json('La requete a été archivé',200);
+            return response()->json('La requête a été archivée',200);
         }catch(ModelNotFoundException $e){
-            return response()->json('requete non trouvé',404);
+            return response()->json('requête non trouvée',404);
         }
     }
     /**
-     *  function showRequest
-     *  affiche les information de la requette a l'id choisie
+     * fonction showRequest
+     * Affiche les informations de la requête à l'id choisi
      * @param $id 
-     * @return json  avec message de confirmation ou erreur
+     * @return json Retourne un message de confirmation avec un code HTML 200 ou 404
      */
     public function showRequest($id){
         try{
             $rentalFiles = saleOrRental_request::findOrFail($id);
             return response()->json($rentalFiles,200);
         }catch(ModelNotFoundException $e){
-            return response()->json('requete non trouvé',404);
+            return response()->json('requête non trouvée',404);
         }
     }
 } 

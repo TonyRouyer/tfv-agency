@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class houseController extends Controller {
      /**
-     * function getHouseSaleList
-     *retourne la liste des maison en vente au format JSON
-     * @return json 
+     * fonction getHouseSaleList
+     * Retourne la liste des maisons en vente au format JSON
+     * @return json Retourne le code HTTP 200
      */
     public function getHouseSaleList(){
         $house = realEstate::where('houseApartment', 0)
@@ -18,9 +18,9 @@ class houseController extends Controller {
         return response()->json(['saleApartementList' => $house], 200);
     }
      /**
-     * function getHouseRentalList
-     *retourne la liste des maison en location au format JSON
-     * @return json 
+     * fonction getHouseRentalList
+     * Retourne la liste des maisons en location au format JSON
+     * @return json Retourne la liste des maisons en location avec le code HTTP 200
      */
     public function getHouseRentalList(){
         $house = realEstate::where('houseApartment', 0)
@@ -29,11 +29,11 @@ class houseController extends Controller {
         return response()->json(['saleApartementList' => $house], 200);
     }
      /**
-     * function getHouseSaleFilter
-     * Recupère la liste de toute les maison en vente d'apres divers filtres sous forme de chiffre, 0 ne prend pour ne pas prendre en compte le filtres
+     * fonction getHouseSaleFilter
+     * Recupère la liste de toutes les maisons en vente filtrée au format numérique sauf le 0 qui ne filtre pas
      * avec dans l'ordre : 
-     * @param Request priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
-     * @return json avec la liste des apartement trouvé
+     * @param Request priceMin, PriceMax, referencePublishing, city, zip, areaMin, areaMax, numberOFPieceMin, numberOfPieceMAx, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
+     * @return json retourne la liste des maisons trouvée avec le code HTTP 200
      */  
     public function getHouseSaleFilter($search){
         $explodeSearch = explode(',', $search);
@@ -93,11 +93,11 @@ class houseController extends Controller {
         return response()->json(['saleHouse' => $result], 200);
     }
      /**
-     * function getHouseRentalFilter
-     * Recupère la liste de toute les maison en location d'apres divers filtres sous forme de chiffre, 0 ne prend pour ne pas prendre en compte le filtres
+     * fonction getHouseRentalFilter
+     * Recupère la liste de toutes les maisons en location filtrée au format numérique sauf le 0 qui ne filtre pas
      * avec dans l'ordre : 
-     * @param Request priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
-     * @return json avec la liste des apartement trouvé
+     * @param Request priceMin, PriceMax, referencePublishing, city, zip, areaMin, areaMax, numberOFPieceMin, numberOfPieceMAx, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
+     * @return json Retourne la liste des maisons à louer avec le code HTTP 200
      */  
     public function getHouseRentalFilter($search){
         $explodeSearch = explode(',', $search);

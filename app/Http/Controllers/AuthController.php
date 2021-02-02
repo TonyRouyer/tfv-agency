@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Models\User;
-//Importation des Auth dans les façades
+// Importation des Auth dans les façades
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -13,7 +13,7 @@ class AuthController extends Controller
   public function register(Request $request)
   {
     /**
-     * function register
+     * fonction register
      * Validation provenant de la requête
      * @param Request lastname, firtsname, mail, password, avatar
      */
@@ -31,7 +31,7 @@ class AuthController extends Controller
      * On instancie User
      * @param Request lastname, firtsname, mail, password, avatar
      * @param User TOKEN in header
-     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 201 et 409
+     * @return json Retourne les infos du RDV avec le message de confirmation et le code HTML 201 ou 409
      */
       $user = new User;
       //stock et récupére les données des INPUTs
@@ -43,7 +43,7 @@ class AuthController extends Controller
       $user->password = app('hash')->make($plainPassword);
       $user->avatar = $request->input('avatar');
       $user->id_tfv042119_role = 6;
-      // sauvegarde les données (les envoies)
+      //sauvegarde les données (les envoies)
       $user->save();
 
       //retourne la réponse si c'est un succès
@@ -59,11 +59,11 @@ class AuthController extends Controller
   public function login(Request $request)
   {
     /**
-     * function login
+     * fonction login
      * Validation provenant de la requête
      * @param Request mail, password
      * @param User TOKEN in header
-     * @return json avec les infos du RDV et message de confirmation ainsi que le code HTML 401
+     * @return json Retourne les infos du RDV avec le message de confirmation et le code HTML 401
      */
     $this->validate($request, [
       'mail' => 'required|string',
@@ -71,7 +71,7 @@ class AuthController extends Controller
     ]);
     //stockage dans $credentials le mail et password
     $credentials = $request->only(['mail', 'password']);
-    //si l'authentification est réussie, stockage du TOKEN dans $token et nous retourne la fonction respondWithToken, sinon affichage d'un message d'erreur
+    //si l'authentification est réussie, stockage du TOKEN dans $token et nous retourne la fonction respondWithToken, sinon affichage d'un message d'erreur avec le code HTTP 401
     if (! $token = Auth::attempt($credentials)) {
       return response()->json(['message' => 'Unauthorized'], 401);
     }

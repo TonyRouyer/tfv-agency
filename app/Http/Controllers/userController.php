@@ -10,25 +10,25 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UserController extends Controller
 {
 
-//Update de l'utilisateur en se moment connecté en vérifiant le token (que le token lui apartienne bien)
+//Update de l'utilisateur connecté actuellement en vérifiant le TOKEN (que le TOKEN lui appartienne bien)
 
 /**
-* Function pour update l'utilisateur
+* Fonction pour update l'utilisateur
 * $user = @var int, @var string
-*
-*
+* @param request lastname, firstname, mail , password, hash, avatar
+* @param Json Retourne les infos du user avec le code HTML 200
 */
     public function UpdateUsers(Request $request)
      {
         if (Auth::check()){
-            //permet de verifier si l'utilisateur est authentifié
+        //Permet de vérifier si l'utilisateur est authentifié
 
         $user = Auth::user();
         $user->lastname = $request->input('lastname');
         $user->firstname = $request->input('firstname');
         $user->mail = $request->input('mail');
         $plainPassword = $request->input('password');
-        //on hash le mot de passe
+        //On hash le mot de passe
         $user->password = app('hash')->make($plainPassword);
         $user->avatar = $request->input('avatar');
         $user->id_tfv042119_role = 6;
@@ -39,7 +39,7 @@ class UserController extends Controller
         }
     }
 
-//permet de récupérer le profil d'un utilisateur en fonction de son token
+//Permet de récupérer le profil d'un utilisateur en fonction de son TOKEN
     public function profile()
     {
         return response()->json(['user' => Auth::user()], 200);
@@ -53,10 +53,10 @@ class UserController extends Controller
 */
 
 
-//insertion d'un employer seulement par l'admin ou par le chef d'agence grace au middleware
+//Insertion d'un employé seulement par l'admin ou par le chef d'agence grâce au middleware
     public function registerEmployee(Request $request)
     {
-      //validate incoming request
+      //Validation de la requête entrante
       $this->validate($request, [
         'lastname' => 'required|string',
         'firstname' => 'required|string',
@@ -67,35 +67,35 @@ class UserController extends Controller
       ]);
 
       try {
-        //on instancie
+        //On instancie
         $user = new User;
-        //stock et récupére les données des input
+        //Stock et récupére les données des INPUTs
         $user->lastname = $request->input('lastname');
         $user->firstname = $request->input('firstname');
         $user->mail = $request->input('mail');
         $plainPassword = $request->input('password');
-        //on hash le mot de passe avec la make méthode
+        //On hash le mot de passe avec la "méthode make"
         $user->password = app('hash')->make($plainPassword);
         $user->avatar = $request->input('avatar');
         $user->id_tfv042119_role = $request->input('id_tfv042119_role');
-        // sauvegarde les données (les envoies)
+        //Sauvegarde les données (les envois)
         $user->save();
-        //return successful response
+        //Si succès, retourne le message de création de l'utilisateur
         return response()->json(['user' => $user, 'message' => 'CREATED'], 201);
 
       } catch (\Exception $e) {
-        //return error message
+        //Retourne un message d'erreur
         return response()->json(['message' => 'Inscription non aboutie'], 409);
       }
     }
 
-//permet de récupérer la liste de tout les utlisateurs en fonction du token
+//Permet de récupérer la liste de tous les utlisateurs en fonction du TOKEN et retourne un code HTML 200
     public function allUsers()
     {
          return response()->json(['users' =>  User::all()], 200);
     }
 
-//permet de récupérer un utlisateurs en fonction du token
+//Permet de récupérer un utlisateur en fonction du TOKEN et retourne un code HTML 200 ou 404
     public function singleUser($id)
     {
         try {
@@ -110,7 +110,7 @@ class UserController extends Controller
 
     }
      
-        // POST /user/{id}/avatar
+        //POST /user/{id}/avatar
         public function uploadAvatar(Request $request, User $user) {
             $file = $request->file('file');
             
