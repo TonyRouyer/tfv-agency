@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class apartmentController extends Controller{
      /**
      * function getApartmentSaleList
-     *retourne la liste des appartement en vente au format JSON
-     * @return json 
+     *retourne la liste des appartements en vente au format JSON
+     * @return json avec l'appartement et le code HTTP 200 
      */
     public function getApartmentSaleList(){
         $house = apartment::where('houseApartment', 1)
@@ -19,8 +19,8 @@ class apartmentController extends Controller{
     }
      /**
      * function getApartmentRentalList
-     *retourne la liste des appartement en location au format JSON
-     * @return json 
+     *retourne la liste des appartements en location au format JSON
+     * @return json avec l'appartement et le code HTTP 200
      */
     public function getApartmentRentalList(){
         $house = apartment::where('houseApartment', 1)
@@ -30,10 +30,10 @@ class apartmentController extends Controller{
     }
      /**
      * function getApartmentSaleFilter
-     * Recupère la liste de toute les appartement en vente d'apres divers filtres sous forme de chiffre, 0 ne prend pour ne pas prendre en compte le filtres
+     * Recupère la liste de tous les appartements en vente filtrée au format numérique sauf le 0 qui ne filtre pas.
      * avec dans l'ordre : 
-     * @param Request priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
-     * @return json avec la liste des apartement trouvé
+     * @param Request priceMin, PriceMax, referencePublishing, city, zip (n° département), areaMin, areaMax, numberOFPieceMin, numberOfPieceMAx, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
+     * @return json avec la liste des appartements trouvée et le code HTTP 200
      */
     public function getApartmentSaleFilter($search){
             $explodeSearch = explode(',', $search);
@@ -94,13 +94,14 @@ class apartmentController extends Controller{
         }
      /**
      * function getApartmentRentalFilter
-     * Recupère la liste de toute les appartement en location d'apres divers filtres sous forme de chiffre, 0 ne prend pour ne pas prendre en compte le filtres
+     * Recupère la liste de tous les appartements en location filtrée au format numérique sauf le 0 qui ne filtre pas
      * avec dans l'ordre : 
-     * @param Request priceMin,PriceMax,referencePublishing,city,zip,areaMin,areaMax,numberOFPieceMin,numberOfPieceMAx,digicode,furniture,balcony,elevator,garden,garage,parking,cellar
-     * @return json avec la liste des apartement trouvé
+     * @param Request priceMin, PriceMax, referencePublishing, city, zip (N° de département), areaMin, areaMax, numberOFPieceMin, numberOfPieceMAx, digicode, furniture, balcony, elevator, garden, garage, parking, cellar
+     * @return json avec la liste des appartements trouvée et le code HTTP 200
      */
     public function getApartmentRentalFilter($search){
-        //'0,250000,0,0,0,30,100,1,0,0,1,0,1,0,0,0,0'
+        //'Exemple : recherche d'une maison, au prix de 250000€ avec une surface comprise entre 30m2 et 100m2 avec au moins 1 pièce, meublé avec escalier'
+        //'=> 0,250000,0,0,0,30,100,1,0,0,1,0,1,0,0,0,0'
         $explodeSearch = explode(',', $search);
         $house = apartment::where('houseApartment', 1)->where('SaleOrRental', 1);
         if ($explodeSearch[0] >= 0 && $explodeSearch[0] < $explodeSearch[1]) {

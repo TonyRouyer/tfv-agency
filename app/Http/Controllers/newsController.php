@@ -33,7 +33,7 @@ class newsController extends Controller{
      /**
      * function createNews
      * Crée une nouvelle news
-     * @return json avec la news et le code HTTP 200
+     * @return json avec la news et le code HTTP 201
      */
     public function createNews(Request $request){
         $news = news::create($request->all());
@@ -42,7 +42,7 @@ class newsController extends Controller{
      /**
      * function updateNews
      * Met a jour une news en fonction de son id, ou une erreur si l'id est incorecte
-     * @return json avec la news et le code HTTP 200
+     * @return json avec la news et le code HTTP 200 et 404
      */
     public function updateNews($id, Request $request){
         try{
