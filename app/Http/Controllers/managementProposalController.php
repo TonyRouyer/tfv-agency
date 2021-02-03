@@ -88,7 +88,7 @@ class managementProposalController extends Controller{
      * @param User TOKEN in header
      * @return json Retourne un message de confirmation ainsi que le code HTML 200 ou 409
      */
-    public function deleteManagementProposal(Request $request, $id) {
+    public function deleteManagementProposal($id) {
 
         $managementProposalList = managementProposal::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
 

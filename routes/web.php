@@ -152,6 +152,10 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleAgence',
         'uses' => 'managementProposalController@getManagementProposalList'
     ]);
+    $router->delete('deleteManagementProposal/{id}', [
+        'middleware' => 'roleAgence',
+        'uses' => 'managementProposalController@deleteManagementProposal'
+    ]);
 });
 // ROUTE APPOINTEMENT
 $router->group(['prefix' => ''], function () use ($router) {
