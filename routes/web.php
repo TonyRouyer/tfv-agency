@@ -94,15 +94,15 @@ $router->group(['prefix' => ''], function () use ($router) {
 //ROUTE ADMIN
 $router->group(['prefix' => 'adm'], function () use ($router) {
     $router->post('register', [
-        'middleware' => 'roleUsers',
+        'middleware' => 'roleResponsable',
         'uses' => 'UserController@registerEmployee'
       ]);
     $router->get('users', [
-        'middleware' => 'roleUsers',
+        'middleware' => 'roleResponsable',
         'uses' => 'UserController@allUsers'
       ]);
     $router->get('users/{id}', [
-        'middleware' => 'roleUsers',
+        'middleware' => 'roleResponsable',
         'uses' => 'UserController@singleUser'
       ]);
 });
@@ -196,6 +196,14 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('showRequest/{id}', [
         'middleware' => 'roleAgence',
         'uses' => 'saleOrRental_requestController@showRequest'
+    ]);
+    $router->get('showSaleRequest', [
+        'middleware' => 'roleAgence',
+        'uses' => 'saleOrRental_requestController@showSaleRequest'
+    ]);
+    $router->get('showRentalRequest', [
+        'middleware' => 'roleAgence',
+        'uses' => 'saleOrRental_requestController@showRentalRequest'
     ]);
 });
 // ROUTE CLIENT LIST

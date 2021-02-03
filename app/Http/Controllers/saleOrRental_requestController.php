@@ -87,4 +87,34 @@ class saleOrRental_requestController extends Controller{
             return response()->json('requête non trouvée',404);
         }
     }
+    /**
+     * fonction showSaleRequest
+     * Affiche toute les requete qui concerne une vente
+     * @param $id 
+     * @return json Retourne un message de confirmation avec un code HTML 200 ou 404
+     */
+    public function showSaleRequest(){
+        try{
+            $rentalFiles = saleOrRental_request::where('saleOrRental', 0)->get();
+
+            return response()->json($rentalFiles,200);
+        }catch(ModelNotFoundException $e){
+            return response()->json('requête non trouvée',404);
+        }
+    }
+    /**
+     * fonction showRentalRequest
+     * Affiche toute les requete qui concerne une vente
+     * @param $id 
+     * @return json Retourne un message de confirmation avec un code HTML 200 ou 404
+     */
+    public function showRentalRequest(){
+        try{
+            $rentalFiles = saleOrRental_request::where('saleOrRental', 1)->get();
+
+            return response()->json($rentalFiles,200);
+        }catch(ModelNotFoundException $e){
+            return response()->json('requête non trouvée',404);
+        }
+    }
 } 
