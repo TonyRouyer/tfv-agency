@@ -71,9 +71,9 @@ class clientListController extends Controller{
     }     
     /**
      * function deleteClientList
-     * Change le statue vers archivé de la ligne ($id) dans la table clientList
+     * Change le status vers archivé de la ligne ($id) dans la table clientList
      * @param Request id de la ligne
-     * @return Json message de confirmation, ou message d'erreur
+     * @return Json message de confirmation avec le code HTML 200 ou 409
      */
     public function deleteClientList($id){
         $clientList = clientList::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
@@ -83,22 +83,21 @@ class clientListController extends Controller{
                 if ($value == $id){
                         $clientList = clientList::findOrFail($id);
                         $clientList->update(['id_tfv042119_status'=> 2]);
-                        return response()->json('Fiche supprimé',200);
+                        return response()->json('Fiche supprimée',200);
                 }
             }
         }
         if (!isset($result)){
-            return response()->json(['message' => 'Vous n\'avez pas acces a cela'], 409);
+            return response()->json(['message' => 'Vous n\'avez pas l\'accès !'], 409);
         }
     } 
 
-
     /**
      * function getClientListDetail
-     * recupere les information de la ligne choisie avec l'id, si elle a été crée par l'utilisateur liéer au token
+     * Récupère les informations de la ligne choisies avec l'id, si il a été créé par l'utilisateur lié au TOKEN
      * @param Request id de la ligne
      * @param Request token
-     * @return Json avece les information recherché, ou message d'erreur
+     * @return Json avec les informations recherchées avec le code HTML 200 ou 409
      */
     public function getClientListDetail ($id){
         $clientList = clientList::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
@@ -113,15 +112,15 @@ class clientListController extends Controller{
             }
         }
         if (!isset($result)){
-            return response()->json(['message' => 'Vous n\'avez pas acces a cela'], 409);
+            return response()->json(['message' => 'Vous n\'avez pas l\'acces !'], 409);
         }
     } 
     /**
      * function getClientListEmployee
-     * recupere les information clientList de tout les employee de l'agence de l'utilisateur du token
+     * récupère les informations clientList de tous les employés de l'agence du TOKEN
      * @param Request id de la ligne
      * @param Request token
-     * @return Json avece les information recherché, ou message d'erreur
+     * @return Json avec les informations recherchées
      */
     public function getClientListEmployee(){
         $userInAgency = clientList::join('user', 'user.id', '=', 'clientList.id_tfv042119_user')

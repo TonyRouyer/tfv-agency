@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class callController extends Controller{
     /**
      * fonction addCall
-     * Ajoute une nouvelle ligne a la table call
+     * Ajoute une nouvelle ligne à la table call
      * @param Request lastname, firstname, mail, avaibility, preferenceCall, phone (non obligatoire), message (non obligatoire)
      * @return Json Retourne un message de confirmation avec le code HTTP 201 ou 409
      */

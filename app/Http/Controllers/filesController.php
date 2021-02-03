@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class filesController extends Controller{
     
-
+/**
+     * fonction uploadImage
+     * Ajoute une image dans la base de données
+     * @param Request hasFile permettant de constituer le fichier (nom du fichier et son extension).
+     * @param Request file permettant de déplacer le fichier dans le dossier temporaire vers son répertoire de destination.
+     * @return Json Retourne un message de confirmation avec le code HTTP 200 ou 404
+     */
 // fonction ok, a ajouter check type fichier (img, pdf).((type mime)) ? ajouter filtre taille max
 // document name != Title
 	public function uploadImage(Request $request)
