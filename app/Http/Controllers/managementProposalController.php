@@ -10,7 +10,7 @@ class managementProposalController extends Controller{
         
      /**
      * fonction createManagementProposal
-     * Créé dans la table managementProposal, renvoi un message d'erreur si nécessaire
+     * Créer dans la table managementProposal, renvoi un message d'erreur si nécessaire
      * @param Request type, address, city, zip(n°département), fullText
      * @param User TOKEN in header
      * @return json Retourne un message de confirmation avec le code HTML 201 ou 409
