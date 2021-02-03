@@ -24,7 +24,7 @@ class filesController extends Controller{
             $original_filename = $request->file('a')->getClientOriginalName();
             $original_filename_arr = explode('.', $original_filename);
             $file_ext = end($original_filename_arr);
-            $destination_path = './upload/user/';
+            $destination_path = './upload/managementProposalFiles/';
             $image = 'U-' . time() . '.' . $file_ext;
 
             if ($request->file('a')->move($destination_path, $image)) {
@@ -34,7 +34,7 @@ class filesController extends Controller{
 			   $files->documentName = $image;
 			   $files->title = $image;
 			   $files->id_tfv042119_user =  auth()->user()->id;
-			   $files->id_tfv042119_management_proposal = $request->input('management_proposal');
+			   $files->id_tfv042119_management_proposal = $request->input('id_tfv042119_management_proposal');
 			   $files->save();
 
                return response()->json(['status' => 'success'], 200);
