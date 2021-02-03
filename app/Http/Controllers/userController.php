@@ -7,19 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-<<<<<<< HEAD
 class UserController extends Controller{
 /**
 * Update de l'utilisateur en se moment connecté en vérifiant le token (que le token lui apartienne bien)
-=======
-class UserController extends Controller
-{
-
-//Update de l'utilisateur connecté actuellement en vérifiant le TOKEN (que le TOKEN lui appartienne bien)
-
-/**
-* Fonction pour update l'utilisateur
->>>>>>> 90a0b1504ee74ee4fbd46c36c12aaf815034649b
 * $user = @var int, @var string
 * @param request lastname, firstname, mail , password, hash, avatar
 * @param Json Retourne les infos du user avec le code HTML 200
@@ -33,10 +23,6 @@ class UserController extends Controller
             'password' => 'confirmed',
         ]);
         if (Auth::check()){
-<<<<<<< HEAD
-         //permet de verifier si l'utilisateur est authentifié
-        $user = Auth::user();
-=======
         //Permet de vérifier si l'utilisateur est authentifié
 
         $user = Auth::user();
@@ -48,7 +34,6 @@ class UserController extends Controller
         $user->password = app('hash')->make($plainPassword);
         $user->avatar = $request->input('avatar');
         $user->id_tfv042119_role = 6;
->>>>>>> 90a0b1504ee74ee4fbd46c36c12aaf815034649b
 
         if ( !empty($request->input('lastname'))){
             $user->lastname = $request->input('lastname');
@@ -159,9 +144,6 @@ class UserController extends Controller
 
     }
      
-<<<<<<< HEAD
-
-=======
         //POST /user/{id}/avatar
         public function uploadAvatar(Request $request, User $user) {
             $file = $request->file('file');
@@ -171,6 +153,5 @@ class UserController extends Controller
             $user->avatar_id = $fileEntry->id;
             $user->save();
         }
->>>>>>> 90a0b1504ee74ee4fbd46c36c12aaf815034649b
         
 }

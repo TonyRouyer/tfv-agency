@@ -26,8 +26,8 @@ class clientListController extends Controller{
             'houseOrApartement' => 'required|boolean',
             'buyOrRental' => 'required|boolean',
             'city' => 'required',
-            'ray' => 'required|alpha',
-            'budget' => 'required|alpha',
+            'ray' => 'required',
+            'budget' => 'required',
             'digicode' => 'required|boolean',
             'balcony' => 'required|boolean',
             'garden' => 'required|boolean',
@@ -36,8 +36,6 @@ class clientListController extends Controller{
             'elevator' => 'required|boolean',
             'garage' => 'required|boolean',
             'parking' => 'required|boolean',
-            'id_tfv042119_user' => 'required|alpha',
-            'id_tfv042119_status' => 'required|alpha'
           ]);
         try {
             $clientList = new clientList;
