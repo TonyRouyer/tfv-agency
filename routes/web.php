@@ -136,7 +136,7 @@ $router->group(['prefix' => ''], function () use ($router) {
     ]);
 // ROUTE MANAGEMENT PROPOSAL
 $router->group(['prefix' => ''], function () use ($router) {
-    $router->post('creatMP', [
+    $router->post('createMP', [
         'middleware' => 'RoleGetionnaireLocatif',
         'uses' => 'managementProposalController@createManagementProposal'
     ]);

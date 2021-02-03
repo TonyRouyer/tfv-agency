@@ -61,7 +61,7 @@ class managementProposalController extends Controller{
      * @param User TOKEN in header
      * @return json Retourne un message de confirmation avec le code HTML 200 ou 409
      */
-    public function showManagementProposalDetail(Request $request, $id) {
+    public function showManagementProposalDetail($id) {
         $managementProposalList = managementProposal::select('id')
         ->where('id_tfv042119_user', auth()->user()->id)
         ->orWhere('id_tfv042119_user_owner_have_management_proposal', auth()->user()->id)
