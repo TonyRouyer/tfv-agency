@@ -18,13 +18,36 @@ class realEstateController extends Controller{
      */  
     public function createRealEstate(Request $request){
         $employeeAgency = auth()->user()->id_tfv042119_agency;
+
+        if ($request->hasFile('coverImg')) {
+            $original_filename = $request->file('coverImg')->getClientOriginalName();
+            $original_filename_arr = explode('.', $original_filename);
+            $file_ext = end($original_filename_arr);
+            $destination_path = './upload/realEstateCover/';
+            $image = 'RE-' . time() . '.' . $file_ext;
+            if ($request->file('coverImg')->move($destination_path, $image)) {
+    
+                $estateCover = $image;
+            } else {
+                return response()->json('Cannot upload file',404);
+            }
+        } else {
+                $estateCover = 'noCover.png';
+        }
+
         $realEstate = realEstate::create([
         'referencePublishing' => $request->input('referencePublishing'),
         'houseApartment'  => $request->input('houseApartment'),
         'SaleOrRental'  => $request->input('SaleOrRental'), 
         'title'  => $request->input('title'),      
-        'fullText'  => $request->input('fullText'),     
-        'coverImage'  => $request->input('coverImage'),          
+        'fullText'  => $request->input('fullText'),  
+        
+        
+
+        'coverImage'  => $estateCover,     
+        
+
+        
         'address'  => $request->input('address'),
         'zip'  => $request->input('zip'),
         'city'  => $request->input('city'),
