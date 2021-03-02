@@ -18,6 +18,8 @@ class saleOrRental_requestController extends Controller{
         $this->validate($request, [
             'saleOrRental' => 'required|boolean',
             'houseApartment' => 'required|boolean',
+            'lastname' => 'required',
+            'firstname' => 'required',
             'address' => 'required',
             'zip' => 'required',
             'city' => 'required',
@@ -29,6 +31,10 @@ class saleOrRental_requestController extends Controller{
 
             $rentalFiles->saleOrRental = $request->input('saleOrRental');
             $rentalFiles->houseApartment = $request->input('houseApartment');
+
+            $rentalFiles->lastname = $request->input('lastname');
+            $rentalFiles->firstname = $request->input('firstname');
+
             $rentalFiles->address = $request->input('address');
             $rentalFiles->zip = $request->input('zip');
             $rentalFiles->city = $request->input('city');

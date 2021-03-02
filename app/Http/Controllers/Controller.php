@@ -19,7 +19,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
         'token' => $token,
         'token_type' => 'bearer',
       //  'date d'expiration' => Auth::factory()->getTTL() * 60
-        'expires_in' => auth('api')->factory()->getTTL() * 1
+        'expires_in' => auth('api')->factory()->getTTL() * 5
       ], 200);
     }
   }
