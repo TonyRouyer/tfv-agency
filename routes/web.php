@@ -51,6 +51,10 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('news/{id}', 'newsController@showNews');
     // 'allNewsPublished' en GET affiche la liste des articles publiés
     $router->get('allNewsPublished', 'newsController@showNewsListPublished');
+
+    // 'allNewsPublishedPagination' en GET affiche la liste des articles publiés, avec en paramêtre le nombre de news skip
+    $router->put('newsPublishedPage', 'newsController@allNewsPublishedPagination');
+
     // 'news' en POST créer un nouvelle article / champs obligatoire : 'title', 'imageNews' , 'fullText' , 'datePublishing' , 'author' , 'id_tfv042119_status'
     // uses signifie "utilise"
     $router->post('news', [
@@ -77,6 +81,8 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleValidateur',
         'uses' => 'newsController@validateNews'
     ]);
+    // 'allNewsPublishedPagination' en GET affiche la liste des articles publiés avec pagination
+    $router->get('allNewsPublishedPagination', 'newsController@showNewsListPublishedPagination');
 });
 //ROUTE SIMPLE UTILISATEUR
 $router->group(['prefix' => ''], function () use ($router) {

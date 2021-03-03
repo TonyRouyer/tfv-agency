@@ -30,6 +30,19 @@ class newsController extends Controller{
         $newsList = news::where('id_tfv042119_status', 1)->orderBy('datePublishing', 'desc')->get();
         return response()->json($newsList, 200);
     }
+    /**
+     * fonction allNewsPublishedPagination
+     * Récupère la liste de tous les articles qui a été publiée avec pagination
+     * @return json Retourne la liste de toutes les news avec le code HTTP 200
+     */
+    public function allNewsPublishedPagination(Request $request){
+
+        $skip = $request->input('skip');
+
+        $newsListPagination = news::where('id_tfv042119_status', 1)->orderBy('datePublishing', 'desc')->skip($skip)->take(9)->get();
+        return response()->json($newsListPagination, 200);
+
+    }
      /**
      * function createNews
      * Crée une nouvelle news,
@@ -59,7 +72,7 @@ class newsController extends Controller{
             } else {
                 $news->imageNews = 'exemple.png';
             }
-            $news->datePublishing = date("Y-m-d H:i:s");
+            $news->datePublishing = date("m-d-Y H:i:s", strtotime($news->datePublishing));
             $news->author = $request->input('author');
             $news->id_tfv042119_status = 4;
             $news->save();
