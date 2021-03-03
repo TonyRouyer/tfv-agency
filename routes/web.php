@@ -140,6 +140,11 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleResponsable',
         'uses' => 'agencyController@createRealEstate'
     ]);
+    
+    $router->get('agencyList', [
+
+        'uses' => 'agencyController@allAgency'
+    ]);
 // ROUTE MANAGEMENT PROPOSAL
 $router->group(['prefix' => ''], function () use ($router) {
     $router->post('createMP', [
