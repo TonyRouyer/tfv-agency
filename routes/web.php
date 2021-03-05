@@ -160,9 +160,16 @@ $router->group(['prefix' => ''], function () use ($router) {
         'uses' => 'managementProposalController@showManagementProposalDetail'
     ]);
     $router->get('getManagementProposalList', [
-        'middleware' => 'roleAgence',
+        'middleware' => 'auth',
         'uses' => 'managementProposalController@getManagementProposalList'
     ]);
+    $router->get('getManagementProposalContact', [
+        'middleware' => 'auth',
+        'uses' => 'managementProposalController@getManagementProposalContact'
+    ]);
+
+
+    
     $router->delete('deleteManagementProposal/{id}', [
         'middleware' => 'roleAgence',
         'uses' => 'managementProposalController@deleteManagementProposal'

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class managementProposal extends model
 {
-    protected $table = 'management_Proposal';
+    protected $table = 'management_proposal';
     public $timestamps = false;
     /**
      * The attributes that are mass assignable.
@@ -14,6 +14,7 @@ class managementProposal extends model
      * @var array
      */
     protected $fillable = [
+        'id',
         'type' , 
         'address' , 
         'zip' , 

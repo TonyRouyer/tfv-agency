@@ -51,7 +51,16 @@ class favoriteController extends Controller{
      */
    
     public function getFavorieList(Request $request){
-        $favorite = favorites::where('id_tfv042119_user', auth()->user()->id)->get();
+        $favorite = favorites::join('real_estate', 'real_estate.id', '=', 'favorites.id_tfv042119_real_estate')
+        ->where('id_tfv042119_user', auth()->user()->id)
+        ->select(
+            'favorites.id',
+            'favorites.id_tfv042119_user',
+            'real_estate.title',
+            'real_estate.coverImage'
+        )
+        ->get();
         return response()->json($favorite, 200);
     }
 }
+

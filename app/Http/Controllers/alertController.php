@@ -48,14 +48,32 @@ class alertController extends Controller{
      * @return Json Retourne un message de confirmation avec le code HTTP 200 ou 404
      */
     public function deleteAlert($id){
-        try{
-            $alert = alert::findOrFail($id);
-            $alert->delete();
-            $result = response()->json(['message' => 'appel supprimé'], 200);
-            return $result;
-        }catch(ModelNotFoundException $e){
-            return response()->json('Appel non trouvé',404);
+        // try{
+        //     $alert = alert::findOrFail($id);
+        //     $alert->delete();
+        //     $result = response()->json(['message' => 'appel supprimé'], 200);
+        //     return $result;
+        // }catch(ModelNotFoundException $e){
+        //     return response()->json('Appel non trouvé',404);
+        // }
+
+        $alertList = alert::select('id')->where('id_tfv042119_user', auth()->user()->id)->get();
+
+        $decoded = json_decode($alertList, true);
+
+        foreach($decoded as $d) {
+            foreach($d as $clef=>$value) {
+                if ($value == $id){
+                    $alert = alert::where('id', $id)->delete();
+                    $result = response()->json(['message' => 'Alerte supprimé'], 200);
+                    return $result;
+                }
+            }
         }
+        if (!isset($result)){
+            return response()->json(['message' => 'Vous n\'avez pas l\'accès !'], 409);
+        }
+
     }
     /**
      * fonction showAllAlert

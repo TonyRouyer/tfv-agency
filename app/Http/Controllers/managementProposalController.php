@@ -48,12 +48,43 @@ class managementProposalController extends Controller{
      * @return json Retourne un message de confirmation avec le code HTML 200
      */
     public function getManagementProposalList(){
-        $managementProposal = managementProposal::where('id_tfv042119_user', auth()->user()->id)
+        $managementProposal = managementProposal::join('user', 'user.id', '=' ,'management_proposal.id_tfv042119_user_owner_have_management_proposal')
+        ->where('id_tfv042119_user', auth()->user()->id)
         ->orWhere('id_tfv042119_user_owner_have_management_proposal', auth()->user()->id)
         ->orWhere('id_tfv042119_user_rental_have_management_proposal', auth()->user()->id)
+        ->select(
+            'management_proposal.id',
+            'management_proposal.address',
+            'management_proposal.zip',
+            'management_proposal.city',
+            'management_proposal.fullText',
+            'user.firstname',
+            'user.lastname',
+            'user.mail',
+        )
         ->get();
         return response()->json($managementProposal, 200);
     }
+
+    /**
+     * fonction getManagementProposalContact
+     * Récupère la liste des mises en gestion locative que l'utilisateur a créé en fonction de son TOKEN
+     * @param User TOKEN in header
+     * @return json Retourne un message de confirmation avec le code HTML 200
+     */
+    public function getManagementProposalContact(){
+        $managementProposal = managementProposal::join('user', 'user.id', '=' ,'management_proposal.id_tfv042119_user')
+        ->orWhere('id_tfv042119_user_owner_have_management_proposal', auth()->user()->id)
+        ->select(
+            'user.firstname',
+            'user.lastname',
+            'user.mail',
+        )
+        ->get();
+        return response()->json($managementProposal, 200);
+    }
+
+
     /**
      * fonction showManagementProposalDetail
      * Retrouve les informations d'une mise en gestion locative créées par l'utilisateur en fonction de l'id recherché et message d'erreur si l'id ne correspond pas à une mise en gestion de l'utilisateur
