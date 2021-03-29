@@ -72,9 +72,92 @@ class UserController extends Controller{
                return response()->json($user, 200);
         }
     }
+/**
+* Met a jour l'avatar d'un utilisateur
+* @param request avatar(type img)
+* @param Json Retourne les infos lorsque la fonction est reussi
+*/
+    public function updateAvatar(Request $request){
+
+        if (Auth::check()){
+            //Permet de vérifier si l'utilisateur est authentifié
+
+            $user = Auth::user();  
+            
+            // if ($request->hasFile('avatar')) {
+            //     return 'as file';
+            // }else {
+            //     return 'non';
+            // }
+                
+            $original_filename = $request->file('avatar')->getClientOriginalName();
+            $original_filename_arr = explode('.', $original_filename);
+            $file_ext = end($original_filename_arr);
+
+            //$destination_path = './Upload/avatar/';
+            $destination_path = './upload/userAvatar/';
+
+            $image = 'U-' . time() . '.' . $file_ext;
+
+            if ($request->file('avatar')->move($destination_path, $image)) {
+                $user->avatar = $image;
+                $user->save();
+                return response()->json($user, 200);
+            } else {
+                return response()->json('Cannot upload file',404);
+            }
+
+            
+
+        }
+    }
+
+/**
+* Met a jour le mot de passe pour la ligne qui corespond au mail
+* @param request mail, password, paswword_confirmation
+* @param Json Retourne les infos lorsque la fonction est reussi
+*/
+    public function passwordUpdatebyMail(Request $request) {
+        $this->validate($request, [
+            'password' => 'confirmed'
+        ]);
+        $mail = $request->input('mail');
+        // on selectionne la ligne qui correspond a l'email
+        $favorite = User::where('mail', $mail)->first();
+                // ajouter fonction comparaison mot de passe avec l'actuel
+        $plainPassword = $request->input('password');
+        // on recupere et on hash le password
+        $favorite->password = app('hash')->make($plainPassword);
+        //on save en bdd
+        $favorite->save();
+        return response()->json($favorite, 200);   
+    }
+/**
+* Met a jour le mot de passe pour la ligne au token de l'utilisateur
+* @param request  password, paswword_confirmation
+* @param Json Retourne les infos lorsque la fonction est reussi
+*/
+    public function passwordUpdate(Request $request) {
+        $this->validate($request, [
+            'password' => 'confirmed'
+        ]);
+        if (Auth::check()){
+            //Permet de vérifier si l'utilisateur est authentifié
+    
+            $user = Auth::user();
+            $plainPassword = $request->input('password');
+
+            $user->password = app('hash')->make($plainPassword);
+            $user->save();
+            return response()->json($user, 200);   
+        }
+
+    }
+
+
 
 //Permet de récupérer le profil d'un utilisateur en fonction de son TOKEN
-    public function profile()
+    public function profile ()
     {
         return response()->json(['user' => Auth::user()], 200);
     }

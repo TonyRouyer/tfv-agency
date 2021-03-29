@@ -23,13 +23,42 @@ class newsController extends Controller{
     }
      /**
      * fonction showNewsListPublished
-     * Récupère la liste de tous les articles qui a été publiée
+     * Récupère la list e de tous les articles qui a été publiée
      * @return json Retourne la liste de toutes les news avec le code HTTP 200
      */
     public function showNewsListPublished(){
         $newsList = news::where('id_tfv042119_status', 1)->orderBy('datePublishing', 'desc')->get();
         return response()->json($newsList, 200);
     }
+
+
+    public function showNewsSearch(Request $request) {
+
+        $title = $request->input('title');
+        $date = $request->input('date');
+
+
+        if($title == NULL){
+            $newsList = news::where('datePublishing', 'like', '%'.$date.'%')
+            ->get();
+
+        }elseif ($date == NULL) {
+            $newsList = news::where('title', 'LIKE', '%'.$title.'%')
+            ->get();
+            
+        }else {
+            $newsList = news::where('title', 'LIKE', '%'.$title.'%')
+            ->orWhere('datePublishing', 'like', '%'.$date.'%')
+            ->get();
+        }
+
+        return response()->json($newsList, 200);
+
+    }
+
+
+
+
     /**
      * fonction allNewsPublishedPagination
      * Récupère la liste de tous les articles qui a été publiée avec pagination

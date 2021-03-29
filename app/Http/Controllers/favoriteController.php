@@ -35,7 +35,7 @@ class favoriteController extends Controller{
      */
     public function deleteFavorite($id){
         try{
-            $favorite = favorites::findOrFail($id);
+            $favorite = favorites::where('id_tfv042119_real_estate', $id);
             $favorite->delete();
             $result = response()->json(['message' => 'le favoris a été supprimé'], 200);
             return $result;
@@ -56,6 +56,7 @@ class favoriteController extends Controller{
         ->select(
             'favorites.id',
             'favorites.id_tfv042119_user',
+            'favorites.id_tfv042119_real_estate',
             'real_estate.title',
             'real_estate.coverImage'
         )

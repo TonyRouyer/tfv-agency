@@ -52,6 +52,10 @@ $router->group(['prefix' => ''], function () use ($router) {
     // 'allNewsPublished' en GET affiche la liste des articles publiés
     $router->get('allNewsPublished', 'newsController@showNewsListPublished');
 
+    $router->post('newsSearch', 'newsController@showNewsSearch');
+
+    
+
     // 'allNewsPublishedPagination' en GET affiche la liste des articles publiés, avec en paramêtre le nombre de news skip
     $router->put('newsPublishedPage', 'newsController@allNewsPublishedPagination');
 
@@ -96,6 +100,22 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'auth',
         'uses' => 'UserController@UpdateUsers'
     ]);
+    $router->put('updatePassMail', [
+        'uses' => 'UserController@passwordUpdatebyMail'
+    ]);
+    $router->put('updatePass', [
+        'middleware' => 'auth',
+        'uses' => 'UserController@passwordUpdate'
+    ]);
+    $router->post('updateAvatar', [
+        'middleware' => 'auth',
+        'uses' => 'UserController@updateAvatar'
+    ]);
+
+    
+
+    
+
 });
 //ROUTE ADMIN
 $router->group(['prefix' => 'adm'], function () use ($router) {
