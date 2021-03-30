@@ -13,6 +13,7 @@ class imagesController extends Controller{
 
 	public function uploadrealestateImg(Request $request)
     {
+        $media = storage_path('app/estateImg');
         if ($request->hasFile('a')) {
             $original_filename = $request->file('a')->getClientOriginalName();
             $original_filename_arr = explode('.', $original_filename);
@@ -20,7 +21,7 @@ class imagesController extends Controller{
             $destination_path = './upload/realEstate/';
             $image = 'U-' . time() . '.' . $file_ext;
 
-            if ($request->file('a')->move($destination_path, $image)) {
+            if ($request->file('a')->move($media, $image)) {
 
 			   $img = new images;
 			   $img->title = $image;

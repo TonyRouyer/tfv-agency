@@ -39,7 +39,7 @@ class AuthController extends Controller
       $plainPassword = $request->input('password');
       //on hash le mot de passe avec la "méthode make"
       $user->password = app('hash')->make($plainPassword);
-      
+      $media = storage_path('app/avatar');
       if ($request->hasFile('a')) {
         $original_filename = $request->file('a')->getClientOriginalName();
         $original_filename_arr = explode('.', $original_filename);
@@ -47,7 +47,7 @@ class AuthController extends Controller
         $destination_path = './upload/userAvatar/';
         $image = 'U-' . time() . '.' . $file_ext;
 
-        if ($request->file('a')->move($destination_path, $image)) {
+        if ($request->file('a')->move($media, $image)) {
 
             $user->avatar = $image;
         } else {
@@ -56,7 +56,8 @@ class AuthController extends Controller
       } else {
           $user->avatar = 'exemple.png';
       }
-
+      $user->rental = 0;
+      $user->owner = 0;
       $user->id_tfv042119_role = 6;
       //sauvegarde les données (les envoies)
       $user->save();

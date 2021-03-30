@@ -49,23 +49,6 @@ class UserController extends Controller{
             //on hash le mot de passe
             $user->password = app('hash')->make($plainPassword);
         }
-        if ($request->hasFile('a')) {
-            $original_filename = $request->file('a')->getClientOriginalName();
-            $original_filename_arr = explode('.', $original_filename);
-            $file_ext = end($original_filename_arr);
-            $destination_path = './upload/userAvatar/';
-            $image = 'U-' . time() . '.' . $file_ext;
-
-            if ($request->file('a')->move($destination_path, $image)) {
-                //$fileToDelete = '../assets/img/avatar/' .  $userInfo->avatar;
-                //unlink($fileToDelete);
-                $user->avatar = $image;
-            } else {
-                return response()->json('Cannot upload file',404);
-            }
-        } else {
-              $user->avatar = 'exemple.png';
-        }
         $user->id_tfv042119_role = 6;
         $user->save();
 
@@ -84,28 +67,33 @@ class UserController extends Controller{
 
             $user = Auth::user();  
             
-            // if ($request->hasFile('avatar')) {
-            //     return 'as file';
-            // }else {
-            //     return 'non';
+
+
+            $media = storage_path('app/avatar');
+
+            $toto = $media . "/" . $user-> avatar;
+            return  $toto;
+
+            // $original_filename = $request->file('avatar')->getClientOriginalName();
+            // $original_filename_arr = explode('.', $original_filename);
+            // $file_ext = end($original_filename_arr);
+
+
+
+            // $image = 'U-' . time() . '.' . $file_ext;
+
+
+
+            // if ($request->file('avatar')->move($media, $image)) {
+            //     unlink($user->avatar);
+
+
+            //     $user->avatar = $image;
+            //     $user->save();
+            //     return response()->json($user->avatar, 200);
+            // } else {
+            //     return response()->json('Cannot upload file',404);
             // }
-                
-            $original_filename = $request->file('avatar')->getClientOriginalName();
-            $original_filename_arr = explode('.', $original_filename);
-            $file_ext = end($original_filename_arr);
-
-            //$destination_path = './Upload/avatar/';
-            $destination_path = './upload/userAvatar/';
-
-            $image = 'U-' . time() . '.' . $file_ext;
-
-            if ($request->file('avatar')->move($destination_path, $image)) {
-                $user->avatar = $image;
-                $user->save();
-                return response()->json($user, 200);
-            } else {
-                return response()->json('Cannot upload file',404);
-            }
 
             
 
@@ -123,14 +111,14 @@ class UserController extends Controller{
         ]);
         $mail = $request->input('mail');
         // on selectionne la ligne qui correspond a l'email
-        $favorite = User::where('mail', $mail)->first();
+        $update = User::where('mail', $mail)->first();
                 // ajouter fonction comparaison mot de passe avec l'actuel
         $plainPassword = $request->input('password');
         // on recupere et on hash le password
-        $favorite->password = app('hash')->make($plainPassword);
+        $update->password = app('hash')->make($plainPassword);
         //on save en bdd
-        $favorite->save();
-        return response()->json($favorite, 200);   
+        $update->save();
+        return response()->json($update, 200);   
     }
 /**
 * Met a jour le mot de passe pour la ligne au token de l'utilisateur

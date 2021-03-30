@@ -313,9 +313,9 @@ $router->group(['prefix' => ''], function () use ($router) {
 });
 // ROUTE FILES
 $router->group(['prefix' => ''], function () use ($router) {
-    $router->post('uploadImage', [
+    $router->post('uploadFiles', [
         'middleware' => 'roleAgence',
-        'uses' => 'filesController@uploadImage'
+        'uses' => 'filesController@uploadFiles'
     ]);
     $router->get('getFiles/{id}', [
         'middleware' => 'roleAgence',

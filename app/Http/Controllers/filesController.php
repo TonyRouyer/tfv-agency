@@ -18,17 +18,17 @@ class filesController extends Controller{
      */
 // fonction ok, a ajouter check type fichier (img, pdf).((type mime)) ? ajouter filtre taille max
 // document name != Title
-	public function uploadImage(Request $request)
+	public function uploadFiles(Request $request)
     {
+        $media = storage_path('app/managementProposalFiles');
         if ($request->hasFile('a')) {
             $original_filename = $request->file('a')->getClientOriginalName();
             $original_filename_arr = explode('.', $original_filename);
             $file_ext = end($original_filename_arr);
-            $destination_path = './upload/managementProposalFiles/';
             $image = 'U-' . time() . '.' . $file_ext;
 
-            if ($request->file('a')->move($destination_path, $image)) {
-			   // $user->image = '/upload/user/' . $image;
+            if ($request->file('a')->move($media, $image)) {
+
 
 			   $files = new files;
 			   $files->documentName = $image;

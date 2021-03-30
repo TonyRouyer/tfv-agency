@@ -87,13 +87,14 @@ class newsController extends Controller{
             $news = new news;
             $news->title = $request->input('title');
             $news->fullText = $request->input('fullText');
+            $media = storage_path('app/newsImg');
             if ($request->hasFile('a')) {
                 $original_filename = $request->file('a')->getClientOriginalName();
                 $original_filename_arr = explode('.', $original_filename);
                 $file_ext = end($original_filename_arr);
                 $destination_path = './upload/news/';
                 $image = 'U-' . time() . '.' . $file_ext;
-                if ($request->file('a')->move($destination_path, $image)) {
+                if ($request->file('a')->move($media, $image)) {
                     $news->imageNews = $image;
                 } else {
                     return response()->json('Cannot upload file',404);
@@ -101,7 +102,7 @@ class newsController extends Controller{
             } else {
                 $news->imageNews = 'exemple.png';
             }
-            $news->datePublishing = date("m-d-Y H:i:s", strtotime($news->datePublishing));
+            $news->datePublishing = date("Y-m-d H:i:s", time());
             $news->author = $request->input('author');
             $news->id_tfv042119_status = 4;
             $news->save();

@@ -18,14 +18,14 @@ class realEstateController extends Controller{
      */  
     public function createRealEstate(Request $request){
         $employeeAgency = auth()->user()->id_tfv042119_agency;
+        $media = storage_path('app/estateImg');
 
         if ($request->hasFile('coverImg')) {
             $original_filename = $request->file('coverImg')->getClientOriginalName();
             $original_filename_arr = explode('.', $original_filename);
             $file_ext = end($original_filename_arr);
-            $destination_path = './upload/realEstateCover/';
             $image = 'RE-' . time() . '.' . $file_ext;
-            if ($request->file('coverImg')->move($destination_path, $image)) {
+            if ($request->file('coverImg')->move($media, $image)) {
     
                 $estateCover = $image;
             } else {
