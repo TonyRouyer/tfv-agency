@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\File;
+
 
 class UserController extends Controller{
 /**
@@ -71,29 +73,29 @@ class UserController extends Controller{
 
             $media = storage_path('app/avatar');
 
-            $toto = $media . "/" . $user-> avatar;
-            return  $toto;
-
-            // $original_filename = $request->file('avatar')->getClientOriginalName();
-            // $original_filename_arr = explode('.', $original_filename);
-            // $file_ext = end($original_filename_arr);
 
 
-
-            // $image = 'U-' . time() . '.' . $file_ext;
+            $original_filename = $request->file('avatar')->getClientOriginalName();
+            $original_filename_arr = explode('.', $original_filename);
+            $file_ext = end($original_filename_arr);
 
 
 
-            // if ($request->file('avatar')->move($media, $image)) {
-            //     unlink($user->avatar);
+            $image = 'U-' . time() . '.' . $file_ext;
 
 
-            //     $user->avatar = $image;
-            //     $user->save();
-            //     return response()->json($user->avatar, 200);
-            // } else {
-            //     return response()->json('Cannot upload file',404);
-            // }
+
+            if ($request->file('avatar')->move($media, $image)) {
+                $toto = $media . "/" . $user-> avatar;
+                unlink($toto);
+    
+
+                $user->avatar = $image;
+                $user->save();
+                return response()->json($user->avatar, 200);
+            } else {
+                return response()->json('Cannot upload file',404);
+            }
 
             
 
@@ -224,5 +226,20 @@ class UserController extends Controller{
             $user->avatar_id = $fileEntry->id;
             $user->save();
         }
+
+    public function showPhoto(Request $request) {
+        try{
+            $avatar = $request->input('avatarName');
+            $path = storage_path('app/avatar/' . $avatar); 
+            // if (!File::exists($path)) { 
+            //     abort(404); 
+            // } 
+            $file = base64_encode(File::get($path)); 
+            $type = File::mimeType($path);
+            return response()->json(['file' => $file, 'type' => $type]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json('Une erreur est survenue durant la récupération de la photo', 500);
+        }
+    }
         
 }

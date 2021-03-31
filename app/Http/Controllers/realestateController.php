@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Support\Facades\File;
 
 
 class realEstateController extends Controller{
@@ -138,6 +139,19 @@ class realEstateController extends Controller{
             return response()->json($realEstate,200);
         }catch(ModelNotFoundException $e){
             return response()->json('bien non trouvé',404);
+        }
+    }
+
+
+    public function showeEtateImg(Request $request) {
+        try{
+            $estateImg = $request->input('estateImg');
+            $path = storage_path('app/estateImg/' . $estateImg); 
+            $file = base64_encode(File::get($path)); 
+            $type = File::mimeType($path);
+            return response()->json(['file' => $file, 'type' => $type]);
+        } catch (ModelNotFoundException $e) {
+            return response()->json('Une erreur est survenue durant la récupération de la photo', 500);
         }
     }
 

@@ -44,6 +44,10 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'roleAgence',
         'uses' => 'realEstateController@updateRealEstate'
     ]);
+    $router->post('showEstateImg', [
+        'uses' => 'realEstateController@showeEtateImg'
+    ]);
+    
 });
 // ROUTE ACTUALITÉ
 $router->group(['prefix' => ''], function () use ($router) {
@@ -111,10 +115,10 @@ $router->group(['prefix' => ''], function () use ($router) {
         'middleware' => 'auth',
         'uses' => 'UserController@updateAvatar'
     ]);
-
-    
-
-    
+    $router->post('showImg', [
+        'middleware' => 'auth',
+        'uses' => 'UserController@showPhoto'
+    ]);
 
 });
 //ROUTE ADMIN
