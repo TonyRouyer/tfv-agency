@@ -5,6 +5,8 @@ use App\Models\news;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\File;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 
 class newsController extends Controller{
      /**
@@ -157,6 +159,18 @@ class newsController extends Controller{
             return response()->json('L\'article a été publié',200);
         }catch(ModelNotFoundException $e){
             return response()->json('Article non trouvé',404);
+        }
+    }
+
+    public function showNewImg(Request $request) {
+        try{
+            $newImg = $request->input('newImg');
+            $path = storage_path('app/newsImg/' . $newImg); 
+            $file = base64_encode(File::get($path)); 
+            $type = File::mimeType($path);
+            return response()->json(['file' => $file, 'type' => $type]);
+        } catch (FileNotFoundException $e) {
+            return response()->json('Une erreur est survenue durant la récupération de la photo', 500);
         }
     }
 }

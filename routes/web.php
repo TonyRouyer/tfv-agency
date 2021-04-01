@@ -57,9 +57,6 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->get('allNewsPublished', 'newsController@showNewsListPublished');
 
     $router->post('newsSearch', 'newsController@showNewsSearch');
-
-    
-
     // 'allNewsPublishedPagination' en GET affiche la liste des articles publiés, avec en paramêtre le nombre de news skip
     $router->put('newsPublishedPage', 'newsController@allNewsPublishedPagination');
 
@@ -91,6 +88,11 @@ $router->group(['prefix' => ''], function () use ($router) {
     ]);
     // 'allNewsPublishedPagination' en GET affiche la liste des articles publiés avec pagination
     $router->get('allNewsPublishedPagination', 'newsController@showNewsListPublishedPagination');
+
+    $router->post('showImgNews', [
+        'uses' => 'newsController@showNewImg'
+    ]);
+    
 });
 //ROUTE SIMPLE UTILISATEUR
 $router->group(['prefix' => ''], function () use ($router) {
@@ -116,8 +118,10 @@ $router->group(['prefix' => ''], function () use ($router) {
         'uses' => 'UserController@updateAvatar'
     ]);
     $router->post('showImg', [
-        'middleware' => 'auth',
         'uses' => 'UserController@showPhoto'
+    ]);
+    $router->post('checkTokenValidity', [
+        'uses' => 'UserController@checkTokenValidity'
     ]);
 
 });

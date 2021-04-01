@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\File;
 
 
+
 class UserController extends Controller{
 /**
 * Update de l'utilisateur en se moment connecté en vérifiant le token (que le token lui apartienne bien)
@@ -143,13 +144,15 @@ class UserController extends Controller{
         }
 
     }
-
-
-
 //Permet de récupérer le profil d'un utilisateur en fonction de son TOKEN
     public function profile ()
     {
         return response()->json(['user' => Auth::user()], 200);
+    }
+
+
+    public function checkTokenValidity(Request $request){
+        return response()->json(['valid' => auth()->check()]);
     }
 
 
