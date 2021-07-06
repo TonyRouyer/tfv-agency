@@ -155,6 +155,7 @@ class UserController extends Controller{
         return response()->json(['valid' => auth()->check()]);
     }
 
+    //le commentaire de toto
 
 /*
 *
