@@ -89,21 +89,23 @@ class newsController extends Controller{
             $news = new news;
             $news->title = $request->input('title');
             $news->fullText = $request->input('fullText');
-            $media = storage_path('app/newsImg');
-            if ($request->hasFile('a')) {
-                $original_filename = $request->file('a')->getClientOriginalName();
-                $original_filename_arr = explode('.', $original_filename);
-                $file_ext = end($original_filename_arr);
-                $destination_path = './upload/news/';
-                $image = 'U-' . time() . '.' . $file_ext;
-                if ($request->file('a')->move($media, $image)) {
-                    $news->imageNews = $image;
-                } else {
-                    return response()->json('Cannot upload file',404);
-                }
-            } else {
-                $news->imageNews = 'exemple.png';
-            }
+            // $media = storage_path('app/newsImg');
+            // if ($request->hasFile('a')) {
+            //     $original_filename = $request->file('a')->getClientOriginalName();
+            //     $original_filename_arr = explode('.', $original_filename);
+            //     $file_ext = end($original_filename_arr);
+            //     $destination_path = './upload/news/';
+            //     $image = 'U-' . time() . '.' . $file_ext;
+            //     if ($request->file('a')->move($media, $image)) {
+            //         $news->imageNews = $image;
+            //     } else {
+            //         return response()->json('Cannot upload file',404);
+            //     }
+            // } else {
+            //     $news->imageNews = 'exemple.png';
+            // }
+            $news->imageNews = $request->input('a');
+
             $news->datePublishing = date("Y-m-d H:i:s", time());
             $news->author = $request->input('author');
             $news->id_tfv042119_status = 4;
@@ -173,4 +175,39 @@ class newsController extends Controller{
             return response()->json('Une erreur est survenue durant la récupération de la photo', 500);
         }
     }
+
+    public function uploadNewsImg(Request $request) {
+
+        $media = storage_path('app/newsImg');
+        if ($request->hasFile('a')) {
+            $file       = $request->file('a');
+            $filename   = $file->getClientOriginalName();
+
+            $original_filename_arr = explode('.', $filename);
+            $file_ext = end($original_filename_arr);
+
+            //$extention  = $file->getClientOriginalExtension();
+            $picture    = 'U-' . time() . '.' . $filename;
+
+            $file->move($media, $picture);
+            return response()->json(['message' => "Image uploaded"], 200);
+
+
+            // $original_filename = $request->file('a')->getClientOriginalName();
+            // $original_filename_arr = explode('.', $original_filename);
+            // $file_ext = end($original_filename_arr);
+            // // $destination_path = './upload/realEstate/';
+            // $image = 'U-' . time() . '.' . $file_ext;
+            // if ($request->file('a')->move($media, $image)) {
+            //     return response()->json(['status' => 'success'], 200);
+            // } else {
+            //     return response()->json('Cannot upload file',404);
+            // }
+        } else {
+            return response()->json('File not found',404);
+        }
+    }
+
+
+    
 }

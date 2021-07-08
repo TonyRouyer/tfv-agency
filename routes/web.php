@@ -92,6 +92,14 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->post('showImgNews', [
         'uses' => 'newsController@showNewImg'
     ]);
+
+    $router->post('uploadNewsImg', [
+        'middleware' => 'roleAgence',
+        'uses' => 'newsController@uploadNewsImg'
+    ]);
+
+
+    
     
 });
 //ROUTE SIMPLE UTILISATEUR
@@ -122,6 +130,9 @@ $router->group(['prefix' => ''], function () use ($router) {
     ]);
     $router->post('checkTokenValidity', [
         'uses' => 'UserController@checkTokenValidity'
+    ]);
+    $router->post('refreshToken', [
+        'uses' => 'UserController@refreshToken'
     ]);
 
 });

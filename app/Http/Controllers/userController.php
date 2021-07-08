@@ -151,11 +151,28 @@ class UserController extends Controller{
     }
 
 
-    public function checkTokenValidity(Request $request){
-        return response()->json(['valid' => auth()->check()]);
+    public function checkTokenValidity(){
+        return response()->json(['valid' => Auth::check()]);
     }
 
-    //le commentaire de toto
+    public function refreshToken(){
+            $responseCode = 200;
+            Auth::refresh();
+            $response =  Auth::refresh();
+            
+            return response()->json($response, $responseCode);
+        
+
+        // $reponse =  response()->json( auth()->check() );
+        // return var_dump($reponse);
+        // // if($reponse == true) {
+        // //     return 'token valide / ' ;
+        // // }else if ($reponse == false) {
+        // //     return 'token non valide / ';
+        // // }
+    }
+
+
 
 /*
 *
