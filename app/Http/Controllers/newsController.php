@@ -187,7 +187,7 @@ class newsController extends Controller{
             $file_ext = end($original_filename_arr);
 
             //$extention  = $file->getClientOriginalExtension();
-            $picture    = 'U-' . time() . '.' . $filename;
+            $picture    = 'U-' . time() . '.' . $file_ext;
 
             $file->move($media, $picture);
             return response()->json(['message' => "Image uploaded"], 200);

@@ -47,6 +47,13 @@ $router->group(['prefix' => ''], function () use ($router) {
     $router->post('showEstateImg', [
         'uses' => 'realEstateController@showeEtateImg'
     ]);
+    $router->post('uploadEstateImg', [
+        'middleware' => 'roleAgence',
+        'uses' => 'realEstateController@uploadEstateImg'
+    ]);
+
+
+    
     
 });
 // ROUTE ACTUALITÉ

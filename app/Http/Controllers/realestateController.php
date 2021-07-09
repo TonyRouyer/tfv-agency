@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\realEstate;
@@ -18,22 +17,22 @@ class realEstateController extends Controller{
      * @return json Retourne les informations saisie avec le code HTML 201
      */  
     public function createRealEstate(Request $request){
-        $employeeAgency = auth()->user()->id_tfv042119_agency;
+        //$employeeAgency = auth()->user()->id_tfv042119_agency; recupere l'id de l'agence de l'utilisateur qui créer l'annonce
         $media = storage_path('app/estateImg');
-
-        if ($request->hasFile('coverImg')) {
-            $original_filename = $request->file('coverImg')->getClientOriginalName();
+        if ($request->hasFile('coverImage')) {
+            $original_filename = $request->file('coverImage')->getClientOriginalName();
             $original_filename_arr = explode('.', $original_filename);
             $file_ext = end($original_filename_arr);
-            $image = 'RE-' . time() . '.' . $file_ext;
-            if ($request->file('coverImg')->move($media, $image)) {
-    
-                $estateCover = $image;
+            // $destination_path = './upload/realEstate/';
+            $image = 'U-' . time() . '.' . $file_ext;
+            if ($request->file('coverImage')->move($media, $image)) {
+                $nomImg = $image;
+                
             } else {
                 return response()->json('Cannot upload file',404);
             }
         } else {
-                $estateCover = 'noCover.png';
+            return response()->json('File not found',404);
         }
 
         $realEstate = realEstate::create([
@@ -43,12 +42,9 @@ class realEstateController extends Controller{
         'title'  => $request->input('title'),      
         'fullText'  => $request->input('fullText'),  
         
-        
 
-        'coverImage'  => $estateCover,     
-        
+        'coverImage' => $image,
 
-        
         'address'  => $request->input('address'),
         'zip'  => $request->input('zip'),
         'city'  => $request->input('city'),
@@ -65,7 +61,8 @@ class realEstateController extends Controller{
         'parking'  => $request->input('parking'),
         'cellar'  => $request->input('cellar'),      
         'id_tfv042119_status'  => 3,  
-        'id_tfv042119_agency'  => $employeeAgency,
+        'id_tfv042119_agency'  => $request->input('agencyId'), 
+        'id'     
         ]);
         return response()->json(['realestate' => $realEstate], 201);
     }
@@ -154,5 +151,27 @@ class realEstateController extends Controller{
             return response()->json('Une erreur est survenue durant la récupération de la photo', 500);
         }
     }
+
+
+
+    public function uploadEstateImg(Request $request) {
+        $media = storage_path('app/estateImg');
+        if ($request->hasFile('a')) {
+            $file       = $request->file('a');
+            $filename   = $file->getClientOriginalName();
+
+            $original_filename_arr = explode('.', $filename);
+            $file_ext = end($original_filename_arr);
+
+            //$extention  = $file->getClientOriginalExtension();
+            $picture    = 'U-' . time() . '.' . $file_ext;
+
+            $file->move($media, $picture);
+            return response()->json(['message' => "Image uploaded"], 200);
+        } else {
+            return response()->json('File not found',404);
+        }
+    }
+
 
 }
